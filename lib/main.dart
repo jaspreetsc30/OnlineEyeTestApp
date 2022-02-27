@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:application/onboarding/onboarding.dart';
+import 'package:application/pages/onboarding/onboarding.dart';
 
 //to do: come up with a nice font, discuss the status bar issue
 
