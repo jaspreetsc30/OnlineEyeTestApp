@@ -9,6 +9,7 @@ import 'package:application/responsiveness/RelativeSize.dart';
 import 'package:flutter/gestures.dart';
 
 
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -25,7 +26,34 @@ class _SignUpPageState extends State<SignUpPage> {
     FocusNode(),
   ];
 
-@override
+  List <TextEditingController> textControllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
+
+  //forreconfirming
+  var password = GlobalKey<FormFieldState>();
+
+
+  Object formvalues = {"Name": '', "Email": "", "Password": "","Re-type Password": '' };
+  final _signupkeys = GlobalKey<FormState>();
+  void onSubmit(){
+    if (!_signupkeys.currentState!.validate())
+      return ;
+
+    //now check if the passwords match
+    if (textControllers[2].text != textControllers[3].text)
+      return ;
+
+
+    //use api calls here , use textControllers[i].text to retrieve form text
+    textControllers.forEach((element) {print(element.text);});
+  }
+
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -67,16 +95,25 @@ class _SignUpPageState extends State<SignUpPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(children: [
-                    FormInput(hint: "Name", icon: Icons.person, inputType: TextInputType.name, inputAction: TextInputAction.next, focusNode: _SignUpNodes[0]),
-                    FormInput(hint: "Email", icon: Icons.email_outlined, inputType: TextInputType.emailAddress, inputAction: TextInputAction.next, focusNode: _SignUpNodes[1]),
-                    FormInput(hint: "Password", icon: Icons.lock, inputType: TextInputType.visiblePassword, inputAction: TextInputAction.next, focusNode: _SignUpNodes[2]),
-                    FormInput(hint: "Re-type Password", icon: Icons.lock, inputType: TextInputType.emailAddress, inputAction: TextInputAction.none, focusNode: _SignUpNodes[3]),
+                    Form(
+
+                      key: _signupkeys,
+                      child: Column(
+                        children: [
+                          FormInput(hint: "Name", icon: Icons.person, inputType: TextInputType.name, inputAction: TextInputAction.next, focusNode: _SignUpNodes[0], controller:textControllers[0] ),
+                          FormInput(hint: "Email", icon: Icons.email_outlined, inputType: TextInputType.emailAddress, inputAction: TextInputAction.next, focusNode: _SignUpNodes[1], controller:textControllers[1]),
+                          FormInput(hint: "Password", icon: Icons.lock, inputType: TextInputType.visiblePassword, inputAction: TextInputAction.next, focusNode: _SignUpNodes[2], controller:textControllers[2]),
+                          FormInput(hint: "Re-type Password", icon: Icons.lock, inputType: TextInputType.emailAddress, inputAction: TextInputAction.none, focusNode: _SignUpNodes[3], controller:textControllers[3]),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: height * 4,
                     ),
                     ElevatedButton(
 
                         onPressed: () {
+                          onSubmit();
                           // Navigator.push(context , MaterialPageRoute(builder: (context)=>SignUpPage()));
                         },
                         child: Text("Sign Up" ,style: TextStyle(fontSize:18)),
@@ -186,9 +223,10 @@ class FormInput extends StatelessWidget {
   final TextInputType inputType;
   final TextInputAction inputAction;
   final FocusNode focusNode;
+  final TextEditingController controller;
 
   const FormInput({
-    Key? key,required this.hint,required this.icon, required this.inputType , required this.inputAction , required this.focusNode
+    Key? key,required this.hint,required this.icon, required this.inputType , required this.inputAction , required this.focusNode,required this.controller
   }) : super(key: key);
 
   @override
@@ -196,6 +234,34 @@ class FormInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+
+        controller: controller,
+        validator: (value){
+
+
+          if (value!.isEmpty ){
+            return "Please input ${this.hint}";
+          }
+          if (this.hint == "Name" && !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)){
+            return "Please Enter Valid Name";
+          }
+          if (this.hint == "Password" ){
+
+            bool hasUppercase = value.contains(new RegExp(r'[A-Z]'));
+            bool hasDigits = value.contains(new RegExp(r'[0-9]'));
+            bool hasSpecialCharacters = value.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+            bool hasMinLength = value.length > 8;
+
+            if (!(hasDigits & hasUppercase  & hasSpecialCharacters & hasMinLength))return "Invalid Password: At least 1 Uppercase,number, special character and 8 digits";
+          }
+          if (this.hint == "Email"){
+            bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+            if (!emailValid)
+              return "Please input a valid Email";
+
+          }
+
+        },
         keyboardType: inputType,
         textInputAction: inputAction,
         focusNode: focusNode,
@@ -203,6 +269,7 @@ class FormInput extends StatelessWidget {
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
+          errorMaxLines: 2,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
