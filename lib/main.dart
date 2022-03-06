@@ -1,9 +1,12 @@
+import 'package:application/Pages/testScreens/testScreens.dart';
+import 'package:application/Pages/userScreen/userScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:application/pages/onboarding/onboarding.dart';
 
-//to do: come up with a nice font, discuss the status bar issue
+import 'package:application/Pages/testResults/testResults.dart';
 
+//to do: come up with a nice font, discuss the status bar issue
 
 void main() {
   runApp(const MyApp());
@@ -16,10 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Color.fromARGB(0xff,0x7b, 0xd1, 0xc2),
-
+      statusBarColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
     ));
-
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -33,17 +34,14 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-          appBarTheme: AppBarTheme(
-            backgroundColor: Color.fromARGB(0xff,0x7b, 0xd1, 0xc2),
-            systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarIconBrightness: Brightness.dark
-            ),
-
-
-          ),
-        primaryColor: Color.fromARGB(0xff,0x7b, 0xd1, 0xc2),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
+          systemOverlayStyle:
+              SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+        ),
+        primaryColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
       ),
-      home: OnBoardingPages(),
+      home: TestScreen1(), // changed from OnBoardingPages()
     );
   }
 }
