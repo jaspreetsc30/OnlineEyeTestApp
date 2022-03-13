@@ -1,6 +1,13 @@
-import 'dart:html' hide VoidCallback;
+// import 'dart:html' hide VoidCallback;
 
+import 'package:application/Pages/userScreen/reminders.dart';
 import 'package:flutter/material.dart';
+import 'package:application/Pages/userScreen/medicalRecords.dart';
+import 'package:application/Pages/userScreen/doctors.dart';
+import 'package:application/Pages/userScreen/reminders.dart';
+
+
+
 
 class UserScreen extends StatelessWidget {
   static String routeName = '/UserScreen';
@@ -11,59 +18,61 @@ class UserScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("User Account Page"),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 20), // put gap between header and user profile
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 20), // put gap between header and user profile
 
-          Column(
-            // whole of user profile image and information
+            Column(
+              // whole of user profile image and information
 
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.tealAccent,
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                height: 250,
-                width: 250,
-                child: Column(
-                  children: [
-                    SizedBox(height: 30),
-                    userProfile(
-                        userImage:
-                            "assets/images/userScreen/profile.png"), // simply change here to change user image
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.tealAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  height: 250,
+                  width: 250,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 30),
+                      userProfile(
+                          userImage:
+                              "assets/images/userScreen/profile.png"), // simply change here to change user image
 
-                    SizedBox(
-                        height: 20), // put gap between header and user profile
+                      SizedBox(
+                          height: 20), // put gap between header and user profile
 
-                    UserProfileInfo(
-                        user_name: "User username", user_id: "User userID"),
-                  ],
+                      UserProfileInfo(
+                          user_name: "User username", user_id: "User userID"),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-          SizedBox(
-              height:
-                  20), // put gap between user profile image and clickable options
+            SizedBox(
+                height:
+                    20), // put gap between user profile image and clickable options
 
-          UserAccountRows(
-              text: "My Account", icon: Icons.account_circle, press: () {}),
-          UserAccountRows(
-              text: "Medical Records",
-              icon: Icons.medical_services,
-              press: () {}),
-          UserAccountRows(
-              text: "My Doctors", icon: Icons.remove_red_eye, press: () {}),
-          UserAccountRows(
-              text: "Reminders", icon: Icons.calendar_view_month, press: () {}),
-          UserAccountRows(
-              text: "Online Consultation",
-              icon: Icons.chat_outlined,
-              press: () {}),
-          UserAccountRows(
-              text: "Appointments", icon: Icons.watch_later, press: () {})
-        ],
+            UserAccountRows(
+                text: "My Account", icon: Icons.account_circle, press: () { }),
+            UserAccountRows(
+                text: "Medical Records",
+                icon: Icons.medical_services,
+                press: () {Navigator.push(context , MaterialPageRoute(builder: (context)=>medicalRecords()));}),
+            UserAccountRows(
+                text: "My Doctors", icon: Icons.remove_red_eye, press: () {Navigator.push(context , MaterialPageRoute(builder: (context)=>doctors()));}),
+            UserAccountRows(
+                text: "Reminders", icon: Icons.calendar_view_month, press: () {Navigator.push(context , MaterialPageRoute(builder: (context)=>reminders()));}),
+            UserAccountRows(
+                text: "Online Consultation",
+                icon: Icons.chat_outlined,
+                press: () {}),
+            UserAccountRows(
+                text: "Appointments", icon: Icons.watch_later, press: () {})
+          ],
+        ),
       ),
     );
   }
