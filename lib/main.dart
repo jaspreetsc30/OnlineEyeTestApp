@@ -13,6 +13,11 @@ import 'package:application/Pages/testResults/testResultsDetailed.dart';
 import 'package:application/Pages/mainScreen/mainScreen.dart';
 import 'package:application/Pages/userScreen/userScreen.dart';
 import "package:application/Pages/testResults/testResults.dart";
+
+import 'Pages/signin/SignIn.dart';
+import 'Pages/signin/SignIn.dart';
+import 'Pages/signin/SignUp.dart';
+import 'Pages/signin/SignUp.dart';
 //to do: come up with a nice font, discuss the status bar issue
 
 //to do: come up with a nice font, discuss the status bar issue
@@ -59,8 +64,8 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
-//       // home: OnBoardingPages(),
-      home: bottomNavigationBar(),
+      home: SignInPage(),
+      // home: bottomNavigationBar(),
     );
   }
 }
