@@ -1,31 +1,34 @@
 import 'dart:html' hide VoidCallback;
+import 'package:application/Pages/mainScreen/mainScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:application/Pages/testScreens/testScreens.dart';
 import 'package:flutter/material.dart';
-import 'package:application/Pages/testScreens/testScreenData.dart';
 
-// class testQuestions {
-//   final int testType; // test number basically
-//   final int questionNumber;
-//   final int questionType; // 0 or 1 for input or textbutton type question
-//   final String questionImage;
-//   final String questionTitle;
-//   final String questionDescription;
-//   final String correctAnswer;
-//   final List<String> answerOptions;
-//   var userAnswer;
+class testQuestions {
+  final int testType; // test number basically
+  final int questionNumber;
+  final int questionType; // 0 or 1 for input or textbutton type question
+  final String questionImage;
+  final String questionTitle;
+  final String questionDescription;
+  final String correctAnswer;
+  final List<String> answerOptions;
+  var userAnswer;
+  var isUserAnswerCorrect;
 
-//   testQuestions(
-//       {required this.testType,
-//       required this.questionNumber,
-//       required this.questionType,
-//       required this.questionImage,
-//       required this.questionTitle,
-//       required this.questionDescription,
-//       required this.correctAnswer,
-//       required this.answerOptions,
-//       required this.userAnswer});
-// }
+  testQuestions(
+      {required this.testType,
+      required this.questionNumber,
+      required this.questionType,
+      required this.questionImage,
+      required this.questionTitle,
+      required this.questionDescription,
+      required this.correctAnswer,
+      required this.answerOptions,
+      required this.userAnswer,
+      required this.isUserAnswerCorrect});
+}
 
 List<testQuestions> testQuestion = [
   //1D array works but trying 2D array for better data structure design
@@ -38,7 +41,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 1 Question 1 Description",
       correctAnswer: "Test 1 Question 1 Correct Answer",
       answerOptions: [""],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 1,
       questionNumber: 2,
@@ -48,7 +52,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 1 Question 2 Description",
       correctAnswer: "Test 1 Question 2 Correct Answer",
       answerOptions: ["T1/Q2/A1", "T1/Q2/A2", "T1/Q2/A3", "T1/Q2/A4"],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 1,
       questionNumber: 3,
@@ -58,7 +63,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 1 Question 3 Description",
       correctAnswer: "Test 1 Question 3 Correct Answer",
       answerOptions: [""],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 1,
       questionNumber: 4,
@@ -68,7 +74,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 1 Question 4 Description",
       correctAnswer: "Test 1 Question 4 Correct Answer",
       answerOptions: [""],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 1,
       questionNumber: 5,
@@ -78,7 +85,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 1 Question 5 Description",
       correctAnswer: "Test 1 Question 5 Correct Answer",
       answerOptions: ["T1/Q5/A1", "T1/Q5/A2", "T1/Q5/A3", "T1/Q5/A4"],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 1,
       questionNumber: 6,
@@ -88,7 +96,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 1 Question 6 Description",
       correctAnswer: "Test 1 Question 6 Correct Answer",
       answerOptions: [""],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 2,
       questionNumber: 1,
@@ -98,7 +107,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 2 Question 1 Description",
       correctAnswer: "Test 2 Question 1 Correct Answer",
       answerOptions: [""],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 2,
       questionNumber: 2,
@@ -108,7 +118,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 2 Question 2 Description",
       correctAnswer: "Test 2 Question 2 Correct Answer",
       answerOptions: ["T2/Q2/A1", "T2/Q2/A2", "T2/Q2/A3", "T2/Q2/A4"],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 2,
       questionNumber: 3,
@@ -118,7 +129,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 2 Question 3 Description",
       correctAnswer: "Test 2 Question 3 Correct Answer",
       answerOptions: [""],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 2,
       questionNumber: 4,
@@ -128,7 +140,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 2 Question 4 Description",
       correctAnswer: "Test 2 Question 4 Correct Answer",
       answerOptions: [""],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 2,
       questionNumber: 5,
@@ -138,7 +151,8 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 2 Question 5 Description",
       correctAnswer: "Test 2 Question 5 Correct Answer",
       answerOptions: ["T2/Q5/A1", "T2/Q5/A2", "T2/Q5/A3", "T2/Q5/A4"],
-      userAnswer: ""),
+      userAnswer: "",
+      isUserAnswerCorrect: false),
   testQuestions(
       testType: 2,
       questionNumber: 6,
@@ -148,9 +162,32 @@ List<testQuestions> testQuestion = [
       questionDescription: "Test 2 Question 6 Description",
       correctAnswer: "Test 2 Question 6 Correct Answer",
       answerOptions: [""],
-      userAnswer: "")
+      userAnswer: "",
+      isUserAnswerCorrect: false)
 ];
 
+// class testScreenQuestion extends StatelessWidget {
+//   const testScreenQuestion({
+//     Key? key,
+//     required this.testQuestion,
+//   }) : super(key: key);
+
+//   final testQuestions testQuestion;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.symmetric(vertical: 10),
+//       child: Column(
+//         children: [
+//           testQuestionSection(testQuestion: testQuestion),
+//           testAnswerSection(testQuestion: testQuestion),
+//           testNavigationSection(testQuestion: testQuestion)
+//         ],
+//       ),
+//     );
+//   }
+// }
 class testScreenQuestion extends StatelessWidget {
   const testScreenQuestion({
     Key? key,
@@ -161,16 +198,32 @@ class testScreenQuestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        children: [
-          testQuestionSection(testQuestion: testQuestion),
-          testAnswerSection(testQuestion: testQuestion),
-          testNavigationSection(testQuestion: testQuestion)
-        ],
-      ),
-    );
+    return Scaffold(
+        appBar: AppBar(
+            title: Text(
+                'Online iTest | Test: ' + testQuestion.testType.toString()),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                //   Navigator.pop(
+                //       context); // maybe change redirection to intro page or remove feature to force user to finish a test
+                // },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => carouselScreen()),
+                );
+              },
+            )),
+        body: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            children: [
+              testQuestionSection(testQuestion: testQuestion),
+              testAnswerSection(testQuestion: testQuestion),
+              testNavigationSection(testQuestion: testQuestion)
+            ],
+          ),
+        ));
   }
 }
 
@@ -295,7 +348,6 @@ class _testAnswerSection extends State<testAnswerSection> {
   final answerInput = TextEditingController();
 
   var testScore = 0;
-  var question_counter = 0;
   int _testScore =
       0; // trying late to see if it works [final doesnt work  cause needs initialization]
   int _questionCounter = 0;
@@ -308,7 +360,7 @@ class _testAnswerSection extends State<testAnswerSection> {
   //   super.dispose();
   // }
 
-  int _updateTestScore() {
+  void _updateTestScore() {
     // var testScore =
     //     0; // probably dont need this in the end, rather just store the answer results for testResults
     // var question_counter = 0;
@@ -318,25 +370,23 @@ class _testAnswerSection extends State<testAnswerSection> {
     if (testQuestion.questionType == 0) {
       if (_answerInputController.value.text == testQuestion.correctAnswer) {
         testScore++;
+        testQuestion.isUserAnswerCorrect = true;
       }
       testQuestion.userAnswer = _answerInputController.value.text;
     } else {
       // for MC Question
       if (_answerInputChoice == testQuestion.correctAnswer) {
         testScore++;
+        testQuestion.isUserAnswerCorrect = true;
       }
       testQuestion.userAnswer = _answerInputChoice;
     }
 
-    question_counter++;
-
     setState(() {
       _testScore = testScore;
-      _questionCounter = question_counter;
       testQuestion.userAnswer = testQuestion.userAnswer;
+      testQuestion.isUserAnswerCorrect = testQuestion.isUserAnswerCorrect;
     });
-
-    return question_counter;
   }
 
   @override
@@ -352,6 +402,9 @@ class _testAnswerSection extends State<testAnswerSection> {
               padding: EdgeInsets.all(8.0),
               child: TextFormField(
                 controller: answerInput,
+                // initialValue: testQuestion.userAnswer,
+                // onChanged: (value) => testQuestion.userAnswer =
+                //     value, // not working to retain user value
                 decoration:
                     InputDecoration(hintText: 'Please enter your answer'),
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -477,41 +530,17 @@ class _testAnswerSection extends State<testAnswerSection> {
   }
 }
 
-class testNavigationSection extends StatefulWidget {
+class testNavigationSection extends StatelessWidget {
   const testNavigationSection({Key? key, required this.testQuestion})
       : super(key: key);
 
   final testQuestions testQuestion;
 
   @override
-  _testNavigationSection createState() =>
-      _testNavigationSection(testQuestion: testQuestion);
-}
-
-class _testNavigationSection extends State<testNavigationSection> {
-  _testNavigationSection({Key? key, required this.testQuestion});
-  // : super(key: key);
-
-  final testQuestions testQuestion;
-
-  var questionCounter = 0;
-  int _questionCounter = 0;
-
-  int _updateTestQuestion() {
-    questionCounter = testQuestion.questionNumber;
-
-    setState(() {
-      _questionCounter = questionCounter;
-    });
-
-    return _questionCounter;
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (testQuestion.questionNumber == 1) {
       return Padding(
-        padding: EdgeInsets.symmetric(vertical: 40),
+        padding: EdgeInsets.symmetric(vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

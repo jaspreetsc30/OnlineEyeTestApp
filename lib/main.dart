@@ -1,10 +1,15 @@
+import 'package:application/Pages/mainScreen/mainScreen.dart';
+import 'package:application/Pages/testResults/testResultsDetailed.dart';
+import 'package:application/Pages/testScreens/testScreenQuestions.dart';
 import 'package:application/Pages/testScreens/testScreens.dart';
+import 'package:application/Pages/testScreens/introTestScreens.dart';
 import 'package:application/Pages/userScreen/userScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:application/pages/onboarding/onboarding.dart';
 
 import 'package:application/Pages/testResults/testResults.dart';
+import 'package:application/Pages/testResults/testResultsDetailed.dart';
 
 //to do: come up with a nice font, discuss the status bar issue
 
@@ -23,6 +28,11 @@ class MyApp extends StatelessWidget {
     ));
 
     return MaterialApp(
+      routes: {
+        '/detailedTestResultsScreen': (context) => detailedTestResultScreen(),
+        '/testResultsScreen': (context) => testResultsScreen(),
+        'testScreen1Questions': (context) => TestScreen1Questions()
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -41,8 +51,7 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
       ),
-      home: TestScreen1(), // changed from OnBoardingPages()
+      home: carouselScreen(), // changed from OnBoardingPages()
     );
   }
 }
-

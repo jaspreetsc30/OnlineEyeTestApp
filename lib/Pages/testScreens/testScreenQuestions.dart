@@ -3,8 +3,8 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:application/pages/testScreen1/testScreens.dart';
-// import 'package:application/Pages/testScreen1/testScreenComponents.dart';
+import 'package:application/pages/testScreens/testScreens.dart';
+import 'package:application/Pages/testScreens/testScreenComponents.dart';
 
 class TestScreen1Questions extends StatelessWidget {
   @override
@@ -37,19 +37,19 @@ class TestScreen2Questions extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) =>
-            testScreenQuestion(testQuestion: testQuestion[0]), // first page
+            testScreenQuestion(testQuestion: testQuestion[6]), // first page
         '/Test2Question1': (context) => testScreenQuestion(
-            testQuestion: testQuestion[0]), // needed again for redirection
+            testQuestion: testQuestion[6]), // needed again for redirection
         '/Test2Question2': (context) =>
-            testScreenQuestion(testQuestion: testQuestion[1]),
+            testScreenQuestion(testQuestion: testQuestion[7]),
         '/Test2Question3': (context) =>
-            testScreenQuestion(testQuestion: testQuestion[2]),
+            testScreenQuestion(testQuestion: testQuestion[8]),
         '/Test2Question4': (context) =>
-            testScreenQuestion(testQuestion: testQuestion[3]),
+            testScreenQuestion(testQuestion: testQuestion[9]),
         '/Test2Question5': (context) =>
-            testScreenQuestion(testQuestion: testQuestion[4]),
+            testScreenQuestion(testQuestion: testQuestion[10]),
         '/Test2Question6': (context) =>
-            testScreenQuestion(testQuestion: testQuestion[5])
+            testScreenQuestion(testQuestion: testQuestion[11])
       },
     );
   }

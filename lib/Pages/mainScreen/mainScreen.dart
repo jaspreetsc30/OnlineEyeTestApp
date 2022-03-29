@@ -3,6 +3,9 @@ import 'dart:html' hide VoidCallback;
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import 'package:application/pages/testScreens/testScreens.dart';
+import 'package:application/Pages/testScreens/testScreenQuestions.dart';
+
 final List<String> imgList = [
   'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Snellen_chart.svg/1200px-Snellen_chart.svg.png',
   'https://marvel-b1-cdn.bc0a.com/f00000000038905/www.aao.org/image.axd?id=4a0d828b-c698-47cf-9455-e265332e7968&t=635998033438800000',
@@ -35,22 +38,41 @@ class _carouselScreenState extends State<carouselScreen> {
   void _showTestScreen() {
     switch (_currentIndex) {
       case 0:
-        Navigator.of(context).pushNamed('/TestScreen1');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TestScreen1Questions()),
+        );
+        // Navigator.of(context).pushNamed('/testScreen1Questions');
         break;
       case 1:
-        Navigator.of(context).pushNamed('/TestScreen2');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TestScreen2Questions()),
+        );
         break;
       case 2:
-        Navigator.of(context).pushNamed('/TestScreen3');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TestScreen3Questions()),
+        );
         break;
       case 3:
-        Navigator.of(context).pushNamed('/TestScreen4');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TestScreen4Questions()),
+        );
         break;
       case 4:
-        Navigator.of(context).pushNamed('/TestScreen5');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TestScreen5Questions()),
+        );
         break;
       case 5:
-        Navigator.of(context).pushNamed('/TestScreen6');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TestScreen6Questions()),
+        );
         break;
       default:
     }
@@ -59,72 +81,101 @@ class _carouselScreenState extends State<carouselScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        'testScreen1Questions': (context) => TestScreen1Questions(),
+        'testScreen2Questions': (context) => TestScreen2Questions(),
+        'testScreen3Questions': (context) => TestScreen3Questions(),
+        'testScreen4Questions': (context) => TestScreen4Questions(),
+        'testScreen5Questions': (context) => TestScreen5Questions(),
+        'testScreen6Questions': (context) => TestScreen6Questions(),
+      },
       home: Scaffold(
         appBar: AppBar(
           title: Text('Online iTest'),
         ),
         body: Column(
           children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                autoPlay: true,
-                // enlargeCenterPage: true,
-                //scrollDirection: Axis.vertical,
-                onPageChanged: (index, reason) {
-                  setState(
-                    () {
-                      _currentIndex = index;
-                    },
-                  );
-                },
-              ),
-              items: imgList
-                  .map(
-                    (item) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        margin: EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        elevation: 6.0,
-                        shadowColor: Colors.redAccent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30.0),
+            Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 1,
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: MediaQuery.of(context).size.height * 0.55,
+                  autoPlay: true,
+                  // enlargeCenterPage: true,
+                  //scrollDirection: Axis.vertical,
+                  onPageChanged: (index, reason) {
+                    setState(
+                      () {
+                        _currentIndex = index;
+                      },
+                    );
+                  },
+                ),
+                items: imgList
+                    .map(
+                      (item) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          margin: EdgeInsets.only(
+                            top: 10.0,
+                            bottom: 10.0,
                           ),
-                          child: Stack(
-                            children: <Widget>[
-                              Image.network(
-                                item,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                              ),
-                              GestureDetector(onTap: () {
-                                _showTestScreen();
-                              }),
-                              Center(
-                                child: Text(
-                                  // individual child entry
-                                  '${Titles[_currentIndex]}',
-                                  style: TextStyle(
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.bold,
-                                    backgroundColor: Colors.black45,
-                                    color: Colors.white,
+                          elevation: 10.0,
+                          shadowColor: Colors.tealAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30.0),
+                            ),
+                            child: Stack(
+                              // consider using column if possible
+                              children: <Widget>[
+                                // Image.network(
+                                //   item,
+                                //   fit: BoxFit.cover,
+                                //   width: double.infinity,
+                                // ),
+                                GestureDetector(
+                                    // for now only images clicked works, if want to make the whole card, just rearrange gestureDetector
+                                    child: Image.network(
+                                      // need to find a way to fix image sizes
+                                      item,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                    ),
+                                    onTap: () {
+                                      _showTestScreen();
+                                    }),
+                                Positioned.fill(
+                                  child: Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 30, bottom: 30),
+                                      child: Text(
+                                        // individual child entry
+                                        '${Titles[_currentIndex]}',
+                                        style: TextStyle(
+                                          fontSize: 24.0,
+                                          fontWeight: FontWeight.bold,
+                                          backgroundColor: Colors.black45,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
+                    )
+                    .toList(),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -142,6 +193,61 @@ class _carouselScreenState extends State<carouselScreen> {
                   ),
                 );
               }).toList(),
+            ),
+            // create the other two features under this [Add on tap features to reroute pages]
+            Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    // for the image of test // thought of using fractionallySizedBox but invalid returns causing errors
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF5F6F9),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          children: [
+                            Image.asset("assets/images/testResults/edit.png",
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height:
+                                    MediaQuery.of(context).size.width * 0.15),
+                            SizedBox(height: 10),
+                            Text("Personal Information",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                          ],
+                        )),
+                  ),
+                  SizedBox(
+                    // for the image of test // thought of using fractionallySizedBox but invalid returns causing errors
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF5F6F9),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          children: [
+                            Image.asset("assets/images/testResults/edit.png",
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height:
+                                    MediaQuery.of(context).size.width * 0.15),
+                            SizedBox(height: 10),
+                            Text("Settings",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                          ],
+                        )),
+                  ),
+                ],
+              ),
             )
           ],
         ),
