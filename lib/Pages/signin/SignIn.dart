@@ -17,6 +17,14 @@ class _SignInPageState extends State<SignInPage> {
     FocusNode(),
   ];
 
+  List <TextEditingController> textControllers = [
+    TextEditingController(),
+    TextEditingController(),
+  ];
+
+
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,8 +40,6 @@ class _SignInPageState extends State<SignInPage> {
     RelativeSize().initialize(context);
     double height = RelativeSize.relativeHeight!;
     double width = RelativeSize.relativeWidth!;
-
-
 
 
     return Scaffold(
@@ -70,8 +76,8 @@ class _SignInPageState extends State<SignInPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(children: [
-                    FormInput(hint: "Email", icon: Icons.email_outlined, inputType: TextInputType.emailAddress, inputAction: TextInputAction.next, focusNode: _SignUpNodes[0]),
-                    FormInput(hint: "Password", icon: Icons.lock, inputType: TextInputType.visiblePassword, inputAction: TextInputAction.next, focusNode: _SignUpNodes[1]),
+                    FormInput(hint: "Email", icon: Icons.email_outlined, inputType: TextInputType.emailAddress, inputAction: TextInputAction.next, focusNode: _SignUpNodes[0], controller: TextEditingController(),),
+                    FormInput(hint: "Password", icon: Icons.lock, inputType: TextInputType.visiblePassword, inputAction: TextInputAction.next, focusNode: _SignUpNodes[1] , controller: TextEditingController(),),
                     SizedBox(
                       height: height * 4,
                     ),

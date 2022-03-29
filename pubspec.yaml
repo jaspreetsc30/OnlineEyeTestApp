@@ -50,6 +50,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   flutter_native_splash: ^1.2.1
 
+
 flutter_native_splash:
   background_image: "assets/images/splashscreen/eye_logo.png"
   android: true
