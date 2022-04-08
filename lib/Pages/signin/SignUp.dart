@@ -3,7 +3,7 @@ todo: input checking , remove keyboard after retype password , hide and show pas
 todo: removing focus when done, remember me and forget password
 
 */
-import 'dart:html';
+// import 'dart:html';
 
 import 'package:application/Classes/user.dart';
 import 'package:application/Pages/signin/SignIn.dart';
@@ -13,6 +13,7 @@ import 'package:flutter/gestures.dart';
 
 import 'package:application/Classes/user.dart';
 import 'package:application/Services/api.dart';
+
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -158,7 +159,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   user.email);
                             });
                             // Navigator.push(context , MaterialPageRoute(builder: (context)=>SignUpPage()));
-                            // onSubmit();
+
                           },
                           child:
                               Text("Sign Up", style: TextStyle(fontSize: 18)),
