@@ -53,6 +53,7 @@ class testIntroScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Online iTest | Test: ' + introTestScreenObject.testType),
+
         ),
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 30),

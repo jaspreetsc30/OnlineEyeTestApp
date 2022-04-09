@@ -216,12 +216,14 @@ class testScreenQuestion extends StatelessWidget {
             )),
         body: Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
-          child: Column(
-            children: [
-              testQuestionSection(testQuestion: testQuestion),
-              testAnswerSection(testQuestion: testQuestion),
-              testNavigationSection(testQuestion: testQuestion)
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                testQuestionSection(testQuestion: testQuestion),
+                testAnswerSection(testQuestion: testQuestion),
+                testNavigationSection(testQuestion: testQuestion)
+              ],
+            ),
           ),
         ));
   }

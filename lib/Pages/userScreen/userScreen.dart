@@ -65,80 +65,90 @@ class _UserScreenState extends State<UserScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("User Account Page"),
+          automaticallyImplyLeading: false,
+        elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 20), // put gap between header and user profile
+      body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/background/Backdropbackground.png'),
+                fit: BoxFit.fill,
+              )
+          ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 20), // put gap between header and user profile
 
-            Column(
-              // whole of user profile image and information
+              Column(
+                // whole of user profile image and information
 
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.tealAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  height: 250,
-                  width: 250,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 30),
-                      userProfile(
-                          userImage:
-                              "assets/images/userScreen/profile.png",
-                          userId: this.ID,
-                          userName: this.userName, callback: (String value)=>changename(value)
-                      ), // simply change here to change user image
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        // color: Colors.tealAccent,
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    height: 250,
+                    width: 250,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 30),
+                        userProfile(
+                            userImage:
+                                "assets/images/userScreen/profile.png",
+                            userId: this.ID,
+                            userName: this.userName, callback: (String value)=>changename(value)
+                        ), // simply change here to change user image
 
-                      SizedBox(
-                          height:
-                              20), // put gap between header and user profile
+                        SizedBox(
+                            height:
+                                20), // put gap between header and user profile
 
-                      UserProfileInfo(
-                          user_name: this.userName, user_id: this.ID , callback: (String value)=>changename(value)),
-                    ],
+                        UserProfileInfo(
+                            user_name: this.userName, user_id: this.ID , callback: (String value)=>changename(value)),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
 
-            SizedBox(
-                height:
-                    20), // put gap between user profile image and clickable options
+              SizedBox(
+                  height:
+                      20), // put gap between user profile image and clickable options
 
-            UserAccountRows(
-                text: "My Account", icon: Icons.account_circle, press: () {}),
-            UserAccountRows(
-                text: "Medical Records",
-                icon: Icons.medical_services,
-                press: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => medicalRecords()));
-                }),
-            UserAccountRows(
-                text: "My Doctors",
-                icon: Icons.remove_red_eye,
-                press: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => doctors()));
-                }),
-            UserAccountRows(
-                text: "Reminders",
-                icon: Icons.calendar_view_month,
-                press: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => reminders()));
-                }),
-            UserAccountRows(
-                text: "Online Consultation",
-                icon: Icons.chat_outlined,
-                press: () {}),
-            UserAccountRows(
-                text: "Appointments", icon: Icons.watch_later, press: () {})
-          ],
+              UserAccountRows(
+                  text: "My Account", icon: Icons.account_circle, press: () {}),
+              UserAccountRows(
+                  text: "Medical Records",
+                  icon: Icons.medical_services,
+                  press: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => medicalRecords()));
+                  }),
+              UserAccountRows(
+                  text: "My Doctors",
+                  icon: Icons.remove_red_eye,
+                  press: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => doctors()));
+                  }),
+              UserAccountRows(
+                  text: "Reminders",
+                  icon: Icons.calendar_view_month,
+                  press: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => reminders()));
+                  }),
+              UserAccountRows(
+                  text: "Online Consultation",
+                  icon: Icons.chat_outlined,
+                  press: () {}),
+              UserAccountRows(
+                  text: "Appointments", icon: Icons.watch_later, press: () {})
+            ],
+          ),
         ),
       ),
     );
