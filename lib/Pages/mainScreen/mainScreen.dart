@@ -110,7 +110,8 @@ class _carouselScreenState extends State<carouselScreen> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Online iTest')
+          title: Text('Online iTest'),
+
 
         ),
         body: Container(
@@ -233,7 +234,7 @@ class _carouselScreenState extends State<carouselScreen> {
                       width: MediaQuery.of(context).size.width * 0.35,
                       height: MediaQuery.of(context).size.height * 0.15,
                       child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Color(0xFFF5F6F9),
                             borderRadius: BorderRadius.circular(15),
@@ -241,13 +242,13 @@ class _carouselScreenState extends State<carouselScreen> {
                           child: Column(
                             children: [
                               Image.asset("assets/images/testResults/edit.png",
-                                  width: MediaQuery.of(context).size.width * 0.15,
+                                  width: MediaQuery.of(context).size.width * 0.12,
                                   height:
-                                      MediaQuery.of(context).size.width * 0.15),
+                                      MediaQuery.of(context).size.width * 0.12),
                               SizedBox(height: 8),
                               Text("Personal Information",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold)),
+                                      fontSize: 14, fontWeight: FontWeight.bold)),
                             ],
                           )),
                     ),
@@ -256,7 +257,7 @@ class _carouselScreenState extends State<carouselScreen> {
                       width: MediaQuery.of(context).size.width * 0.35,
                       height: MediaQuery.of(context).size.height * 0.15,
                       child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Color(0xFFF5F6F9),
                             borderRadius: BorderRadius.circular(15),
@@ -264,13 +265,13 @@ class _carouselScreenState extends State<carouselScreen> {
                           child: Column(
                             children: [
                               Image.asset("assets/images/testResults/edit.png",
-                                  width: MediaQuery.of(context).size.width * 0.15,
+                                  width: MediaQuery.of(context).size.width * 0.12,
                                   height:
-                                      MediaQuery.of(context).size.width * 0.15),
+                                      MediaQuery.of(context).size.width * 0.12),
                               SizedBox(height: 8),
                               Text("Settings",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold)),
+                                      fontSize: 14, fontWeight: FontWeight.bold)),
                             ],
                           )),
                     ),

@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:application/Pages/testScreens/testScreens.dart';
 import 'package:flutter/material.dart';
+import 'package:application/main.dart';
+
 
 class testQuestions {
   final int testType; // test number basically
@@ -200,8 +202,11 @@ class testScreenQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+
             title: Text(
                 'Online iTest | Test: ' + testQuestion.testType.toString()),
+            backgroundColor: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2),
+
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
@@ -210,7 +215,7 @@ class testScreenQuestion extends StatelessWidget {
                 // },
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => carouselScreen()),
+                  MaterialPageRoute(builder: (context) => bottomNavigationBar()),
                 );
               },
             )),
@@ -459,7 +464,7 @@ class _testAnswerSection extends State<testAnswerSection> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.1,
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -501,7 +506,7 @@ class _testAnswerSection extends State<testAnswerSection> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.1,
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -559,7 +564,7 @@ class testNavigationSection extends StatelessWidget {
                 },
                 child: Icon(Icons.arrow_back_ios_rounded)),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
+              width: MediaQuery.of(context).size.width * 0.10,
             ),
             TextButton(
               style: TextButton.styleFrom(
@@ -575,7 +580,7 @@ class testNavigationSection extends StatelessWidget {
                 "Submit Test",
               ),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.10),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
@@ -599,7 +604,7 @@ class testNavigationSection extends StatelessWidget {
     } else if (1 < testQuestion.questionNumber &&
         testQuestion.questionNumber <= 5) {
       return Padding(
-        padding: EdgeInsets.symmetric(vertical: 40),
+        padding: EdgeInsets.symmetric(vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -620,7 +625,7 @@ class testNavigationSection extends StatelessWidget {
                 },
                 child: Icon(Icons.arrow_back_ios_rounded)),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
+              width: MediaQuery.of(context).size.width * 0.10,
             ),
             TextButton(
               style: TextButton.styleFrom(
@@ -636,7 +641,7 @@ class testNavigationSection extends StatelessWidget {
                 "Submit Test",
               ),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.10),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
@@ -659,7 +664,7 @@ class testNavigationSection extends StatelessWidget {
       );
     } else {
       return Padding(
-        padding: EdgeInsets.symmetric(vertical: 40),
+        padding: EdgeInsets.symmetric(vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -680,7 +685,7 @@ class testNavigationSection extends StatelessWidget {
                 },
                 child: Icon(Icons.arrow_back_ios_rounded)),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
+              width: MediaQuery.of(context).size.width * 0.10,
             ),
             TextButton(
               style: TextButton.styleFrom(
@@ -699,7 +704,7 @@ class testNavigationSection extends StatelessWidget {
                 "Submit Test",
               ),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.10),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
