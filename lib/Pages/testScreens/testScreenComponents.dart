@@ -1,9 +1,9 @@
-import 'dart:html' hide VoidCallback;
+// import 'dart:html' hide VoidCallback;
 import 'package:application/Pages/mainScreen/mainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:application/Pages/testScreens/testScreens.dart';
 import 'package:flutter/material.dart';
+import 'package:application/main.dart';
 
 class testQuestions {
   final int testType; // test number basically
@@ -31,7 +31,6 @@ class testQuestions {
 }
 
 List<testQuestions> testQuestion = [
-  //1D array works but trying 2D array for better data structure design
   testQuestions(
       testType: 1,
       questionNumber: 1,
@@ -98,96 +97,8 @@ List<testQuestions> testQuestion = [
       answerOptions: [""],
       userAnswer: "",
       isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 2,
-      questionNumber: 1,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 2 Question 1",
-      questionDescription: "Test 2 Question 1 Description",
-      correctAnswer: "Test 2 Question 1 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 2,
-      questionNumber: 2,
-      questionType: 1, // input field
-      questionImage: "assets/images/testResults/profile.png",
-      questionTitle: "Test 2 Question 2",
-      questionDescription: "Test 2 Question 2 Description",
-      correctAnswer: "Test 2 Question 2 Correct Answer",
-      answerOptions: ["T2/Q2/A1", "T2/Q2/A2", "T2/Q2/A3", "T2/Q2/A4"],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 2,
-      questionNumber: 3,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/user.png",
-      questionTitle: "Test 2 Question 3",
-      questionDescription: "Test 2 Question 3 Description",
-      correctAnswer: "Test 2 Question 3 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 2,
-      questionNumber: 4,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 2 Question 4",
-      questionDescription: "Test 2 Question 4 Description",
-      correctAnswer: "Test 2 Question 4 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 2,
-      questionNumber: 5,
-      questionType: 1, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 2 Question 5",
-      questionDescription: "Test 2 Question 5 Description",
-      correctAnswer: "Test 2 Question 5 Correct Answer",
-      answerOptions: ["T2/Q5/A1", "T2/Q5/A2", "T2/Q5/A3", "T2/Q5/A4"],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 2,
-      questionNumber: 6,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 2 Question 6",
-      questionDescription: "Test 2 Question 6 Description",
-      correctAnswer: "Test 2 Question 6 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false)
 ];
 
-// class testScreenQuestion extends StatelessWidget {
-//   const testScreenQuestion({
-//     Key? key,
-//     required this.testQuestion,
-//   }) : super(key: key);
-
-//   final testQuestions testQuestion;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: EdgeInsets.symmetric(vertical: 10),
-//       child: Column(
-//         children: [
-//           testQuestionSection(testQuestion: testQuestion),
-//           testAnswerSection(testQuestion: testQuestion),
-//           testNavigationSection(testQuestion: testQuestion)
-//         ],
-//       ),
-//     );
-//   }
-// }
 class testScreenQuestion extends StatelessWidget {
   const testScreenQuestion({
     Key? key,
@@ -200,8 +111,25 @@ class testScreenQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            //   title:
+            //       Text('Online iTest | Test: ' + testQuestion.testType.toString()),
+            //   // leading: IconButton(
+            //   //   icon: Icon(Icons.arrow_back_ios),
+            //   //   onPressed: () {
+            //   //     //   Navigator.pop(
+            //   //     //       context); // maybe change redirection to intro page or remove feature to force user to finish a test
+            //   //     // },
+            //   //     Navigator.push(
+            //   //       context,
+            //   //       MaterialPageRoute(builder: (context) => carouselScreen()),
+            //   //     );
+            //   //   },
+            //   // )
+            // ),
+
             title: Text(
                 'Online iTest | Test: ' + testQuestion.testType.toString()),
+            backgroundColor: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2),
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
@@ -210,18 +138,21 @@ class testScreenQuestion extends StatelessWidget {
                 // },
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => carouselScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => bottomNavigationBar()),
                 );
               },
             )),
         body: Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
-          child: Column(
-            children: [
-              testQuestionSection(testQuestion: testQuestion),
-              testAnswerSection(testQuestion: testQuestion),
-              testNavigationSection(testQuestion: testQuestion)
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                testQuestionSection(testQuestion: testQuestion),
+                testAnswerSection(testQuestion: testQuestion),
+                testNavigationSection(testQuestion: testQuestion)
+              ],
+            ),
           ),
         ));
   }
@@ -354,12 +285,6 @@ class _testAnswerSection extends State<testAnswerSection> {
   String answerInputChoice =
       ""; // onTap() function should change this value to check for correctness
 
-  // @override // clean up controller
-  // void dispose() {
-  //   answerInput.dispose();
-  //   super.dispose();
-  // }
-
   void _updateTestScore() {
     // var testScore =
     //     0; // probably dont need this in the end, rather just store the answer results for testResults
@@ -369,7 +294,7 @@ class _testAnswerSection extends State<testAnswerSection> {
 
     if (testQuestion.questionType == 0) {
       if (_answerInputController.value.text == testQuestion.correctAnswer) {
-        testScore++;
+        testScore++; // maybe have to check if reentering the answer will add score but going to a new test should be fine
         testQuestion.isUserAnswerCorrect = true;
       }
       testQuestion.userAnswer = _answerInputController.value.text;
@@ -457,7 +382,7 @@ class _testAnswerSection extends State<testAnswerSection> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.1,
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -499,7 +424,7 @@ class _testAnswerSection extends State<testAnswerSection> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.1,
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -518,10 +443,6 @@ class _testAnswerSection extends State<testAnswerSection> {
                   ),
                 ],
               ),
-              // SizedBox( // for checking, everything works :)
-              //   height: 20,
-              // ),
-              // Text(testQuestion.userAnswer)
             ],
           ),
         ),
@@ -557,7 +478,7 @@ class testNavigationSection extends StatelessWidget {
                 },
                 child: Icon(Icons.arrow_back_ios_rounded)),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
+              width: MediaQuery.of(context).size.width * 0.10,
             ),
             TextButton(
               style: TextButton.styleFrom(
@@ -573,7 +494,7 @@ class testNavigationSection extends StatelessWidget {
                 "Submit Test",
               ),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.10),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
@@ -584,9 +505,7 @@ class testNavigationSection extends StatelessWidget {
                 onPressed: () {
                   // go to next question from same test
                   if (testQuestion.userAnswer != "") {
-                    Navigator.of(context).pushNamed('/Test' +
-                        testQuestion.testType.toString() +
-                        'Question' +
+                    Navigator.of(context).pushNamed('/TestQuestion' +
                         (testQuestion.questionNumber + 1).toString());
                   }
                 },
@@ -597,7 +516,7 @@ class testNavigationSection extends StatelessWidget {
     } else if (1 < testQuestion.questionNumber &&
         testQuestion.questionNumber <= 5) {
       return Padding(
-        padding: EdgeInsets.symmetric(vertical: 40),
+        padding: EdgeInsets.symmetric(vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -611,14 +530,12 @@ class testNavigationSection extends StatelessWidget {
                 ),
                 onPressed: () {
                   // go to previous question [maybe can use pop function]
-                  Navigator.of(context).pushNamed('/Test' +
-                      testQuestion.testType.toString() +
-                      'Question' +
+                  Navigator.of(context).pushNamed('/TestQuestion' +
                       (testQuestion.questionNumber - 1).toString());
                 },
                 child: Icon(Icons.arrow_back_ios_rounded)),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
+              width: MediaQuery.of(context).size.width * 0.10,
             ),
             TextButton(
               style: TextButton.styleFrom(
@@ -634,7 +551,7 @@ class testNavigationSection extends StatelessWidget {
                 "Submit Test",
               ),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.10),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
@@ -645,9 +562,7 @@ class testNavigationSection extends StatelessWidget {
                 onPressed: () {
                   // go to next question from same test
                   if (testQuestion.userAnswer != "") {
-                    Navigator.of(context).pushNamed('/Test' +
-                        testQuestion.testType.toString() +
-                        'Question' +
+                    Navigator.of(context).pushNamed('/TestQuestion' +
                         (testQuestion.questionNumber + 1).toString());
                   }
                 },
@@ -657,7 +572,7 @@ class testNavigationSection extends StatelessWidget {
       );
     } else {
       return Padding(
-        padding: EdgeInsets.symmetric(vertical: 40),
+        padding: EdgeInsets.symmetric(vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -671,14 +586,12 @@ class testNavigationSection extends StatelessWidget {
                 ),
                 onPressed: () {
                   // go to previous question [maybe can use pop function]
-                  Navigator.of(context).pushNamed('/Test' +
-                      testQuestion.testType.toString() +
-                      'Question' +
+                  Navigator.of(context).pushNamed('/TestQuestion' +
                       (testQuestion.questionNumber - 1).toString());
                 },
                 child: Icon(Icons.arrow_back_ios_rounded)),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
+              width: MediaQuery.of(context).size.width * 0.10,
             ),
             TextButton(
               style: TextButton.styleFrom(
@@ -697,7 +610,7 @@ class testNavigationSection extends StatelessWidget {
                 "Submit Test",
               ),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.10),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),

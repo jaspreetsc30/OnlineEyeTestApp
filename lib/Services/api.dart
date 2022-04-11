@@ -22,7 +22,7 @@ Future<User> Login(LoginUser user) async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    throw Exception('Failed to login. Invalid Username/Password');
+    throw User(id: "invalid",first_name: '',last_name: '',email: '');
   }
 }
 

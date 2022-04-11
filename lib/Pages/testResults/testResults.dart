@@ -51,12 +51,22 @@ class testResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          elevation: 0,
         title: Text(
           "Test Results",
-          style: TextStyle(color: Colors.tealAccent, fontSize: 40),
+
         ),
+          automaticallyImplyLeading: false
       ),
-      body: testResult(test: testResults[0]),
+      body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/background/Backdropbackground.png'),
+                fit: BoxFit.fill,
+              )
+          ),
+
+          child: testResult(test: testResults[0])),
     );
   }
 }

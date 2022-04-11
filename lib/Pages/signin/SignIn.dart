@@ -4,6 +4,8 @@ import 'package:application/responsiveness/RelativeSize.dart';
 import 'package:flutter/gestures.dart';
 import 'package:application/Classes/user.dart';
 import 'package:application/Services/api.dart';
+import 'package:application/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -22,6 +24,22 @@ class _SignInPageState extends State<SignInPage> {
     TextEditingController(),
     TextEditingController(),
   ];
+
+
+  Future adduserandid(String id , String username) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', username);
+    await prefs.setString('id', id);
+  }
+
+
+  Future changesignedinalready() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('signedInAlready', true );
+
+  }
+
+
 
   @override
   void initState() {
@@ -111,9 +129,21 @@ class _SignInPageState extends State<SignInPage> {
                                   user.first_name +
                                   ", your email is " +
                                   user.email);
+
+
+                              if (user.id != "invalid")
+                                Navigator.pushReplacement(context , MaterialPageRoute(builder: (context)=>bottomNavigationBar()));
+                                adduserandid(user.id , user.first_name);
+                                //change it to sign in already
+                                changesignedinalready();
+
                             });
-                            // Navigator.push(context , MaterialPageRoute(builder: (context)=>SignUpPage()));
-                          },
+
+                            //get user_id and username
+                            adduserandid("21324124" , "Jasprddddt");
+                            Navigator.pushReplacement(context , MaterialPageRoute(builder: (context)=>bottomNavigationBar()));
+
+                            },
                           child:
                               Text("Sign In", style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(

@@ -36,220 +36,207 @@ class _carouselScreenState extends State<carouselScreen> {
   final CarouselController _controller = CarouselController();
 
   void _showTestScreen() {
-    switch (_currentIndex) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen1Questions()),
-        );
-        // Navigator.of(context).pushNamed('/testScreen1Questions');
-        break;
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen2Questions()),
-        );
-        break;
-      case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen3Questions()),
-        );
-        break;
-      case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen4Questions()),
-        );
-        break;
-      case 4:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen5Questions()),
-        );
-        break;
-      case 5:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen6Questions()),
-        );
-        break;
-      default:
-    }
+    //send _currentIndex to backend
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TestScreenQuestions()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        'testScreen1Questions': (context) => TestScreen1Questions(),
-        'testScreen2Questions': (context) => TestScreen2Questions(),
-        'testScreen3Questions': (context) => TestScreen3Questions(),
-        'testScreen4Questions': (context) => TestScreen4Questions(),
-        'testScreen5Questions': (context) => TestScreen5Questions(),
-        'testScreen6Questions': (context) => TestScreen6Questions(),
-      },
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
+          elevation: 0,
+        ),
+        primaryColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: Text('Online iTest'),
         ),
-        body: Column(
-          children: [
-            Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 1,
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height * 0.55,
-                  autoPlay: true,
-                  // enlargeCenterPage: true,
-                  //scrollDirection: Axis.vertical,
-                  onPageChanged: (index, reason) {
-                    setState(
-                      () {
-                        _currentIndex = index;
-                      },
-                    );
-                  },
-                ),
-                items: imgList
-                    .map(
-                      (item) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          margin: EdgeInsets.only(
-                            top: 10.0,
-                            bottom: 10.0,
-                          ),
-                          elevation: 10.0,
-                          shadowColor: Colors.tealAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+            image:
+                AssetImage('assets/images/background/Backdropbackground.png'),
+            fit: BoxFit.fill,
+          )),
+          child: Column(
+            children: [
+              Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 1,
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: MediaQuery.of(context).size.height * 0.55,
+                    autoPlay: true,
+                    // enlargeCenterPage: true,
+                    //scrollDirection: Axis.vertical,
+                    onPageChanged: (index, reason) {
+                      setState(
+                        () {
+                          _currentIndex = index;
+                        },
+                      );
+                    },
+                  ),
+                  items: imgList
+                      .map(
+                        (item) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            margin: EdgeInsets.only(
+                              top: 10.0,
+                              bottom: 10.0,
                             ),
-                            child: Stack(
-                              // consider using column if possible
-                              children: <Widget>[
-                                // Image.network(
-                                //   item,
-                                //   fit: BoxFit.cover,
-                                //   width: double.infinity,
-                                // ),
-                                GestureDetector(
-                                    // for now only images clicked works, if want to make the whole card, just rearrange gestureDetector
-                                    child: Image.network(
-                                      // need to find a way to fix image sizes
-                                      item,
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                    ),
-                                    onTap: () {
-                                      _showTestScreen();
-                                    }),
-                                Positioned.fill(
-                                  child: Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 30, bottom: 30),
-                                      child: Text(
-                                        // individual child entry
-                                        '${Titles[_currentIndex]}',
-                                        style: TextStyle(
-                                          fontSize: 24.0,
-                                          fontWeight: FontWeight.bold,
-                                          backgroundColor: Colors.black45,
-                                          color: Colors.white,
+                            elevation: 10.0,
+                            shadowColor: Colors.tealAccent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30.0),
+                              ),
+                              child: Stack(
+                                // consider using column if possible
+                                children: <Widget>[
+                                  // Image.network(
+                                  //   item,
+                                  //   fit: BoxFit.cover,
+                                  //   width: double.infinity,
+                                  // ),
+                                  GestureDetector(
+                                      // for now only images clicked works, if want to make the whole card, just rearrange gestureDetector
+                                      child: Image.network(
+                                        // need to find a way to fix image sizes
+                                        item,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      ),
+                                      onTap: () {
+                                        _showTestScreen();
+                                      }),
+                                  Positioned.fill(
+                                    child: Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 30, bottom: 30),
+                                        child: Text(
+                                          // individual child entry
+                                          '${Titles[_currentIndex]}',
+                                          style: TextStyle(
+                                            fontSize: 24.0,
+                                            fontWeight: FontWeight.bold,
+                                            backgroundColor: Colors.black45,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
+                      )
+                      .toList(),
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: imgList.map((urlOfItem) {
-                int index = imgList.indexOf(urlOfItem);
-                return Container(
-                  width: 10.0,
-                  height: 10.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentIndex == index
-                        ? Color.fromRGBO(0, 0, 0, 0.8)
-                        : Color.fromRGBO(0, 0, 0, 0.3),
-                  ),
-                );
-              }).toList(),
-            ),
-            // create the other two features under this [Add on tap features to reroute pages]
-            Padding(
-              padding: EdgeInsets.only(top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    // for the image of test // thought of using fractionallySizedBox but invalid returns causing errors
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF5F6F9),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          children: [
-                            Image.asset("assets/images/testResults/edit.png",
-                                width: MediaQuery.of(context).size.width * 0.15,
-                                height:
-                                    MediaQuery.of(context).size.width * 0.15),
-                            SizedBox(height: 10),
-                            Text("Personal Information",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                          ],
-                        )),
-                  ),
-                  SizedBox(
-                    // for the image of test // thought of using fractionallySizedBox but invalid returns causing errors
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF5F6F9),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          children: [
-                            Image.asset("assets/images/testResults/edit.png",
-                                width: MediaQuery.of(context).size.width * 0.15,
-                                height:
-                                    MediaQuery.of(context).size.width * 0.15),
-                            SizedBox(height: 10),
-                            Text("Settings",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                          ],
-                        )),
-                  ),
-                ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: imgList.map((urlOfItem) {
+                  int index = imgList.indexOf(urlOfItem);
+                  return Container(
+                    width: 10.0,
+                    height: 10.0,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentIndex == index
+                          ? Color.fromRGBO(0, 0, 0, 0.8)
+                          : Color.fromRGBO(0, 0, 0, 0.3),
+                    ),
+                  );
+                }).toList(),
               ),
-            )
-          ],
+              // create the other two features under this [Add on tap features to reroute pages]
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      // for the image of test // thought of using fractionallySizedBox but invalid returns causing errors
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF5F6F9),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            children: [
+                              Image.asset("assets/images/testResults/edit.png",
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.12,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.12),
+                              SizedBox(height: 8),
+                              Text("Personal Information",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          )),
+                    ),
+                    SizedBox(
+                      // for the image of test // thought of using fractionallySizedBox but invalid returns causing errors
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF5F6F9),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            children: [
+                              Image.asset("assets/images/testResults/edit.png",
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.12,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.12),
+                              SizedBox(height: 8),
+                              Text("Settings",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
