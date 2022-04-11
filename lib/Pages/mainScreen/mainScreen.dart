@@ -36,59 +36,16 @@ class _carouselScreenState extends State<carouselScreen> {
   final CarouselController _controller = CarouselController();
 
   void _showTestScreen() {
-    switch (_currentIndex) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen1Questions()),
-        );
-        // Navigator.of(context).pushNamed('/testScreen1Questions');
-        break;
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen2Questions()),
-        );
-        break;
-      case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen3Questions()),
-        );
-        break;
-      case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen4Questions()),
-        );
-        break;
-      case 4:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen5Questions()),
-        );
-        break;
-      case 5:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen6Questions()),
-        );
-        break;
-      default:
-    }
+    //send _currentIndex to backend
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TestScreenQuestions()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        'testScreen1Questions': (context) => TestScreen1Questions(),
-        'testScreen2Questions': (context) => TestScreen2Questions(),
-        'testScreen3Questions': (context) => TestScreen3Questions(),
-        'testScreen4Questions': (context) => TestScreen4Questions(),
-        'testScreen5Questions': (context) => TestScreen5Questions(),
-        'testScreen6Questions': (context) => TestScreen6Questions(),
-      },
       home: Scaffold(
         appBar: AppBar(
           title: Text('Online iTest'),

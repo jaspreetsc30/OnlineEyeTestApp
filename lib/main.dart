@@ -1,4 +1,5 @@
 import 'package:application/Pages/mainScreen/mainScreen.dart';
+import 'package:application/Pages/signin/SignIn.dart';
 import 'package:application/Pages/testResults/testResultsDetailed.dart';
 import 'package:application/Pages/testScreens/testScreenQuestions.dart';
 import 'package:application/Pages/testScreens/testScreens.dart';
@@ -35,7 +36,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/detailedTestResultsScreen': (context) => detailedTestResultScreen(),
         '/testResultsScreen': (context) => testResultsScreen(),
-        'testScreen1Questions': (context) => TestScreen1Questions()
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -60,7 +60,8 @@ class MyApp extends StatelessWidget {
 //   }
 // }
 //       // home: OnBoardingPages(),
-      home: bottomNavigationBar(),
+      // home: SignInPage(), //bottomNavigationBar(),
+      home: carouselScreen(),
     );
   }
 }
