@@ -3,6 +3,7 @@ import 'package:application/Pages/onboarding/data.dart';
 import 'package:application/responsiveness/RelativeSize.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:application/Pages/signin/SignUp.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingPages extends StatefulWidget {
   const OnBoardingPages({Key? key}) : super(key: key);
@@ -15,6 +16,17 @@ class _OnBoardingPagesState extends State<OnBoardingPages> {
   int currentpage = 0;
   PageController page = PageController(initialPage: 0);
 
+  Future onBoardingTrue()  async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('seenOnBoard', true);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    onBoardingTrue();
+  }
   @override
   Widget build(BuildContext context) {
     RelativeSize().initialize(context);
