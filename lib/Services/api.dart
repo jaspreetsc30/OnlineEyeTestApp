@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:application/Classes/user.dart';
 import 'package:application/Pages/testScreens/testScreenComponents.dart';
 import 'package:application/Pages/testResults/testResults.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final String postsURL = "http://127.0.0.1:8000/";
 
@@ -53,11 +54,13 @@ Future<User> Register(RegisterUser user) async {
 }
 
 Future<String> fetchNewTest(int index) async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String id = pref.getString("id") ?? "81d72fb2309c4bd0828e853399074abe";
   final response = await http.post(
     Uri.parse(postsURL + "api/tests/fetchNewTestQuestions"),
     headers: <String, String>{'Content-Type': 'application/json'},
     body: jsonEncode({
-      'userId': 'id',
+      'userId': id,
       'testType': index,
     }),
   );
@@ -73,12 +76,28 @@ Future<String> fetchNewTest(int index) async {
   }
 }
 
+Map<String, dynamic> toJson(testQuestions question) => {
+      'test_type': question.testType,
+      'questionNumber': question.questionNumber,
+      'correctAnswer': question.correctAnswer,
+      'userAnswer': question.userAnswer,
+      'id': question.questionId,
+    };
+
 Future<String> completeNewTest(List<testQuestions> questions) async {
   final response = await http.post(
     Uri.parse(postsURL + "api/tests/completeNewTest"),
     headers: <String, String>{'Content-Type': 'application/json'},
     body: jsonEncode({
-      'questions': questions,
+      'questionList': [
+        toJson(questions[0]),
+        toJson(questions[1]),
+        toJson(questions[2]),
+        toJson(questions[3]),
+        toJson(questions[4]),
+        toJson(questions[5])
+      ],
+      'testId': questions[0].testId
     }),
   );
   if (response.statusCode == 200) {

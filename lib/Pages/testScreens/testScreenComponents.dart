@@ -4,10 +4,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 import 'package:application/main.dart';
+import 'package:application/Services/api.dart';
 
 class testQuestions {
   final int testType; // test number basically
   final int questionNumber;
+  final String questionId;
   final int questionType; // 0 or 1 for input or textbutton type question
   final String questionImage;
   final String questionTitle;
@@ -20,6 +22,7 @@ class testQuestions {
 
   testQuestions(
       {required this.testType,
+      required this.questionId,
       required this.questionNumber,
       required this.questionType,
       required this.questionImage,
@@ -35,6 +38,7 @@ class testQuestions {
     testQuestions newTestQuestion = testQuestions(
         testType: -1,
         questionNumber: -1,
+        questionId: "",
         questionType: 0, // input field
         questionImage: "",
         questionTitle: "",
@@ -44,34 +48,42 @@ class testQuestions {
         userAnswer: "",
         isUserAnswerCorrect: false,
         testId: "");
-
     for (int i = 0; i < 6; i++) {
       newTestQuestion = testQuestions(
-          testType: json['payload']['testType'],
-          questionNumber: i,
+          testType: json['payload']['questions'][i]['test_type'],
+          questionNumber: i + 1,
+          questionId: json['payload']['questions'][i]['id'],
           questionType:
               json['payload']['questions'][i]['question_type'] == 'MC' ? 1 : 0,
           questionImage: json['payload']['questions'][i]['question_image'],
           questionTitle: json['payload']['questions'][i]['question'],
-          questionDescription: json['payload']['questions'][i]['question'],
+          questionDescription: "",
           correctAnswer: json['payload']['questions'][i]['correct_answer'],
           answerOptions: [
-            json['payload']['questions'][i]['option_1'],
-            json['payload']['questions'][i]['option_2'],
-            json['payload']['questions'][i]['option_3'],
-            json['payload']['questions'][i]['option_4'],
+            json['payload']['questions'][i]['option_1'] == 'nan'
+                ? ""
+                : json['payload']['questions'][i]['option_1'],
+            json['payload']['questions'][i]['option_2'] == 'nan'
+                ? ""
+                : json['payload']['questions'][i]['option_2'],
+            json['payload']['questions'][i]['option_3'] == 'nan'
+                ? ""
+                : json['payload']['questions'][i]['option_3'],
+            json['payload']['questions'][i]['option_4'] == 'nan'
+                ? ""
+                : json['payload']['questions'][i]['option_4'],
           ],
           userAnswer: "",
           isUserAnswerCorrect: false,
           testId: json['payload']['testId']);
 
-      testQuestion.add(newTestQuestion);
+      testQuestionList.add(newTestQuestion);
     }
     return newTestQuestion;
   }
 }
 
-List<testQuestions> testQuestion = [];
+List<testQuestions> testQuestionList = [];
 
 class testScreenQuestion extends StatelessWidget {
   const testScreenQuestion({
@@ -183,8 +195,8 @@ class testQuestionSection extends StatelessWidget {
                   color: Color(0xFFF5F6F9),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child:
-                    Image.asset(testQuestion.questionImage), // hopefully works
+                child: Image.network(
+                    testQuestion.questionImage), // hopefully works
               ),
             ),
           ),
@@ -431,6 +443,15 @@ class testNavigationSection extends StatelessWidget {
 
   final testQuestions testQuestion;
 
+  void _sendTestResults() {
+    //send _currentIndex to backend
+    Future<String> _resultQuestions = completeNewTest(testQuestionList);
+
+    _resultQuestions.then((result) {
+      //go back home screen
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (testQuestion.questionNumber == 1) {
@@ -576,8 +597,7 @@ class testNavigationSection extends StatelessWidget {
               ),
               onPressed: () {
                 if (testQuestion.userAnswer != null) {
-                  // given that the last question is also answered
-                  // send to test result page with latest test results
+                  _sendTestResults();
                 }
               },
               child: Text(
