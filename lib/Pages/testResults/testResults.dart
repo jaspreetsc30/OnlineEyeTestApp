@@ -56,7 +56,9 @@ class testResultsScreen extends StatelessWidget {
           "Test Results",
 
         ),
-          automaticallyImplyLeading: false
+          automaticallyImplyLeading: false,
+
+        backgroundColor:Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
       ),
       body: Container(
           decoration: BoxDecoration(

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:application/Pages/testResults/testResults.dart';
+import 'package:application/main.dart';
 
 class testResultDetailed {
   final int testType; // test number basically
@@ -96,7 +97,10 @@ class detailedTestResultScreen extends StatelessWidget {
         leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () =>
-                Navigator.of(context).pushNamed('/testResultsScreen')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => bottomNavigationBar()),
+                )),
         title: Text("Detailed Test Screen"),
       ),
       body: SingleChildScrollView(
