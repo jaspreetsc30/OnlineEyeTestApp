@@ -1,5 +1,6 @@
 // import 'dart:html' hide VoidCallback;
 
+import 'package:application/Pages/testScreens/testScreenComponents.dart';
 import 'package:flutter/material.dart';
 
 class completedTest {
@@ -60,11 +61,13 @@ class testResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 0,
-          title: Text(
-            "Test Results",
-          ),
-          automaticallyImplyLeading: false),
+        elevation: 0,
+        title: Text(
+          "Test Results",
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
+      ),
       body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
