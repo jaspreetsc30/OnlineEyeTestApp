@@ -19,6 +19,29 @@ class completedTest {
     required this.testCondition,
     required this.testPress,
   });
+
+  factory completedTest.fromJson(Map<String, dynamic> json) {
+    completedTest newCompletedTest = completedTest(
+        testImage: "",
+        testName: "",
+        testDate: "",
+        testScore: 0,
+        testCondition: "",
+        testPress: () {});
+
+    for (int i = 0; i < json['payload']['tests'].length; i++) {
+      newCompletedTest = completedTest(
+          testImage: json['payload']['tests'],
+          testName: json['payload']['tests'],
+          testDate: json['payload']['tests'],
+          testScore: json['payload']['tests'],
+          testCondition: json['payload']['tests'],
+          testPress: () {});
+
+      testResults.add(newCompletedTest);
+    }
+    return newCompletedTest;
+  }
 }
 
 List<completedTest> testResults = [
@@ -29,20 +52,6 @@ List<completedTest> testResults = [
       testScore: 6,
       testCondition: "good",
       testPress: () {}), // go to new page which shows testResult in detail
-  completedTest(
-      testImage: "assets/images/testResults/profile.png",
-      testName: "TestName trial2",
-      testDate: "12/05/1999",
-      testScore: 3,
-      testCondition: "good",
-      testPress: () {}),
-  completedTest(
-      testImage: "assets/images/testResults/user.png",
-      testName: "TestName trial3",
-      testDate: "30/12/2004",
-      testScore: 9,
-      testCondition: "good",
-      testPress: () {})
 ];
 
 class testResultsScreen extends StatelessWidget {
@@ -52,20 +61,17 @@ class testResultsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-        title: Text(
-          "Test Results",
-
-        ),
-          automaticallyImplyLeading: false
-      ),
+          title: Text(
+            "Test Results",
+          ),
+          automaticallyImplyLeading: false),
       body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background/Backdropbackground.png'),
-                fit: BoxFit.fill,
-              )
-          ),
-
+            image:
+                AssetImage('assets/images/background/Backdropbackground.png'),
+            fit: BoxFit.fill,
+          )),
           child: testResult(test: testResults[0])),
     );
   }

@@ -14,6 +14,7 @@ class testQuestions {
   final String questionDescription;
   final String correctAnswer;
   final List<String> answerOptions;
+  final String testId;
   var userAnswer;
   var isUserAnswerCorrect;
 
@@ -27,77 +28,50 @@ class testQuestions {
       required this.correctAnswer,
       required this.answerOptions,
       required this.userAnswer,
-      required this.isUserAnswerCorrect});
+      required this.isUserAnswerCorrect,
+      required this.testId});
+
+  factory testQuestions.fromJson(Map<String, dynamic> json) {
+    testQuestions newTestQuestion = testQuestions(
+        testType: -1,
+        questionNumber: -1,
+        questionType: 0, // input field
+        questionImage: "",
+        questionTitle: "",
+        questionDescription: "",
+        correctAnswer: "",
+        answerOptions: [""],
+        userAnswer: "",
+        isUserAnswerCorrect: false,
+        testId: "");
+
+    for (int i = 0; i < 6; i++) {
+      newTestQuestion = testQuestions(
+          testType: json['payload']['testType'],
+          questionNumber: i,
+          questionType:
+              json['payload']['questions'][i]['question_type'] == 'MC' ? 1 : 0,
+          questionImage: json['payload']['questions'][i]['question_image'],
+          questionTitle: json['payload']['questions'][i]['question'],
+          questionDescription: json['payload']['questions'][i]['question'],
+          correctAnswer: json['payload']['questions'][i]['correct_answer'],
+          answerOptions: [
+            json['payload']['questions'][i]['option_1'],
+            json['payload']['questions'][i]['option_2'],
+            json['payload']['questions'][i]['option_3'],
+            json['payload']['questions'][i]['option_4'],
+          ],
+          userAnswer: "",
+          isUserAnswerCorrect: false,
+          testId: json['payload']['testId']);
+
+      testQuestion.add(newTestQuestion);
+    }
+    return newTestQuestion;
+  }
 }
 
-List<testQuestions> testQuestion = [
-  testQuestions(
-      testType: 1,
-      questionNumber: 1,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 1 Question 1",
-      questionDescription: "Test 1 Question 1 Description",
-      correctAnswer: "Test 1 Question 1 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 2,
-      questionType: 1, // input field
-      questionImage: "assets/images/testResults/profile.png",
-      questionTitle: "Test 1 Question 2",
-      questionDescription: "Test 1 Question 2 Description",
-      correctAnswer: "Test 1 Question 2 Correct Answer",
-      answerOptions: ["T1/Q2/A1", "T1/Q2/A2", "T1/Q2/A3", "T1/Q2/A4"],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 3,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/user.png",
-      questionTitle: "Test 1 Question 3",
-      questionDescription: "Test 1 Question 3 Description",
-      correctAnswer: "Test 1 Question 3 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 4,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 1 Question 4",
-      questionDescription: "Test 1 Question 4 Description",
-      correctAnswer: "Test 1 Question 4 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 5,
-      questionType: 1, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 1 Question 5",
-      questionDescription: "Test 1 Question 5 Description",
-      correctAnswer: "Test 1 Question 5 Correct Answer",
-      answerOptions: ["T1/Q5/A1", "T1/Q5/A2", "T1/Q5/A3", "T1/Q5/A4"],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 6,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 1 Question 6",
-      questionDescription: "Test 1 Question 6 Description",
-      correctAnswer: "Test 1 Question 6 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-];
+List<testQuestions> testQuestion = [];
 
 class testScreenQuestion extends StatelessWidget {
   const testScreenQuestion({

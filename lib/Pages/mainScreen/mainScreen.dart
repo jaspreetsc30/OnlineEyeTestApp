@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import 'package:application/pages/testScreens/testScreens.dart';
 import 'package:application/Pages/testScreens/testScreenQuestions.dart';
+import 'package:application/Services/api.dart';
 
 final List<String> imgList = [
   'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Snellen_chart.svg/1200px-Snellen_chart.svg.png',
@@ -37,10 +37,14 @@ class _carouselScreenState extends State<carouselScreen> {
 
   void _showTestScreen() {
     //send _currentIndex to backend
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => TestScreenQuestions()),
-    );
+    Future<String> _resultQuestions = fetchNewTest(_currentIndex);
+
+    _resultQuestions.then((questionString) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => TestScreenQuestions()),
+      );
+    });
   }
 
   @override

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:application/Classes/user.dart';
 import 'package:application/Pages/testScreens/testScreenComponents.dart';
+import 'package:application/Pages/testResults/testResults.dart';
 
 final String postsURL = "http://127.0.0.1:8000/";
 
@@ -22,7 +23,7 @@ Future<User> Login(LoginUser user) async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    throw User(id: "invalid",first_name: '',last_name: '',email: '');
+    throw User(id: "invalid", first_name: '', last_name: '', email: '');
   }
 }
 
@@ -51,22 +52,62 @@ Future<User> Register(RegisterUser user) async {
   }
 }
 
-Future<testQuestions> fetchNewTest(LoginUser user) async {
+Future<String> fetchNewTest(int index) async {
   final response = await http.post(
-    Uri.parse(postsURL + "api/patient/login"),
+    Uri.parse(postsURL + "api/tests/fetchNewTestQuestions"),
     headers: <String, String>{'Content-Type': 'application/json'},
-    body: jsonEncode(<String, String>{
-      'email': user.email,
-      'password': user.password,
+    body: jsonEncode({
+      'userId': 'id',
+      'testType': index,
     }),
   );
   if (response.statusCode == 200) {
     // If the server did return a 201 CREATED response,
     // then parse the JSON.
-    return User.fromJson(jsonDecode(response.body));
+    testQuestions.fromJson(jsonDecode(response.body));
+    return "Successfull Fetching";
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    throw Exception('Failed to login. Invalid Username/Password');
+    throw Exception('Failed to Fetch Questions');
+  }
+}
+
+Future<String> completeNewTest(List<testQuestions> questions) async {
+  final response = await http.post(
+    Uri.parse(postsURL + "api/tests/completeNewTest"),
+    headers: <String, String>{'Content-Type': 'application/json'},
+    body: jsonEncode({
+      'questions': questions,
+    }),
+  );
+  if (response.statusCode == 200) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return "Successfull Fetching";
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to Fetch Questions');
+  }
+}
+
+Future<String> fetchAllUserTests() async {
+  final response = await http.post(
+    Uri.parse(postsURL + "api/tests/fetchAllUserTests"),
+    headers: <String, String>{'Content-Type': 'application/json'},
+    body: jsonEncode({
+      'userId': 'id',
+    }),
+  );
+  if (response.statusCode == 200) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    completedTest.fromJson(jsonDecode(response.body));
+    return "Successfull Fetching";
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to Fetch Questions');
   }
 }
