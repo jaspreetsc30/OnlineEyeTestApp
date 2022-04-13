@@ -31,12 +31,18 @@ class completedTest {
         testPress: () {});
 
     for (int i = 0; i < json['payload']['tests'].length; i++) {
+      int score = 0;
+      for (int j = 0;
+          j < json['payload']['tests'][i]['questions'].length;
+          j++) {
+        if (json['payload']['tests'][i]['questions'][j]['is_correct']) score++;
+      }
       newCompletedTest = completedTest(
-          testImage: json['payload']['tests'],
-          testName: json['payload']['tests'],
-          testDate: json['payload']['tests'],
-          testScore: json['payload']['tests'],
-          testCondition: json['payload']['tests'],
+          testImage: "",
+          testName: json['payload']['tests'][i]['name'],
+          testDate: json['payload']['tests'][i]['date'],
+          testScore: score,
+          testCondition: json['payload']['tests'][i]['status'],
           testPress: () {});
 
       testResults.add(newCompletedTest);
@@ -45,15 +51,7 @@ class completedTest {
   }
 }
 
-List<completedTest> testResults = [
-  completedTest(
-      testImage: "assets/images/testResults/edit.png",
-      testName: "TestName trial1",
-      testDate: "24/05/2022",
-      testScore: 6,
-      testCondition: "good",
-      testPress: () {}), // go to new page which shows testResult in detail
-];
+List<completedTest> testResults = [];
 
 class testResultsScreen extends StatelessWidget {
   static String routeName = "/testResultsScreen";

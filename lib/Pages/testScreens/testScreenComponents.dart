@@ -448,6 +448,7 @@ class testNavigationSection extends StatelessWidget {
     Future<String> _resultQuestions = completeNewTest(testQuestionList);
 
     _resultQuestions.then((result) {
+      testQuestionList.clear();
       //go back home screen
     });
   }

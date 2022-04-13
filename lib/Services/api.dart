@@ -112,11 +112,13 @@ Future<String> completeNewTest(List<testQuestions> questions) async {
 }
 
 Future<String> fetchAllUserTests() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String id = pref.getString("id") ?? "81d72fb2309c4bd0828e853399074abe";
   final response = await http.post(
     Uri.parse(postsURL + "api/tests/fetchAllUserTests"),
     headers: <String, String>{'Content-Type': 'application/json'},
     body: jsonEncode({
-      'userId': 'id',
+      'userId': id,
     }),
   );
   if (response.statusCode == 200) {
