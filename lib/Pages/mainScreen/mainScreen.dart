@@ -36,60 +36,16 @@ class _carouselScreenState extends State<carouselScreen> {
   final CarouselController _controller = CarouselController();
 
   void _showTestScreen() {
-    switch (_currentIndex) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen1Questions()),
-        );
-        // Navigator.of(context).pushNamed('/testScreen1Questions');
-        break;
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen2Questions()),
-        );
-        break;
-      case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen3Questions()),
-        );
-        break;
-      case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen4Questions()),
-        );
-        break;
-      case 4:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen5Questions()),
-        );
-        break;
-      case 5:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreen6Questions()),
-        );
-        break;
-      default:
-    }
+    //send _currentIndex to backend
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TestScreenQuestions()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        'testScreen1Questions': (context) => TestScreen1Questions(),
-        'testScreen2Questions': (context) => TestScreen2Questions(),
-        'testScreen3Questions': (context) => TestScreen3Questions(),
-        'testScreen4Questions': (context) => TestScreen4Questions(),
-        'testScreen5Questions': (context) => TestScreen5Questions(),
-        'testScreen6Questions': (context) => TestScreen6Questions(),
-      },
-
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -104,24 +60,20 @@ class _carouselScreenState extends State<carouselScreen> {
         appBarTheme: AppBarTheme(
           backgroundColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
           elevation: 0,
-
         ),
         primaryColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
       ),
       home: Scaffold(
         appBar: AppBar(
           title: Text('Online iTest'),
-
-
         ),
         body: Container(
-
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background/Backdropbackground.png'),
-                fit: BoxFit.fill,
-              )
-          ),
+            image:
+                AssetImage('assets/images/background/Backdropbackground.png'),
+            fit: BoxFit.fill,
+          )),
           child: Column(
             children: [
               Padding(padding: EdgeInsets.symmetric(vertical: 20)),
@@ -182,8 +134,8 @@ class _carouselScreenState extends State<carouselScreen> {
                                     child: Align(
                                       alignment: Alignment.bottomLeft,
                                       child: Padding(
-                                        padding:
-                                            EdgeInsets.only(left: 30, bottom: 30),
+                                        padding: EdgeInsets.only(
+                                            left: 30, bottom: 30),
                                         child: Text(
                                           // individual child entry
                                           '${Titles[_currentIndex]}',
@@ -213,7 +165,8 @@ class _carouselScreenState extends State<carouselScreen> {
                   return Container(
                     width: 10.0,
                     height: 10.0,
-                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    margin:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _currentIndex == index
@@ -242,13 +195,15 @@ class _carouselScreenState extends State<carouselScreen> {
                           child: Column(
                             children: [
                               Image.asset("assets/images/testResults/edit.png",
-                                  width: MediaQuery.of(context).size.width * 0.12,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.12,
                                   height:
                                       MediaQuery.of(context).size.width * 0.12),
                               SizedBox(height: 8),
                               Text("Personal Information",
                                   style: TextStyle(
-                                      fontSize: 14, fontWeight: FontWeight.bold)),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold)),
                             ],
                           )),
                     ),
@@ -265,13 +220,15 @@ class _carouselScreenState extends State<carouselScreen> {
                           child: Column(
                             children: [
                               Image.asset("assets/images/testResults/edit.png",
-                                  width: MediaQuery.of(context).size.width * 0.12,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.12,
                                   height:
                                       MediaQuery.of(context).size.width * 0.12),
                               SizedBox(height: 8),
                               Text("Settings",
                                   style: TextStyle(
-                                      fontSize: 14, fontWeight: FontWeight.bold)),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold)),
                             ],
                           )),
                     ),

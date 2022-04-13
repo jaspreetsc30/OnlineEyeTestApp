@@ -1,13 +1,12 @@
 import 'package:application/Pages/mainScreen/mainScreen.dart';
+import 'package:application/Pages/signin/SignIn.dart';
 import 'package:application/Pages/onboarding/onboarding.dart';
 import 'package:application/Pages/testResults/testResultsDetailed.dart';
 import 'package:application/Pages/testScreens/testScreenQuestions.dart';
-import 'package:application/Pages/testScreens/testScreens.dart';
 import 'package:application/Pages/testScreens/introTestScreens.dart';
 import 'package:application/Pages/userScreen/userScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 
 import 'package:application/Pages/testResults/testResults.dart';
 import 'package:application/Pages/testResults/testResultsDetailed.dart';
@@ -25,17 +24,14 @@ import 'Pages/signin/SignUp.dart';
 
 import "package:shared_preferences/shared_preferences.dart";
 
-bool onboardingdone =false;
+bool onboardingdone = false;
 bool signedinalready = false;
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences pref = await SharedPreferences.
-  getInstance();
-  onboardingdone = pref.getBool("seenOnBoard") ?? false ;
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  onboardingdone = pref.getBool("seenOnBoard") ?? false;
   signedinalready = pref.getBool("signedInAlready") ?? false;
-
 
   runApp(const MyApp());
 }
@@ -50,14 +46,10 @@ class MyApp extends StatelessWidget {
       statusBarColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
     ));
 
-
-
-
     return MaterialApp(
       routes: {
         '/detailedTestResultsScreen': (context) => detailedTestResultScreen(),
         '/testResultsScreen': (context) => testResultsScreen(),
-        'testScreen1Questions': (context) => TestScreen1Questions()
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -81,8 +73,11 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
+//       // home: OnBoardingPages(),
+      // home: SignInPage(), //bottomNavigationBar(),
+      home: carouselScreen(),
 //       home: SignInPage(),
-      home:  signedinalready == true ? bottomNavigationBar(): onboardingdone ==true ? SignUpPage():OnBoardingPages(),
+      //  home:  signedinalready == true ? bottomNavigationBar(): onboardingdone ==true ? SignUpPage():OnBoardingPages(),
     );
   }
 }
