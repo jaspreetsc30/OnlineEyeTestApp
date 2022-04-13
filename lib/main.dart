@@ -7,6 +7,7 @@ import 'package:application/Pages/testScreens/introTestScreens.dart';
 import 'package:application/Pages/userScreen/userScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:application/Services/api.dart';
 
 import 'package:application/Pages/testResults/testResults.dart';
 import 'package:application/Pages/testResults/testResultsDetailed.dart';
@@ -75,9 +76,13 @@ class MyApp extends StatelessWidget {
 // }
 //       // home: OnBoardingPages(),
       // home: SignInPage(), //bottomNavigationBar(),
-      home: carouselScreen(),
+      // home: carouselScreen(),
 //       home: SignInPage(),
-      //  home:  signedinalready == true ? bottomNavigationBar(): onboardingdone ==true ? SignUpPage():OnBoardingPages(),
+      home: signedinalready == true
+          ? bottomNavigationBar()
+          : onboardingdone == true
+              ? SignUpPage()
+              : OnBoardingPages(),
     );
   }
 }
@@ -91,6 +96,19 @@ class bottomNavigationBar extends StatefulWidget {
 
 class _bottomNavigationBarState extends State<bottomNavigationBar> {
   int bottomnavbarindex = 0;
+
+  void goToScreen(int index) {
+    if (index != 2) {
+      setState(() => bottomnavbarindex = index);
+    } else {
+      testResults.clear();
+      Future<String> _result = fetchAllUserTests();
+      _result.then((_result) {
+        setState(() => bottomnavbarindex = index);
+      });
+    }
+  }
+  //=> setState(() => bottomnavbarindex = index)
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +127,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
         elevation: 0,
         key: Key("navbar"),
         currentIndex: bottomnavbarindex,
-        onTap: (index) => setState(() => bottomnavbarindex = index),
+        onTap: (index) => goToScreen(index),
         backgroundColor: Colors.white,
         showSelectedLabels: true, // <-- HERE
         showUnselectedLabels: false, // <-- AND HERE

@@ -25,21 +25,16 @@ class _SignInPageState extends State<SignInPage> {
     TextEditingController(),
   ];
 
-
-  Future adduserandid(String id , String username) async {
+  Future adduserandid(String id, String username) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('username', username);
     await prefs.setString('id', id);
   }
 
-
   Future changesignedinalready() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('signedInAlready', true );
-
+    await prefs.setBool('signedInAlready', true);
   }
-
-
 
   @override
   void initState() {
@@ -130,20 +125,25 @@ class _SignInPageState extends State<SignInPage> {
                                   ", your email is " +
                                   user.email);
 
-
                               if (user.id != "invalid")
-                                Navigator.pushReplacement(context , MaterialPageRoute(builder: (context)=>bottomNavigationBar()));
-                                adduserandid(user.id , user.first_name);
-                                //change it to sign in already
-                                changesignedinalready();
-
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            bottomNavigationBar()));
+                              adduserandid(user.id, user.first_name);
+                              //change it to sign in already
+                              changesignedinalready();
                             });
 
                             //get user_id and username
-                            adduserandid("21324124" , "Jasprddddt");
-                            Navigator.pushReplacement(context , MaterialPageRoute(builder: (context)=>bottomNavigationBar()));
-
-                            },
+                            adduserandid("21324124", "Jasprddddt");
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        bottomNavigationBar()));
+                          },
                           child:
                               Text("Sign In", style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
