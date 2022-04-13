@@ -6,7 +6,7 @@ import 'package:application/Pages/testScreens/testScreenComponents.dart';
 import 'package:application/Pages/testResults/testResults.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final String postsURL = "http://127.0.0.1:8000/";
+final String postsURL = "http://52.77.191.48:8000/";
 
 Future<User> Login(LoginUser user) async {
   final response = await http.post(
