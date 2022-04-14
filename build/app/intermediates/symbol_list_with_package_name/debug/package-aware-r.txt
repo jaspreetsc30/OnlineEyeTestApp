@@ -1,5 +1,6 @@
 com.example.application
 attr alpha
+attr camera_id
 attr font
 attr fontProviderAuthority
 attr fontProviderCerts
@@ -10,6 +11,7 @@ attr fontProviderQuery
 attr fontStyle
 attr fontVariationSettings
 attr fontWeight
+attr show_fps
 attr ttcIndex
 color notification_action_color_filter
 color notification_icon_bg_color
@@ -89,11 +91,14 @@ id action_divider
 id action_image
 id action_text
 id actions
+id any
 id async
+id back
 id blocking
 id chronometer
 id dialog_button
 id forever
+id front
 id icon
 id icon_group
 id info
@@ -137,6 +142,7 @@ style TextAppearance_Compat_Notification_Time
 style TextAppearance_Compat_Notification_Title
 style Widget_Compat_NotificationActionContainer
 style Widget_Compat_NotificationActionText
+styleable CameraBridgeViewBase camera_id show_fps
 styleable ColorStateListItem android_color android_alpha alpha
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery
 styleable FontFamilyFont android_font android_fontWeight android_fontStyle android_ttcIndex android_fontVariationSettings font fontStyle fontVariationSettings fontWeight ttcIndex

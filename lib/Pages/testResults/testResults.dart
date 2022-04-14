@@ -1,6 +1,8 @@
 // import 'dart:html' hide VoidCallback;
 
+import 'package:application/Pages/testScreens/testScreenComponents.dart';
 import 'package:flutter/material.dart';
+import 'package:application/Services/api.dart';
 
 class completedTest {
   final String testImage;
@@ -19,53 +21,60 @@ class completedTest {
     required this.testCondition,
     required this.testPress,
   });
+
+  factory completedTest.fromJson(Map<String, dynamic> json) {
+    completedTest newCompletedTest = completedTest(
+        testImage: "",
+        testName: "",
+        testDate: "",
+        testScore: 0,
+        testCondition: "",
+        testPress: () {});
+
+    for (int i = 0; i < json['payload']['tests'].length; i++) {
+      int score = 0;
+      for (int j = 0;
+          j < json['payload']['tests'][i]['questions'].length;
+          j++) {
+        if (json['payload']['tests'][i]['questions'][j]['is_correct']) score++;
+      }
+      newCompletedTest = completedTest(
+          testImage: "",
+          testName: json['payload']['tests'][i]['name'],
+          testDate: json['payload']['tests'][i]['date'],
+          testScore: score,
+          testCondition: json['payload']['tests'][i]['status'],
+          testPress: () {});
+
+      testResults.add(newCompletedTest);
+    }
+    return newCompletedTest;
+  }
 }
 
-List<completedTest> testResults = [
-  completedTest(
-      testImage: "assets/images/testResults/edit.png",
-      testName: "TestName trial1",
-      testDate: "24/05/2022",
-      testScore: 6,
-      testCondition: "good",
-      testPress: () {}), // go to new page which shows testResult in detail
-  completedTest(
-      testImage: "assets/images/testResults/profile.png",
-      testName: "TestName trial2",
-      testDate: "12/05/1999",
-      testScore: 3,
-      testCondition: "good",
-      testPress: () {}),
-  completedTest(
-      testImage: "assets/images/testResults/user.png",
-      testName: "TestName trial3",
-      testDate: "30/12/2004",
-      testScore: 9,
-      testCondition: "good",
-      testPress: () {})
-];
+List<completedTest> testResults = [];
 
 class testResultsScreen extends StatelessWidget {
   static String routeName = "/testResultsScreen";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 0,
+        elevation: 0,
         title: Text(
           "Test Results",
-
         ),
-          automaticallyImplyLeading: false
+        automaticallyImplyLeading: false,
+        backgroundColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
       ),
       body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background/Backdropbackground.png'),
-                fit: BoxFit.fill,
-              )
-          ),
-
+            image:
+                AssetImage('assets/images/background/Backdropbackground.png'),
+            fit: BoxFit.fill,
+          )),
           child: testResult(test: testResults[0])),
     );
   }

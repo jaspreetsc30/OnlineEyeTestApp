@@ -5,21 +5,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 import 'package:application/main.dart';
+import 'package:application/Services/api.dart';
 
 class testQuestions {
   final int testType; // test number basically
   final int questionNumber;
+  final String questionId;
   final int questionType; // 0 or 1 for input or textbutton type question
   final String questionImage;
   final String questionTitle;
   final String questionDescription;
   final String correctAnswer;
   final List<String> answerOptions;
+  final String testId;
   var userAnswer;
   var isUserAnswerCorrect;
 
   testQuestions(
       {required this.testType,
+      required this.questionId,
       required this.questionNumber,
       required this.questionType,
       required this.questionImage,
@@ -28,77 +32,59 @@ class testQuestions {
       required this.correctAnswer,
       required this.answerOptions,
       required this.userAnswer,
-      required this.isUserAnswerCorrect});
+      required this.isUserAnswerCorrect,
+      required this.testId});
+
+  factory testQuestions.fromJson(Map<String, dynamic> json) {
+    testQuestions newTestQuestion = testQuestions(
+        testType: -1,
+        questionNumber: -1,
+        questionId: "",
+        questionType: 0, // input field
+        questionImage: "",
+        questionTitle: "",
+        questionDescription: "",
+        correctAnswer: "",
+        answerOptions: [""],
+        userAnswer: "",
+        isUserAnswerCorrect: false,
+        testId: "");
+    for (int i = 0; i < 6; i++) {
+      newTestQuestion = testQuestions(
+          testType: json['payload']['questions'][i]['test_type'],
+          questionNumber: i + 1,
+          questionId: json['payload']['questions'][i]['id'],
+          questionType:
+              json['payload']['questions'][i]['question_type'] == 'MC' ? 1 : 0,
+          questionImage: json['payload']['questions'][i]['question_image'],
+          questionTitle: json['payload']['questions'][i]['question'],
+          questionDescription: "",
+          correctAnswer: json['payload']['questions'][i]['correct_answer'],
+          answerOptions: [
+            json['payload']['questions'][i]['option_1'] == 'nan'
+                ? ""
+                : json['payload']['questions'][i]['option_1'],
+            json['payload']['questions'][i]['option_2'] == 'nan'
+                ? ""
+                : json['payload']['questions'][i]['option_2'],
+            json['payload']['questions'][i]['option_3'] == 'nan'
+                ? ""
+                : json['payload']['questions'][i]['option_3'],
+            json['payload']['questions'][i]['option_4'] == 'nan'
+                ? ""
+                : json['payload']['questions'][i]['option_4'],
+          ],
+          userAnswer: "",
+          isUserAnswerCorrect: false,
+          testId: json['payload']['testId']);
+
+      testQuestionList.add(newTestQuestion);
+    }
+    return newTestQuestion;
+  }
 }
 
-List<testQuestions> testQuestion = [
-  testQuestions(
-      testType: 1,
-      questionNumber: 1,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 1 Question 1",
-      questionDescription: "Test 1 Question 1 Description",
-      correctAnswer: "Test 1 Question 1 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 2,
-      questionType: 1, // input field
-      questionImage: "assets/images/testResults/profile.png",
-      questionTitle: "Test 1 Question 2",
-      questionDescription: "Test 1 Question 2 Description",
-      correctAnswer: "T1/Q2/A3",
-      answerOptions: ["T1/Q2/A1", "T1/Q2/A2", "T1/Q2/A3", "T1/Q2/A4"],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 3,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/user.png",
-      questionTitle: "Test 1 Question 3",
-      questionDescription: "Test 1 Question 3 Description",
-      correctAnswer: "Test 1 Question 3 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 4,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 1 Question 4",
-      questionDescription: "Test 1 Question 4 Description",
-      correctAnswer: "Test 1 Question 4 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 5,
-      questionType: 1, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 1 Question 5",
-      questionDescription: "Test 1 Question 5 Description",
-      correctAnswer: "T1/Q5/A1",
-      answerOptions: ["T1/Q5/A1", "T1/Q5/A2", "T1/Q5/A3", "T1/Q5/A4"],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-  testQuestions(
-      testType: 1,
-      questionNumber: 6,
-      questionType: 0, // input field
-      questionImage: "assets/images/testResults/edit.png",
-      questionTitle: "Test 1 Question 6",
-      questionDescription: "Test 1 Question 6 Description",
-      correctAnswer: "Test 1 Question 6 Correct Answer",
-      answerOptions: [""],
-      userAnswer: "",
-      isUserAnswerCorrect: false),
-];
+List<testQuestions> testQuestionList = [];
 
 class testScreenQuestion extends StatelessWidget {
   const testScreenQuestion({
@@ -197,8 +183,8 @@ class testQuestionSection extends StatelessWidget {
                   color: Color(0xFFF5F6F9),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child:
-                    Image.asset(testQuestion.questionImage), // hopefully works
+                child: Image.network(
+                    testQuestion.questionImage), // hopefully works
               ),
             ),
           ),
@@ -467,6 +453,21 @@ class testNavigationSection extends StatelessWidget {
   final testQuestions testQuestion;
   final List<testQuestions> wholeTest;
 
+  void _sendTestResults(context) {
+    //send _currentIndex to backend
+    Future<String> _resultQuestions = completeNewTest(testQuestionList);
+
+    _resultQuestions.then((result) {
+      testQuestionList.clear();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => immediateTestResults(wholeTest: wholeTest)),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (testQuestion.questionNumber == 1) {
@@ -705,12 +706,7 @@ class testNavigationSection extends StatelessWidget {
                   shape: StadiumBorder()),
               onPressed: () {
                 if (testQuestion.userAnswer != "") {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            immediateTestResults(wholeTest: wholeTest)),
-                  );
+                  _sendTestResults(context);
                 } else {
                   showDialog<String>(
                     context: context,

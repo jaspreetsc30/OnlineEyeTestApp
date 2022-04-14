@@ -8,6 +8,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:application/Pages/testScreens/testScreenQuestions.dart';
 import 'package:application/Pages/settingsScreen/settings.dart';
 import 'package:application/Pages/mainScreen/globals.dart' as globals;
+import 'package:application/Services/api.dart';
+import 'package:application/Pages/testScreens/testScreenComponents.dart';
 
 class individualTestItem {
   final String imageURL;
@@ -50,6 +52,18 @@ class _carouselScreenState extends State<carouselScreen> {
         testName: "Color Vision Test",
         redirectionMessage: "Click to do the test"),
   ];
+  // void _showTestScreen() {
+  //   //send _currentIndex to backend
+  //   testQuestionList.clear();
+  //   Future<String> _resultQuestions = fetchNewTest(globals.globalTestIndex);
+
+  //   _resultQuestions.then((questionString) {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => TestScreenQuestions()),
+  //     );
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

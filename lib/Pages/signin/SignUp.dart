@@ -113,6 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               inputAction: TextInputAction.next,
                               focusNode: _SignUpNodes[0],
                               controller: textControllers[0],
+                              TypePwController: textControllers[2],
                             ),
                             FormInput(
                               hint: "Email",
@@ -121,6 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               inputAction: TextInputAction.next,
                               focusNode: _SignUpNodes[1],
                               controller: textControllers[1],
+                              TypePwController: textControllers[2],
                             ),
                             FormInput(
                               hint: "Password",
@@ -129,6 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               inputAction: TextInputAction.next,
                               focusNode: _SignUpNodes[2],
                               controller: textControllers[2],
+                              TypePwController: textControllers[2],
                             ),
                             FormInput(
                               hint: "Re-type Password",
@@ -137,6 +140,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               inputAction: TextInputAction.none,
                               focusNode: _SignUpNodes[3],
                               controller: textControllers[3],
+                              TypePwController: textControllers[2],
                             ),
                           ],
                         ),
@@ -146,6 +150,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
+
+                            if (!_signupkeys.currentState!.validate()) return;
+
                             RegisterUser registerfields = RegisterUser(
                                 email: textControllers[1].text,
                                 first_name: textControllers[0].text,
@@ -158,6 +165,28 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ", your email is " +
                                   user.email);
                             });
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Congratulations"),
+                                    content: Text("Sign Up Completed"),
+                                    actions: [
+                                      ElevatedButton(
+                                          child: Text("Ok"),
+
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              onPrimary: Color.fromARGB(0xff, 0xe5, 0xe5, 0xe5),
+                                              primary: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2))
+
+                                      )
+                                    ],
+
+                                  );
+                                });
                             // Navigator.push(context , MaterialPageRoute(builder: (context)=>SignUpPage()));
 
                           },
@@ -261,6 +290,7 @@ class FormInput extends StatelessWidget {
   final TextInputAction inputAction;
   final FocusNode focusNode;
   final TextEditingController controller;
+  final TextEditingController TypePwController;
 
   FormInput(
       {Key? key,
@@ -269,7 +299,8 @@ class FormInput extends StatelessWidget {
       required this.inputType,
       required this.inputAction,
       required this.focusNode,
-      required this.controller})
+      required this.controller,
+      required this.TypePwController})
       : super(key: key);
 
   @override
@@ -293,6 +324,7 @@ class FormInput extends StatelessWidget {
                 value.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
             bool hasMinLength = value.length > 8;
 
+
             if (!(hasDigits &
                 hasUppercase &
                 hasSpecialCharacters &
@@ -305,6 +337,15 @@ class FormInput extends StatelessWidget {
                 .hasMatch(value);
             if (!emailValid) return "Please input a valid Email";
           }
+
+          if (this.hint == "Re-type Password"){
+            print("This is checked");
+            print(value);
+            print(TypePwController.text);
+            if (value != TypePwController.text) return "The passwords do not match";
+          }
+
+
         },
         keyboardType: inputType,
         textInputAction: inputAction,

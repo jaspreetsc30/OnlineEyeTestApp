@@ -66,6 +66,7 @@ class _UserScreenState extends State<UserScreen> {
       appBar: AppBar(
         title: Text("User Account Page"),
           automaticallyImplyLeading: false,
+        backgroundColor:Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
         elevation: 0,
       ),
       body: Container(
@@ -374,6 +375,7 @@ class _userProfileState extends State<userProfile> {
                                   inputAction: TextInputAction.next,
                                   focusNode: _SignUpNodes[0],
                                   controller: textControllers[0],
+                                  TypePwController: textControllers[0],
                                 ),
 
                                 ElevatedButton(

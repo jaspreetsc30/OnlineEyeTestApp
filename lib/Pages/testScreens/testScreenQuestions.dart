@@ -11,24 +11,24 @@ class TestScreenQuestions extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => testScreenQuestion(
-            testQuestion: testQuestion[0],
+            testQuestion: testQuestionList[0],
             wholeTest:
-                testQuestion), // first page Change this to test opening page (test name, description, target group) // move onto a simple instruction of covering left eye
+                testQuestionList), // first page Change this to test opening page (test name, description, target group) // move onto a simple instruction of covering left eye
         '/TestQuestion1': (context) => testScreenQuestion(
-            testQuestion: testQuestion[0],
-            wholeTest: testQuestion), // needed again for redirection
+            testQuestion: testQuestionList[0],
+            wholeTest: testQuestionList), // needed again for redirection
         '/TestQuestion2': (context) => testScreenQuestion(
-            testQuestion: testQuestion[1], wholeTest: testQuestion),
+            testQuestion: testQuestionList[1], wholeTest: testQuestionList),
         '/TestQuestion3': (context) => testScreenQuestion(
-            testQuestion: testQuestion[2], wholeTest: testQuestion),
+            testQuestion: testQuestionList[2], wholeTest: testQuestionList),
         '/TestQuestion4': (context) => testScreenQuestion(
-            testQuestion: testQuestion[3], wholeTest: testQuestion),
+            testQuestion: testQuestionList[3], wholeTest: testQuestionList),
         '/TestQuestion5': (context) => testScreenQuestion(
-            testQuestion: testQuestion[4], wholeTest: testQuestion),
+            testQuestion: testQuestionList[4], wholeTest: testQuestionList),
         '/TestQuestion6': (context) => testScreenQuestion(
-            testQuestion: testQuestion[5],
+            testQuestion: testQuestionList[5],
             wholeTest:
-                testQuestion) // add last page which is immediate test result page (test name, score, simple test diagnosis, simple test recommendations, return to home page)
+                testQuestionList) // add last page which is immediate test result page (test name, score, simple test diagnosis, simple test recommendations, return to home page)
         // send to next screen which shows "please cover your right eye and perform the test again" --> next page another 6 questions for different eye
       },
     );
