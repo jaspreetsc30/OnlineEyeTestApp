@@ -252,6 +252,8 @@ class _testAnswerSection extends State<testAnswerSection> {
   final testQuestions testQuestion;
   final answerInput = TextEditingController();
 
+  // answerInput.value.text = testQuestion.userAnswer;
+
   int _questionCounter = 0;
   String answerInputChoice =
       ""; // onTap() function should change this value to check for correctness
@@ -457,14 +459,14 @@ class testNavigationSection extends StatelessWidget {
     //send _currentIndex to backend
     Future<String> _resultQuestions = completeNewTest(testQuestionList);
 
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              immediateTestResults(wholeTest: testQuestionList)),
+    );
     _resultQuestions.then((result) {
       testQuestionList.clear();
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => immediateTestResults(wholeTest: wholeTest)),
-      );
     });
   }
 
