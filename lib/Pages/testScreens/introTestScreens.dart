@@ -4,7 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:application/Pages/mainScreen/mainScreen.dart';
 import 'package:application/Pages/testScreens/testScreenQuestions.dart';
+import 'package:application/Pages/testScreens/testScreenComponents.dart';
 import 'package:application/Pages/mainScreen/globals.dart' as globals;
+
+import 'package:application/Services/api.dart';
 
 class introTestScreenComponents {
   final String testType; // test name
@@ -141,6 +144,19 @@ class beginTestButton extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  void _showTestScreen(context) {
+    //send _currentIndex to backend
+    testQuestionList.clear();
+    Future<String> _resultQuestions = fetchNewTest(globals.globalTestIndex);
+
+    _resultQuestions.then((questionString) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => TestScreenQuestions()),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -150,11 +166,7 @@ class beginTestButton extends StatelessWidget {
           padding: EdgeInsets.all(20),
           shape: StadiumBorder()),
       onPressed: () {
-        // navigate back to home page AND push testResults to backend for later retreival
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestScreenQuestions()),
-        );
+        _showTestScreen(context);
       },
       child: Text(
         "Begin Test",
