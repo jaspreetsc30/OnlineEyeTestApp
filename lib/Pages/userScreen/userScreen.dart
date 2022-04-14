@@ -375,6 +375,7 @@ class _userProfileState extends State<userProfile> {
                                   inputAction: TextInputAction.next,
                                   focusNode: _SignUpNodes[0],
                                   controller: textControllers[0],
+                                  TypePwController: textControllers[0],
                                 ),
 
                                 ElevatedButton(

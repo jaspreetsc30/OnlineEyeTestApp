@@ -101,6 +101,7 @@ class _SignInPageState extends State<SignInPage> {
                         inputAction: TextInputAction.next,
                         focusNode: _SignUpNodes[0],
                         controller: textControllers[0],
+                        TypePwController: textControllers[0],
                       ),
                       FormInput(
                         hint: "Password",
@@ -109,6 +110,7 @@ class _SignInPageState extends State<SignInPage> {
                         inputAction: TextInputAction.next,
                         focusNode: _SignUpNodes[1],
                         controller: textControllers[1],
+                        TypePwController: textControllers[0],
                       ),
                       SizedBox(
                         height: height * 4,
@@ -125,24 +127,56 @@ class _SignInPageState extends State<SignInPage> {
                                   ", your email is " +
                                   user.email);
 
-                              if (user.id != "invalid")
+                              if (user.id != "invalid"){
+
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             bottomNavigationBar()));
-                              adduserandid(user.id, user.first_name);
-                              //change it to sign in already
-                              changesignedinalready();
+                                adduserandid(user.id, user.first_name);
+                                //change it to sign in already
+                                changesignedinalready();
+
+                              }
+                              else {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Error"),
+                                        content: Text("Invalid User name /password "),
+                                        actions: [
+                                          ElevatedButton(
+                                              child: Text("Ok"),
+
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  onPrimary: Color.fromARGB(0xff, 0xe5, 0xe5, 0xe5),
+                                                  primary: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2))
+
+                                          )
+                                        ],
+
+                                      );
+                                    });
+
+                              }
                             });
 
-                            //get user_id and username
-                            adduserandid("21324124", "Jasprddddt");
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        bottomNavigationBar()));
+                            //failed authentication give pop up
+
+
+
+                            // //get user_id and username
+                            // adduserandid("21324124", "Jasprddddt");
+                            // Navigator.pushReplacement(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             bottomNavigationBar()));
                           },
                           child:
                               Text("Sign In", style: TextStyle(fontSize: 18)),
