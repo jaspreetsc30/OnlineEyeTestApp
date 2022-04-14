@@ -1,5 +1,6 @@
 // import 'dart:html' hide VoidCallback;
 import 'package:application/Pages/mainScreen/mainScreen.dart';
+import 'package:application/Pages/testScreens/immediateTestResultsScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ List<testQuestions> testQuestion = [
       questionImage: "assets/images/testResults/profile.png",
       questionTitle: "Test 1 Question 2",
       questionDescription: "Test 1 Question 2 Description",
-      correctAnswer: "Test 1 Question 2 Correct Answer",
+      correctAnswer: "T1/Q2/A3",
       answerOptions: ["T1/Q2/A1", "T1/Q2/A2", "T1/Q2/A3", "T1/Q2/A4"],
       userAnswer: "",
       isUserAnswerCorrect: false),
@@ -82,7 +83,7 @@ List<testQuestions> testQuestion = [
       questionImage: "assets/images/testResults/edit.png",
       questionTitle: "Test 1 Question 5",
       questionDescription: "Test 1 Question 5 Description",
-      correctAnswer: "Test 1 Question 5 Correct Answer",
+      correctAnswer: "T1/Q5/A1",
       answerOptions: ["T1/Q5/A1", "T1/Q5/A2", "T1/Q5/A3", "T1/Q5/A4"],
       userAnswer: "",
       isUserAnswerCorrect: false),
@@ -103,39 +104,23 @@ class testScreenQuestion extends StatelessWidget {
   const testScreenQuestion({
     Key? key,
     required this.testQuestion,
+    required this.wholeTest,
   }) : super(key: key);
 
   final testQuestions testQuestion;
+  final List<testQuestions> wholeTest;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            //   title:
-            //       Text('Online iTest | Test: ' + testQuestion.testType.toString()),
-            //   // leading: IconButton(
-            //   //   icon: Icon(Icons.arrow_back_ios),
-            //   //   onPressed: () {
-            //   //     //   Navigator.pop(
-            //   //     //       context); // maybe change redirection to intro page or remove feature to force user to finish a test
-            //   //     // },
-            //   //     Navigator.push(
-            //   //       context,
-            //   //       MaterialPageRoute(builder: (context) => carouselScreen()),
-            //   //     );
-            //   //   },
-            //   // )
-            // ),
-
             title: Text(
                 'Online iTest | Test: ' + testQuestion.testType.toString()),
             backgroundColor: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2),
             leading: IconButton(
+              // this will be removed
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
-                //   Navigator.pop(
-                //       context); // maybe change redirection to intro page or remove feature to force user to finish a test
-                // },
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -150,7 +135,10 @@ class testScreenQuestion extends StatelessWidget {
               children: [
                 testQuestionSection(testQuestion: testQuestion),
                 testAnswerSection(testQuestion: testQuestion),
-                testNavigationSection(testQuestion: testQuestion)
+                testNavigationSection(
+                  testQuestion: testQuestion,
+                  wholeTest: wholeTest,
+                )
               ],
             ),
           ),
@@ -278,37 +266,28 @@ class _testAnswerSection extends State<testAnswerSection> {
   final testQuestions testQuestion;
   final answerInput = TextEditingController();
 
-  var testScore = 0;
-  int _testScore =
-      0; // trying late to see if it works [final doesnt work  cause needs initialization]
   int _questionCounter = 0;
   String answerInputChoice =
       ""; // onTap() function should change this value to check for correctness
 
-  void _updateTestScore() {
-    // var testScore =
-    //     0; // probably dont need this in the end, rather just store the answer results for testResults
-    // var question_counter = 0;
-    final _answerInputController = answerInput;
-    final _answerInputChoice = answerInputChoice;
+  void _updateTestAnswer() {
+    var _answerInputController = answerInput;
+    var _answerInputChoice = answerInputChoice;
 
     if (testQuestion.questionType == 0) {
       if (_answerInputController.value.text == testQuestion.correctAnswer) {
-        testScore++; // maybe have to check if reentering the answer will add score but going to a new test should be fine
         testQuestion.isUserAnswerCorrect = true;
       }
       testQuestion.userAnswer = _answerInputController.value.text;
     } else {
       // for MC Question
       if (_answerInputChoice == testQuestion.correctAnswer) {
-        testScore++;
         testQuestion.isUserAnswerCorrect = true;
       }
       testQuestion.userAnswer = _answerInputChoice;
     }
 
     setState(() {
-      _testScore = testScore;
       testQuestion.userAnswer = testQuestion.userAnswer;
       testQuestion.isUserAnswerCorrect = testQuestion.isUserAnswerCorrect;
     });
@@ -318,7 +297,7 @@ class _testAnswerSection extends State<testAnswerSection> {
   Widget build(BuildContext context) {
     if (testQuestion.questionType == 0) {
       return Form(
-        onChanged: _updateTestScore,
+        onChanged: _updateTestAnswer,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20),
           child: SizedBox(
@@ -327,7 +306,9 @@ class _testAnswerSection extends State<testAnswerSection> {
               padding: EdgeInsets.all(8.0),
               child: TextFormField(
                 controller: answerInput,
-                // initialValue: testQuestion.userAnswer,
+                // initialValue: (testQuestion.userAnswer != "")
+                //     ? testQuestion.userAnswer
+                //     : null,
                 // onChanged: (value) => testQuestion.userAnswer =
                 //     value, // not working to retain user value
                 decoration:
@@ -335,28 +316,29 @@ class _testAnswerSection extends State<testAnswerSection> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
-            // child: Column( // for checking, everything works :)
-            //   children: [
-            //     TextFormField(
-            //         controller: answerInput,
-            //         decoration:
-            //             InputDecoration(hintText: 'Please enter your answer')),
-            //     SizedBox(
-            //       height: 10,
-            //     ),
-            //     Text(testQuestion.correctAnswer),
-            //     SizedBox(
-            //       height: 10,
-            //     ),
-            //     Text(testQuestion.userAnswer),
-            //   ],
-            // ),
           ),
         ),
       );
+      // return Padding(
+      //   padding: EdgeInsets.symmetric(vertical: 20),
+      //   child: SizedBox(
+      //     width: MediaQuery.of(context).size.width * 0.8,
+      //     child: Padding(
+      //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      //       child: TextField(
+      //         controller: answerInput,
+      //         // textInputAction: TextInputAction.done, submission of answer works by entering
+      //         onEditingComplete: _updateTestAnswer,
+      //         decoration: InputDecoration(
+      //           border: OutlineInputBorder(),
+      //           hintText: 'Please enter your answer',
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // );
     } else {
       return Padding(
-        // onChanged: _updateTestScore,
         padding: EdgeInsets.symmetric(vertical: 20),
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.8,
@@ -369,13 +351,21 @@ class _testAnswerSection extends State<testAnswerSection> {
                   TextButton(
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.all(16.0),
-                      primary: Colors.white,
-                      backgroundColor: Colors.tealAccent, // color of word
+                      // primary: Colors.white,
+                      // backgroundColor: Colors.tealAccent, // color of word
+                      primary: (testQuestion.userAnswer ==
+                              testQuestion.answerOptions[0])
+                          ? Colors.white
+                          : Colors.white,
+                      backgroundColor: (testQuestion.userAnswer ==
+                              testQuestion.answerOptions[0])
+                          ? Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2)
+                          : Colors.grey,
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
                       answerInputChoice = testQuestion.answerOptions[0];
-                      _updateTestScore();
+                      _updateTestAnswer();
                     },
                     child: Text(
                       testQuestion.answerOptions[0],
@@ -387,13 +377,19 @@ class _testAnswerSection extends State<testAnswerSection> {
                   TextButton(
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.all(16.0),
-                      primary: Colors.white,
-                      backgroundColor: Colors.tealAccent,
+                      primary: (testQuestion.userAnswer ==
+                              testQuestion.answerOptions[1])
+                          ? Colors.white
+                          : Colors.white,
+                      backgroundColor: (testQuestion.userAnswer ==
+                              testQuestion.answerOptions[1])
+                          ? Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2)
+                          : Colors.grey,
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
                       answerInputChoice = testQuestion.answerOptions[1];
-                      _updateTestScore();
+                      _updateTestAnswer();
                     },
                     child: Text(
                       testQuestion.answerOptions[1],
@@ -411,13 +407,19 @@ class _testAnswerSection extends State<testAnswerSection> {
                   TextButton(
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.all(16.0),
-                      primary: Colors.white,
-                      backgroundColor: Colors.tealAccent,
+                      primary: (testQuestion.userAnswer ==
+                              testQuestion.answerOptions[2])
+                          ? Colors.white
+                          : Colors.white,
+                      backgroundColor: (testQuestion.userAnswer ==
+                              testQuestion.answerOptions[2])
+                          ? Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2)
+                          : Colors.grey,
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
                       answerInputChoice = testQuestion.answerOptions[2];
-                      _updateTestScore();
+                      _updateTestAnswer();
                     },
                     child: Text(
                       testQuestion.answerOptions[2],
@@ -429,13 +431,19 @@ class _testAnswerSection extends State<testAnswerSection> {
                   TextButton(
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.all(16.0),
-                      primary: Colors.white,
-                      backgroundColor: Colors.tealAccent,
+                      primary: (testQuestion.userAnswer ==
+                              testQuestion.answerOptions[3])
+                          ? Colors.white
+                          : Colors.white,
+                      backgroundColor: (testQuestion.userAnswer ==
+                              testQuestion.answerOptions[3])
+                          ? Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2)
+                          : Colors.grey,
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
                       answerInputChoice = testQuestion.answerOptions[3];
-                      _updateTestScore();
+                      _updateTestAnswer();
                     },
                     child: Text(
                       testQuestion.answerOptions[3],
@@ -452,10 +460,12 @@ class _testAnswerSection extends State<testAnswerSection> {
 }
 
 class testNavigationSection extends StatelessWidget {
-  const testNavigationSection({Key? key, required this.testQuestion})
+  const testNavigationSection(
+      {Key? key, required this.testQuestion, required this.wholeTest})
       : super(key: key);
 
   final testQuestions testQuestion;
+  final List<testQuestions> wholeTest;
 
   @override
   Widget build(BuildContext context) {
@@ -480,15 +490,36 @@ class testNavigationSection extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.10,
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16.0),
-                primary: Colors.white,
-                backgroundColor: Colors.grey,
-                textStyle: const TextStyle(fontSize: 28),
-              ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.grey,
+                  textStyle: const TextStyle(fontSize: 28),
+                  padding: EdgeInsets.all(20),
+                  shape: StadiumBorder()),
               onPressed: () {
-                null;
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      'Missing answers',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    content: const Text('Please complete the test to submit.'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text(
+                          'OK',
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
               child: Text(
                 "Submit Test",
@@ -499,7 +530,8 @@ class testNavigationSection extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
                   padding: EdgeInsets.all(20),
-                  primary: Colors.tealAccent, // <-- Button color
+                  primary: Color.fromARGB(
+                      0xFF, 0x7b, 0xd1, 0xc2), // <-- Button color
                   onPrimary: Colors.white, // <-- icon color
                 ),
                 onPressed: () {
@@ -507,6 +539,29 @@ class testNavigationSection extends StatelessWidget {
                   if (testQuestion.userAnswer != "") {
                     Navigator.of(context).pushNamed('/TestQuestion' +
                         (testQuestion.questionNumber + 1).toString());
+                  } else {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text(
+                          'No input found',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        content: const Text(
+                            'Please enter an answer or select an option.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 },
                 child: Icon(Icons.arrow_forward_ios_rounded)),
@@ -525,7 +580,8 @@ class testNavigationSection extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
                   padding: EdgeInsets.all(20),
-                  primary: Colors.tealAccent, // <-- Button color
+                  primary: Color.fromARGB(
+                      0xFF, 0x7b, 0xd1, 0xc2), // <-- Button color
                   onPrimary: Colors.white, // <-- icon color
                 ),
                 onPressed: () {
@@ -537,15 +593,36 @@ class testNavigationSection extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.10,
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16.0),
-                primary: Colors.white,
-                backgroundColor: Colors.grey,
-                textStyle: const TextStyle(fontSize: 28),
-              ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.grey,
+                  textStyle: const TextStyle(fontSize: 28),
+                  padding: EdgeInsets.all(20),
+                  shape: StadiumBorder()),
               onPressed: () {
-                null;
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      'Missing answers',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    content: const Text('Please complete the test to submit.'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text(
+                          'OK',
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
               child: Text(
                 "Submit Test",
@@ -556,7 +633,8 @@ class testNavigationSection extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
                   padding: EdgeInsets.all(20),
-                  primary: Colors.tealAccent, // <-- Button color
+                  primary: Color.fromARGB(
+                      0xFF, 0x7b, 0xd1, 0xc2), // <-- Button color
                   onPrimary: Colors.white, // <-- icon color
                 ),
                 onPressed: () {
@@ -564,6 +642,31 @@ class testNavigationSection extends StatelessWidget {
                   if (testQuestion.userAnswer != "") {
                     Navigator.of(context).pushNamed('/TestQuestion' +
                         (testQuestion.questionNumber + 1).toString());
+                  } else {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text(
+                          'No input found',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        content: const Text(
+                            'Please enter an answer or select an option.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text(
+                              'OK',
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 },
                 child: Icon(Icons.arrow_forward_ios_rounded)),
@@ -581,7 +684,8 @@ class testNavigationSection extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
                   padding: EdgeInsets.all(20),
-                  primary: Colors.tealAccent, // <-- Button color
+                  primary: Color.fromARGB(
+                      0xFF, 0x7b, 0xd1, 0xc2), // <-- Button color
                   onPrimary: Colors.white, // <-- icon color
                 ),
                 onPressed: () {
@@ -593,17 +697,45 @@ class testNavigationSection extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.10,
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16.0),
-                primary: Colors.white,
-                backgroundColor: Colors.tealAccent,
-                textStyle: const TextStyle(fontSize: 28),
-              ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2),
+                  textStyle: const TextStyle(fontSize: 28),
+                  padding: EdgeInsets.all(20),
+                  shape: StadiumBorder()),
               onPressed: () {
-                if (testQuestion.userAnswer != null) {
-                  // given that the last question is also answered
-                  // send to test result page with latest test results
+                if (testQuestion.userAnswer != "") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            immediateTestResults(wholeTest: wholeTest)),
+                  );
+                } else {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text(
+                        'Missing answers',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      content:
+                          const Text('Please complete the test to submit.'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'Cancel'),
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text(
+                            'OK',
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 }
               },
               child: Text(

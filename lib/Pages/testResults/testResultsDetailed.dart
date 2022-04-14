@@ -14,6 +14,7 @@ class testResultDetailed {
   final List<String> userAnswers;
   final List<bool> isUserAnswersCorrect;
   final String testDiagnostics;
+  final String testRecommendations;
 
   testResultDetailed(
       {required this.testType,
@@ -22,7 +23,8 @@ class testResultDetailed {
       required this.correctAnswers,
       required this.userAnswers, // maybe needed
       required this.isUserAnswersCorrect,
-      required this.testDiagnostics});
+      required this.testDiagnostics,
+      required this.testRecommendations});
 }
 
 List<testResultDetailed> DetailedTestResults = [
@@ -55,7 +57,9 @@ List<testResultDetailed> DetailedTestResults = [
       ],
       isUserAnswersCorrect: [false, true, false, false, false, true],
       testDiagnostics:
-          "this is the palceholder for test diagnostics of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds"),
+          "this is the palceholder for test diagnostics of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds",
+      testRecommendations:
+          "this is the palceholder for test recommendations of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds"),
   testResultDetailed(
       testType: 2,
       testImage: "assets/images/testResults/profile.png",
@@ -85,7 +89,9 @@ List<testResultDetailed> DetailedTestResults = [
       ],
       isUserAnswersCorrect: [true, true, false, true, false, true],
       testDiagnostics:
-          "this is the palceholder for test diagnostics of a patient. The patient suffers from sdfalknsdfsdpofwehbfjwq clmkpoqijrheubjncklasdkfipogihoqrbwnkfds"),
+          "this is the palceholder for test diagnostics of a patient. The patient suffers from sdfalknsdfsdpofwehbfjwq clmkpoqijrheubjncklasdkfipogihoqrbwnkfds",
+      testRecommendations:
+          "this is the palceholder for test recommendations of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds"),
 ];
 
 class detailedTestResultScreen extends StatelessWidget {

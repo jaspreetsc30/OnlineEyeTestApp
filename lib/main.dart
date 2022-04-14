@@ -2,6 +2,7 @@ import 'package:application/Pages/mainScreen/mainScreen.dart';
 import 'package:application/Pages/signin/SignIn.dart';
 import 'package:application/Pages/onboarding/onboarding.dart';
 import 'package:application/Pages/testResults/testResultsDetailed.dart';
+import 'package:application/Pages/testScreens/testScreenComponents.dart';
 import 'package:application/Pages/testScreens/testScreenQuestions.dart';
 import 'package:application/Pages/testScreens/introTestScreens.dart';
 import 'package:application/Pages/userScreen/userScreen.dart';
@@ -13,6 +14,8 @@ import 'package:application/Pages/testResults/testResultsDetailed.dart';
 import 'package:application/Pages/mainScreen/mainScreen.dart';
 import 'package:application/Pages/userScreen/userScreen.dart';
 import "package:application/Pages/testResults/testResults.dart";
+import 'package:application/pages/testScreens/immediateTestResultsScreen.dart';
+import 'package:application/pages/testScreens/introTestScreens.dart';
 
 import 'Pages/signin/SignIn.dart';
 import 'Pages/signin/SignIn.dart';
@@ -73,10 +76,9 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
-//       // home: OnBoardingPages(),
+      // home: OnBoardingPages(),
       // home: SignInPage(), //bottomNavigationBar(),
       home: carouselScreen(),
-//       home: SignInPage(),
       //  home:  signedinalready == true ? bottomNavigationBar(): onboardingdone ==true ? SignUpPage():OnBoardingPages(),
     );
   }
