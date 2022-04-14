@@ -52,18 +52,6 @@ class _carouselScreenState extends State<carouselScreen> {
         testName: "Color Vision Test",
         redirectionMessage: "Click to do the test"),
   ];
-  // void _showTestScreen() {
-  //   //send _currentIndex to backend
-  //   testQuestionList.clear();
-  //   Future<String> _resultQuestions = fetchNewTest(globals.globalTestIndex);
-
-  //   _resultQuestions.then((questionString) {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => TestScreenQuestions()),
-  //     );
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

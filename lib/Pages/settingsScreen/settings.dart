@@ -13,17 +13,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 1,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop(); // go back previous page
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.green,
-          ),
-        ),
+        title: Text('Online iTest | Settings'),
+        backgroundColor: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -31,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             Text(
               "Settings",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 40,
@@ -40,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Icon(
                   Icons.person,
-                  color: Colors.green,
+                  color: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
                 ),
                 SizedBox(
                   width: 8,
@@ -67,7 +58,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Icon(
                   Icons.volume_up_outlined, // for notifications
-                  color: Colors.green,
+                  color: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
                 ),
                 SizedBox(
                   width: 8,
@@ -96,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Icon(
                   Icons.accessibility_new_rounded,
-                  color: Colors.green,
+                  color: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
                 ),
                 SizedBox(
                   width: 8,
@@ -122,17 +113,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             Center(
               child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
+                    textStyle: const TextStyle(fontSize: 28),
+                    padding: EdgeInsets.all(20),
+                    shape: StadiumBorder()),
+                onPressed: () {
+                  // logout from account
+                  null;
+                },
+                child: Text(
+                  "Logout",
                 ),
-                onPressed: () {},
-                child: Text("Logout",
-                    style: TextStyle(
-                        fontSize: 16,
-                        letterSpacing: 2.2,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500)),
               ),
             )
           ],
