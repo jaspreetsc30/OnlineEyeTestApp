@@ -7,6 +7,9 @@ INJECTED from C:\Users\Jaspreet\Desktop\FYP\application\android\app\src\main\And
 MERGED from C:\Users\Jaspreet\Desktop\FYP\application\android\app\src\main\AndroidManifest.xml:1:1-41:12
 MERGED from [:opencv_4] C:\Users\Jaspreet\Desktop\FYP\application\build\opencv_4\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:shared_preferences_android] C:\Users\Jaspreet\Desktop\FYP\application\build\shared_preferences_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:opencvplugin] C:\Users\Jaspreet\Desktop\FYP\application\build\opencvplugin\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:camera] C:\Users\Jaspreet\Desktop\FYP\application\build\camera\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-12:12
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\Jaspreet\Desktop\FYP\application\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:sqflite] C:\Users\Jaspreet\Desktop\FYP\application\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:path_provider_android] C:\Users\Jaspreet\Desktop\FYP\application\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [com.quickbirdstudios:opencv:4.3.0] C:\Users\Jaspreet\.gradle\caches\transforms-2\files-2.1\146359b21b3b03d747bcb2d0c7bfd5bc\jetified-opencv-4.3.0\AndroidManifest.xml:2:1-11:12
@@ -102,6 +105,12 @@ MERGED from [:opencv_4] C:\Users\Jaspreet\Desktop\FYP\application\build\opencv_4
 MERGED from [:opencv_4] C:\Users\Jaspreet\Desktop\FYP\application\build\opencv_4\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_android] C:\Users\Jaspreet\Desktop\FYP\application\build\shared_preferences_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_android] C:\Users\Jaspreet\Desktop\FYP\application\build\shared_preferences_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:opencvplugin] C:\Users\Jaspreet\Desktop\FYP\application\build\opencvplugin\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:opencvplugin] C:\Users\Jaspreet\Desktop\FYP\application\build\opencvplugin\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:camera] C:\Users\Jaspreet\Desktop\FYP\application\build\camera\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:camera] C:\Users\Jaspreet\Desktop\FYP\application\build\camera\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\Jaspreet\Desktop\FYP\application\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\Jaspreet\Desktop\FYP\application\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] C:\Users\Jaspreet\Desktop\FYP\application\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] C:\Users\Jaspreet\Desktop\FYP\application\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] C:\Users\Jaspreet\Desktop\FYP\application\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
@@ -146,3 +155,11 @@ uses-permission#android.permission.INTERNET
 ADDED from C:\Users\Jaspreet\Desktop\FYP\application\android\app\src\debug\AndroidManifest.xml:6:5-66
 	android:name
 		ADDED from C:\Users\Jaspreet\Desktop\FYP\application\android\app\src\debug\AndroidManifest.xml:6:22-64
+uses-permission#android.permission.CAMERA
+ADDED from [:camera] C:\Users\Jaspreet\Desktop\FYP\application\build\camera\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-65
+	android:name
+		ADDED from [:camera] C:\Users\Jaspreet\Desktop\FYP\application\build\camera\intermediates\library_manifest\debug\AndroidManifest.xml:9:22-62
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from [:camera] C:\Users\Jaspreet\Desktop\FYP\application\build\camera\intermediates\library_manifest\debug\AndroidManifest.xml:10:5-71
+	android:name
+		ADDED from [:camera] C:\Users\Jaspreet\Desktop\FYP\application\build\camera\intermediates\library_manifest\debug\AndroidManifest.xml:10:22-68

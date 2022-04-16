@@ -1,0 +1,11 @@
+ninja: Entering directory `C:\Users\Jaspreet\Desktop\FYP\application\opencvplugin\android\.cxx\cmake\debug\x86_64'
+[1/3] Building CXX object CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/aimodel/main.cpp.o
+[2/3] Building CXX object CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp.o
+C:/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp:151:26: warning: expression result unused [-Wunused-value]
+                        (255,255,255),
+                         ^~~
+C:/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp:151:30: warning: expression result unused [-Wunused-value]
+                        (255,255,255),
+                             ^~~
+2 warnings generated.
+[3/3] Linking CXX shared library C:\Users\Jaspreet\Desktop\FYP\application\build\opencvplugin\intermediates\cmake\debug\obj\x86_64\libopencvplugin.so

@@ -1,0 +1,7 @@
+Executable : C:\Users\Jaspreet\AppData\Local\Android\sdk\cmake\3.10.2.4988404\bin\ninja.exe
+arguments : 
+-C
+C:\Users\Jaspreet\Desktop\FYP\application\opencvplugin\android\.cxx\cmake\debug\x86_64
+opencvplugin
+jvmArgs : 
+

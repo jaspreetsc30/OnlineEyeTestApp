@@ -16,9 +16,24 @@ public final class GeneratedPluginRegistrant {
   private static final String TAG = "GeneratedPluginRegistrant";
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     try {
+      flutterEngine.getPlugins().add(new io.flutter.plugins.camera.CameraPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin camera, io.flutter.plugins.camera.CameraPlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_plugin_android_lifecycle, io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new ar.fgsoruco.opencv4.Opencv4Plugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin opencv_4, ar.fgsoruco.opencv4.Opencv4Plugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new com.example.opencvplugin.OpencvpluginPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin opencvplugin, com.example.opencvplugin.OpencvpluginPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
