@@ -115,13 +115,6 @@ class _immediateTestResults extends State<immediateTestResults> {
                                     child: Column(
                                       children: [
                                         _showTestScore(),
-                                        // Text(
-                                        //   "5",
-                                        //   style: TextStyle(
-                                        //       fontSize: 48,
-                                        //       fontWeight: FontWeight.w700,
-                                        //       color: Colors.white),
-                                        // ),
                                         Padding(
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 5)),

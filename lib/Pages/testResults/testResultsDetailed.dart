@@ -9,9 +9,7 @@ import 'package:application/main.dart';
 
 class testResultDetailed {
   final int testType; // test number basically
-  final String testImage;
   final List<String> questionTitles;
-  final List<String> correctAnswers;
   final List<String> userAnswers;
   final List<bool> isUserAnswersCorrect;
   final String testDiagnostics;
@@ -19,81 +17,36 @@ class testResultDetailed {
 
   testResultDetailed(
       {required this.testType,
-      required this.testImage,
       required this.questionTitles,
-      required this.correctAnswers,
       required this.userAnswers, // maybe needed
       required this.isUserAnswersCorrect,
       required this.testDiagnostics,
       required this.testRecommendations});
 }
 
-List<testResultDetailed> DetailedTestResults = [
-  testResultDetailed(
-      testType: 1,
-      testImage: "assets/images/testResults/edit.png",
-      questionTitles: [
-        "Test 1 Question 1",
-        "Test 1 Question 2",
-        "Test 1 Question 3",
-        "Test 1 Question 4",
-        "Test 1 Question 5",
-        "Test 1 Question 6"
-      ],
-      correctAnswers: [
-        "Test 1 Question 1 Correct Answer",
-        "Test 1 Question 2 Correct Answer",
-        "Test 1 Question 3 Correct Answer",
-        "Test 1 Question 4 Correct Answer",
-        "Test 1 Question 5 Correct Answer",
-        "Test 1 Question 6 Correct Answer"
-      ],
-      userAnswers: [
-        "Answer 1",
-        "Answer 2",
-        "Answer 3",
-        "Answer 4",
-        "Answer 5",
-        "Answer 6"
-      ],
-      isUserAnswersCorrect: [false, true, false, false, false, true],
-      testDiagnostics:
-          "this is the palceholder for test diagnostics of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds",
-      testRecommendations:
-          "this is the palceholder for test recommendations of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds"),
-  testResultDetailed(
-      testType: 2,
-      testImage: "assets/images/testResults/profile.png",
-      questionTitles: [
-        "Test 2 Question 1",
-        "Test 2 Question 2",
-        "Test 2 Question 3",
-        "Test 2 Question 4",
-        "Test 2 Question 5",
-        "Test 2 Question 6"
-      ],
-      correctAnswers: [
-        "Test 2 Question 1 Correct Answer",
-        "Test 2 Question 2 Correct Answer",
-        "Test 2 Question 3 Correct Answer",
-        "Test 2 Question 4 Correct Answer",
-        "Test 2 Question 5 Correct Answer",
-        "Test 2 Question 6 Correct Answer"
-      ],
-      userAnswers: [
-        "Answer 1",
-        "Answer 2",
-        "Answer 3",
-        "Answer 4",
-        "Answer 5",
-        "Answer 6"
-      ],
-      isUserAnswersCorrect: [true, true, false, true, false, true],
-      testDiagnostics:
-          "this is the palceholder for test diagnostics of a patient. The patient suffers from sdfalknsdfsdpofwehbfjwq clmkpoqijrheubjncklasdkfipogihoqrbwnkfds",
-      testRecommendations:
-          "this is the palceholder for test recommendations of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds"),
-];
+testResultDetailed DetailedTestResults = testResultDetailed(
+    testType: 1,
+    questionTitles: [
+      "Test 1 Question 1",
+      "Test 1 Question 2",
+      "Test 1 Question 3",
+      "Test 1 Question 4",
+      "Test 1 Question 5",
+      "Test 1 Question 6"
+    ],
+    userAnswers: [
+      "Answer 1",
+      "Answer 2",
+      "Answer 3",
+      "Answer 4",
+      "Answer 5",
+      "Answer 6"
+    ],
+    isUserAnswersCorrect: [false, true, false, false, false, true],
+    testDiagnostics:
+        "this is the palceholder for test diagnostics of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds",
+    testRecommendations:
+        "this is the palceholder for test recommendations of a patient. The patient suffers from sdfalkns dfsdpofweh bfjwq clmk poqijrh ubjnckla sdkfip ogih oqrb nkfds");
 
 class detailedTestResultScreen extends StatelessWidget {
   @override
@@ -102,10 +55,10 @@ class detailedTestResultScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () =>
-                Navigator.push(
+            onPressed: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => bottomNavigationBar()),
+                  MaterialPageRoute(
+                      builder: (context) => bottomNavigationBar()),
                 )),
         title: Text("Detailed Test Screen"),
       ),
@@ -113,9 +66,9 @@ class detailedTestResultScreen extends StatelessWidget {
         child: Column(
           children: [
             testResultSection(
-                individualDetailedTestResult: DetailedTestResults[
-                    0]), // first object of detailedtestresults
-            diagnosticsSection(detailedTestResult: DetailedTestResults[0])
+                individualDetailedTestResult:
+                    DetailedTestResults), // first object of detailedtestresults
+            diagnosticsSection(detailedTestResult: DetailedTestResults)
           ],
         ),
       ),
@@ -131,6 +84,18 @@ class testResultSection extends StatelessWidget {
 
   final testResultDetailed individualDetailedTestResult;
 
+  String testName() {
+    if (individualDetailedTestResult.testType == 1) {
+      return "Visual Acuity Test";
+    } else if (individualDetailedTestResult.testType == 2) {
+      return "Astigmatism Test";
+    } else if (individualDetailedTestResult.testType == 3) {
+      return "Light Sensitivity Test";
+    } else {
+      return "Color Vision Test";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -142,46 +107,40 @@ class testResultSection extends StatelessWidget {
           // SingleChildScrollView(
           // scrollDirection: Axis.vertical,), try this for scrolling option
           Text(
-            "NAME OF THE TEST",
+            testName(),
             style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 30),
           individualQuestion(
               // use for loop for this if possible
-              questionTitle: DetailedTestResults[0].questionTitles[0],
-              userAnswer: DetailedTestResults[0].userAnswers[0],
-              isUserAnswerCorrect:
-                  DetailedTestResults[0].isUserAnswersCorrect[0]),
+              questionTitle: DetailedTestResults.questionTitles[0],
+              userAnswer: DetailedTestResults.userAnswers[0],
+              isUserAnswerCorrect: DetailedTestResults.isUserAnswersCorrect[0]),
           SizedBox(height: 10),
           individualQuestion(
-              questionTitle: DetailedTestResults[0].questionTitles[1],
-              userAnswer: DetailedTestResults[0].userAnswers[1],
-              isUserAnswerCorrect:
-                  DetailedTestResults[0].isUserAnswersCorrect[1]),
+              questionTitle: DetailedTestResults.questionTitles[1],
+              userAnswer: DetailedTestResults.userAnswers[1],
+              isUserAnswerCorrect: DetailedTestResults.isUserAnswersCorrect[1]),
           SizedBox(height: 10),
           individualQuestion(
-              questionTitle: DetailedTestResults[0].questionTitles[2],
-              userAnswer: DetailedTestResults[0].userAnswers[2],
-              isUserAnswerCorrect:
-                  DetailedTestResults[0].isUserAnswersCorrect[2]),
+              questionTitle: DetailedTestResults.questionTitles[2],
+              userAnswer: DetailedTestResults.userAnswers[2],
+              isUserAnswerCorrect: DetailedTestResults.isUserAnswersCorrect[2]),
           SizedBox(height: 10),
           individualQuestion(
-              questionTitle: DetailedTestResults[0].questionTitles[3],
-              userAnswer: DetailedTestResults[0].userAnswers[3],
-              isUserAnswerCorrect:
-                  DetailedTestResults[0].isUserAnswersCorrect[3]),
+              questionTitle: DetailedTestResults.questionTitles[3],
+              userAnswer: DetailedTestResults.userAnswers[3],
+              isUserAnswerCorrect: DetailedTestResults.isUserAnswersCorrect[3]),
           SizedBox(height: 10),
           individualQuestion(
-              questionTitle: DetailedTestResults[0].questionTitles[4],
-              userAnswer: DetailedTestResults[0].userAnswers[4],
-              isUserAnswerCorrect:
-                  DetailedTestResults[0].isUserAnswersCorrect[4]),
+              questionTitle: DetailedTestResults.questionTitles[4],
+              userAnswer: DetailedTestResults.userAnswers[4],
+              isUserAnswerCorrect: DetailedTestResults.isUserAnswersCorrect[4]),
           SizedBox(height: 10),
           individualQuestion(
-              questionTitle: DetailedTestResults[0].questionTitles[5],
-              userAnswer: DetailedTestResults[0].userAnswers[5],
-              isUserAnswerCorrect:
-                  DetailedTestResults[0].isUserAnswersCorrect[5]),
+              questionTitle: DetailedTestResults.questionTitles[5],
+              userAnswer: DetailedTestResults.userAnswers[5],
+              isUserAnswerCorrect: DetailedTestResults.isUserAnswersCorrect[5]),
           SizedBox(height: 10),
         ],
       ),
@@ -197,7 +156,7 @@ class individualQuestion extends StatelessWidget {
     required this.isUserAnswerCorrect,
   }) : super(key: key);
 
-  final questionTitle;
+  final String questionTitle;
   final String userAnswer;
   final bool isUserAnswerCorrect;
 

@@ -64,11 +64,12 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
       ),
-      home: signedinalready == true
-          ? bottomNavigationBar()
-          : onboardingdone == true
-              ? SignUpPage()
-              : OnBoardingPages(),
+      // home: signedinalready == true
+      //     ? bottomNavigationBar()
+      //     : onboardingdone == true
+      //         ? SignUpPage()
+      //         : OnBoardingPages(),
+      home: carouselScreen(),
     );
   }
 }
