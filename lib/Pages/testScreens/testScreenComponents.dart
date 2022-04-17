@@ -468,6 +468,7 @@ class testNavigationSection extends StatelessWidget {
               immediateTestResults(wholeTest: testQuestionList)),
     );
     _resultQuestions.then((result) {
+      // maybe navigator in this
       testQuestionList.clear();
     });
   }
@@ -542,8 +543,15 @@ class testNavigationSection extends StatelessWidget {
                 onPressed: () {
                   // go to next question from same test
                   if (testQuestion.userAnswer != "") {
-                    Navigator.of(context).pushNamed('/TestQuestion' +
-                        (testQuestion.questionNumber + 1).toString());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => testScreenQuestion(
+                            testQuestion: testQuestionList[testQuestion
+                                .questionNumber], // no need + 1 cause questionNumber starts from 1?
+                            wholeTest: testQuestionList),
+                      ),
+                    );
                   } else {
                     showDialog<String>(
                       context: context,
@@ -574,7 +582,7 @@ class testNavigationSection extends StatelessWidget {
         ),
       );
     } else if (1 < testQuestion.questionNumber &&
-        testQuestion.questionNumber <= 5) {
+        testQuestion.questionNumber <= wholeTest.length - 1) {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Row(
@@ -590,9 +598,16 @@ class testNavigationSection extends StatelessWidget {
                   onPrimary: Colors.white, // <-- icon color
                 ),
                 onPressed: () {
-                  // go to previous question [maybe can use pop function]
-                  Navigator.of(context).pushNamed('/TestQuestion' +
-                      (testQuestion.questionNumber - 1).toString());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => testScreenQuestion(
+                          testQuestion: testQuestionList[
+                              testQuestion.questionNumber -
+                                  2], // -2 cause question number starts 1
+                          wholeTest: testQuestionList),
+                    ),
+                  );
                 },
                 child: Icon(Icons.arrow_back_ios_rounded)),
             SizedBox(
@@ -645,8 +660,15 @@ class testNavigationSection extends StatelessWidget {
                 onPressed: () {
                   // go to next question from same test
                   if (testQuestion.userAnswer != "") {
-                    Navigator.of(context).pushNamed('/TestQuestion' +
-                        (testQuestion.questionNumber + 1).toString());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => testScreenQuestion(
+                            testQuestion:
+                                testQuestionList[testQuestion.questionNumber],
+                            wholeTest: testQuestionList),
+                      ),
+                    );
                   } else {
                     showDialog<String>(
                       context: context,
@@ -679,6 +701,7 @@ class testNavigationSection extends StatelessWidget {
         ),
       );
     } else {
+      // last question
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Row(
@@ -694,9 +717,16 @@ class testNavigationSection extends StatelessWidget {
                   onPrimary: Colors.white, // <-- icon color
                 ),
                 onPressed: () {
-                  // go to previous question [maybe can use pop function]
-                  Navigator.of(context).pushNamed('/TestQuestion' +
-                      (testQuestion.questionNumber - 1).toString());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => testScreenQuestion(
+                          testQuestion: testQuestionList[
+                              testQuestion.questionNumber -
+                                  2], // -2 cause question number is + 1
+                          wholeTest: testQuestionList),
+                    ),
+                  );
                 },
                 child: Icon(Icons.arrow_back_ios_rounded)),
             SizedBox(

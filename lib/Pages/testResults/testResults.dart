@@ -1,6 +1,9 @@
 // import 'dart:html' hide VoidCallback;
 
 import 'package:application/Pages/testScreens/testScreenComponents.dart';
+import 'package:application/Pages/testResults/testResultsDetailed.dart';
+import 'package:application/Pages/mainScreen/globals.dart' as globals;
+
 import 'package:flutter/material.dart';
 import 'package:application/Services/api.dart';
 
@@ -98,7 +101,8 @@ class testResult extends StatelessWidget {
             // used Column before to make it one by one but listview builder is needed to make multiple results
             itemBuilder: (context, index) => Column(
                   children: [
-                    individualTestResult(test: testResults[index]),
+                    individualTestResult(
+                        test: testResults[index], testResultIndex: index),
                   ],
                 ),
             separatorBuilder: (context, index) => SizedBox(
@@ -112,16 +116,36 @@ class individualTestResult extends StatelessWidget {
   const individualTestResult({
     Key? key,
     required this.test,
+    required this.testResultIndex,
   }) : super(key: key);
 
   final completedTest test;
+  final int testResultIndex;
+
+  String imageAssetName() {
+    if (test.testName == "Visual Acuity") {
+      return "images/mainScreen/visualAcuity.png";
+    } else if (test.testName == "Astigmatism") {
+      return "images/mainScreen/astigmatism.png";
+    } else if (test.testName == "Light Sensitivity") {
+      return "images/mainScreen/lightSensitivity.png";
+    } else {
+      return "images/mainScreen/colorBlind.png";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         // save index of the one pushed also so that data can be fetched for detailed explanation Probably need state and global variable
-        Navigator.of(context).pushNamed('/detailedTestResultsScreen');
+        // Navigator.of(context).pushNamed('/detailedTestResultsScreen');
+        globals.globalTestResultIndex = testResultIndex;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => detailedTestResultScreen(),
+            ));
       },
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -135,16 +159,17 @@ class individualTestResult extends StatelessWidget {
               SizedBox(
                 // for the image of test // thought of using fractionallySizedBox but invalid returns causing errors
                 width: MediaQuery.of(context).size.width * 0.15,
-                child: AspectRatio(
-                  aspectRatio: 0.88,
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF5F6F9),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Image.asset(test.testImage), // hopefully works
+                height: MediaQuery.of(context).size.width * 0.15,
+                child: Container(
+                  // padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(15),
                   ),
+                  child: Image.asset(
+                    imageAssetName(),
+                    fit: BoxFit.fill,
+                  ), // hopefully works
                 ),
               ),
               SizedBox(
