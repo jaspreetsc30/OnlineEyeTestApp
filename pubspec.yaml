@@ -115,5 +115,5 @@ flutter:
     - assets/images/userScreen/
     - assets/images/testResults/
     - assets/icons/userScreen/
-    - assets/images/background/
+    - assets/images/background/Backdropbackground.png
     - assets/classifier/haarcascade_frontalface_default.xml

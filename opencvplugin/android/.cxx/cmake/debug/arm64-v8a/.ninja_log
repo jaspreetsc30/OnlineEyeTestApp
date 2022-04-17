@@ -2,3 +2,7 @@
 2	209	671890357	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/aimodel/main.cpp.o	3ac50074bc0500e6
 10	2752	671890360	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp.o	cc849c06968db15
 2755	4538	671890361	C:/Users/Jaspreet/Desktop/FYP/application/build/opencvplugin/intermediates/cmake/debug/obj/arm64-v8a/libopencvplugin.so	512e56c47978813
+0	10	0	clean	626f66a5bc81cdc5
+13	146	671896995	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/aimodel/main.cpp.o	3ac50074bc0500e6
+21	2845	671896997	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp.o	cc849c06968db15
+2845	5325	671897000	C:/Users/Jaspreet/Desktop/FYP/application/build/opencvplugin/intermediates/cmake/debug/obj/arm64-v8a/libopencvplugin.so	512e56c47978813

@@ -21,9 +21,11 @@ class _DetectionPageState extends State<DetectionPage> {
   int _camFrameRotation = 0;
   double _camFrameToScreenScale = 0;
   int _lastRun = 0;
+  int check = 0;
 
   bool sentrefimage = false ;
   bool inprocessofsendingimage = false;
+  bool calibrationdone = false;
   double computedfocallength = 0 ;
 
 
@@ -73,9 +75,7 @@ class _DetectionPageState extends State<DetectionPage> {
           }
 
           //call the api
-          print("bout to cllapi");
-          print("bout to cllap3423i");
-          print("bout to cllapi");
+
           double distance = opencvplugin.getdistance(image.width, image.height, _camFrameRotation, yBuffer, uBuffer, vBuffer, newPath,computedfocallength)??-1;
           print(distance);
 
@@ -139,17 +139,27 @@ class _DetectionPageState extends State<DetectionPage> {
           }
 
           //call the api
-          print("bout to cllapi");
-          print("bout to cllap3423i");
-          print("bout to cllapi");
+          print("getting focal length");
           double computedfocallengthreceived = opencvplugin.getref(image.width, image.height, _camFrameRotation, yBuffer, uBuffer, vBuffer, newPath)??-1;
           print(computedfocallengthreceived);
 
-          setState(() {
-             computedfocallength = computedfocallengthreceived ;
-             inprocessofsendingimage = false;
-             sentrefimage = true ;
-          });
+          if(computedfocallengthreceived!=0.0){
+            setState(() {
+              computedfocallength = computedfocallengthreceived ;
+              inprocessofsendingimage = false;
+              sentrefimage = true ;
+              calibrationdone = true;
+            });
+
+          }
+          else {
+            setState(() {
+              inprocessofsendingimage = false;
+            });
+          }
+
+
+
 
 
 
@@ -196,7 +206,7 @@ class _DetectionPageState extends State<DetectionPage> {
 
   void _processCameraImage(CameraImage image) async {
 
-    if ( !mounted || DateTime.now().millisecondsSinceEpoch - _lastRun < 3000) {
+    if ( !mounted || DateTime.now().millisecondsSinceEpoch - _lastRun < 1000) {
       return;
     }
 
@@ -268,11 +278,20 @@ class _DetectionPageState extends State<DetectionPage> {
       );
     }
 
-    return Stack(
+    return Scaffold(
 
-      children: [
-        CameraPreview(_camController!),
-      ],
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20),)
+          ),
+          child:
+
+              calibrationdone?Center(child: ElevatedButton(onPressed: (){}, child: Text("Start" ),)):Center(child: Text("Please wait for calibration...." , style: TextStyle(color: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2) , fontSize: 15),)),
+
+        )
+
     );
   }
 }
