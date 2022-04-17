@@ -20,14 +20,30 @@ using namespace cv;
 using namespace std;
 
 //constants
-float Known_distance = 17 ; // Inches
-float Known_width = 5.78f ;  // Inches
-float checker = 1.11f;
+double Known_distance = 17 ; // Inches
+double Known_width = 5.78f ;  // Inches
+double checker = 1.11f;
 
 
-int checkstuff(){
+void rotateMat(Mat &matImage, int rotation)
+{
+    if (rotation == 90) {
+        transpose(matImage, matImage);
+        flip(matImage, matImage, 1); //transpose+flip(1)=CW
+    } else if (rotation == 270) {
+        transpose(matImage, matImage);
+        flip(matImage, matImage, 0); //transpose+flip(0)=CCW
+    } else if (rotation == 180) {
+        flip(matImage, matImage, -1);    //flip(-1)=180
+    }
+}
+
+
+
+
+int checkstuff(const char* path){
     CascadeClassifier faceDetectorobj;
-    String xmlfile = "C:/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/haarcascade_frontalface_default.xml" ;
+    String xmlfile(path) ;
     if (!faceDetectorobj.load(xmlfile)){
 
         return -1;
@@ -37,23 +53,13 @@ int checkstuff(){
 
 }
 
-const char * getexepath()
-{
-    char result[ PATH_MAX ];
-    ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
-    String  path =string( result, (count > 0) ? count : 0 );
-    const char * c = path.c_str();
-    return c;
 
-}
-
-
-float FocalLength(float measured_distance , float real_width , int width_in_rf_image){
+double FocalLength(double measured_distance , double real_width , int width_in_rf_image){
     return (width_in_rf_image * measured_distance) / real_width;
 }
 
 
-float DistanceFinder(float Focal_Length, float real_face_width, int face_width_in_frame ){
+double DistanceFinder(double Focal_Length, double real_face_width, int face_width_in_frame ){
     return (real_face_width * Focal_Length) / face_width_in_frame;
 }
 
@@ -66,12 +72,6 @@ void faceDetector(Mat &src , bool callOut , int distanceLevel , vector<Rect> &fa
     faceDetector.detectMultiScale(gray,faces,1.3,5);
     int lineThickness = 2 ;
     for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r ){
-        int LLV = (int) (r->height * 0.12) ;
-
-        line(src, Point(r->x, r->y + LLV), Point(r->x + r->width, r->y + LLV), Scalar(255,255,255), lineThickness) ;
-        line(src, Point(r->x, r->y + r->height), Point(r->x + r->width, r->y + r->height),Scalar(255,255,255), lineThickness);
-        line(src, Point(r->x + r->width, r->y + LLV), Point(r->x + r->width, r->y + r->height), Scalar(255,255,255), lineThickness);
-        line(src, Point(r->x, r->y + r->height), Point(r->x, r->y +  LLV),Scalar(255,255,255), lineThickness);
 
         if (distanceLevel < 10)
             distanceLevel = 10;
@@ -118,68 +118,23 @@ int main()
     vector<Rect> faces;
     int faceWidth = 0;
     faceDetector(src , false , 0 , faces , faceWidth, faceDetectorobj);
-    float computedFocalLength = FocalLength(Known_distance , Known_width , faceWidth);
-    cout<<computedFocalLength<<endl<<endl<<endl<<endl<<endl;
-    cout<<faceWidth<<endl<<endl<<endl<<endl<<endl;
-
-
-
-
-
-
-
+    double computedFocalLength = FocalLength(Known_distance , Known_width , faceWidth);
 
 
         // Mat newsrc;
         cap.read(src);
 
         faceDetector(src , true , 0 , faces , faceWidth, faceDetectorobj);
-
+        double distance ;
 
         for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r ){
             if (computedFocalLength != 0){
+                distance = DistanceFinder(computedFocalLength,Known_width, faceWidth);
 
-                float distance = DistanceFinder(computedFocalLength,Known_width, faceWidth);
-                return distance ;
-                cout<<distance<<endl ;
-                string message = to_string(distance) + " Inches" ;
-                putText(src ,
-                        message ,
-                        Point(r->x - 6, r->y - 6),
-                        FONT_HERSHEY_SIMPLEX,
-                        1,
-                        (255,255,255),
-                        2,
-                        LINE_AA);
             }
         }
-        if (src.empty()) {
-            cout << "ERROR! blank frame grabbed\n";
-            return -1;
-        }
-        imshow("Distance",src);
-        waitKey(1);
+        return distance ;
 
-
-
-
-
-
-
-
-
-
-    // cap.release();
-    // destroyAllWindows();
-
-
-
-
-
-
-    cout<<"build works";
-    cout<<"ok";
-    return -1;
 }
 
 
@@ -197,10 +152,83 @@ extern "C" {
     }
 
     __attribute__((visibility("default"))) __attribute__((used))
-    int getmessage(){
-        return checkstuff();
+    int getmessage(const char* path){
+
+        return checkstuff(path);
 
     }
+
+    __attribute__((visibility("default"))) __attribute__((used))
+    double refimage(int width , int height , int rotation , uint8_t* bytes, int isYUV, const char* path){
+        //create frame
+        Mat frame;
+        if (isYUV == 1) {
+            Mat myyuv(height + height / 2, width, CV_8UC1, bytes);
+            cvtColor(myyuv, frame, COLOR_YUV2BGRA_NV21);
+        } else {
+            frame = Mat(height, width, CV_8UC4, bytes);
+        }
+
+        rotateMat(frame, rotation);
+
+
+
+        //load xml
+        String xmlfilepath(path);
+        CascadeClassifier faceDetectorobj;
+
+        if (!faceDetectorobj.load(xmlfilepath)){
+            return -1;
+        };
+
+        vector<Rect> faces;
+        int faceWidth = 0;
+        faceDetector(frame , false , 0 , faces , faceWidth, faceDetectorobj);
+        double computedFocalLength = FocalLength(Known_distance , Known_width , faceWidth);
+
+        return computedFocalLength ;
+
+    }
+
+    __attribute__((visibility("default"))) __attribute__((used))
+    double getdistance(int width , int height , int rotation , uint8_t* bytes, int isYUV, const char* path , double computedFocalLength){
+        //create frame
+        Mat frame;
+        if (isYUV == 1) {
+            Mat myyuv(height + height / 2, width, CV_8UC1, bytes);
+            cvtColor(myyuv, frame, COLOR_YUV2BGRA_NV21);
+        } else {
+            frame = Mat(height, width, CV_8UC4, bytes);
+        }
+
+
+        rotateMat(frame, rotation);
+
+        //load xml
+        String xmlfilepath(path);
+        CascadeClassifier faceDetectorobj;
+
+        if (!faceDetectorobj.load(xmlfilepath)){
+            return -1;
+        };
+        vector<Rect> faces;
+        int faceWidth = 0;
+        faceDetector(frame , true , 0 , faces , faceWidth, faceDetectorobj);
+
+        double distance;
+        for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r ){
+            if (computedFocalLength != 0){
+
+                distance = DistanceFinder(computedFocalLength,Known_width, faceWidth);
+                cout<<distance<<endl ;
+
+            }
+        }
+        return distance ;
+
+
+    }
+
 
 
 

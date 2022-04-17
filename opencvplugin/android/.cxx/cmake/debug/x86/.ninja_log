@@ -1,8 +1,4 @@
 # ninja log v5
-5	80	671794509	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/aimodel/main.cpp.o	f6e63f77c845dacf
-1	1624	671794511	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp.o	d34cec5d8d6945f1
-1627	2415	671794511	C:/Users/Jaspreet/Desktop/FYP/application/build/opencvplugin/intermediates/cmake/debug/obj/x86/libopencvplugin.so	d97d01bf9a811696
-0	10	0	clean	626f66a5bc81cdc5
-6	97	671805572	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/aimodel/main.cpp.o	f6e63f77c845dacf
-10	1676	671805574	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp.o	d34cec5d8d6945f1
-1676	2509	671805575	C:/Users/Jaspreet/Desktop/FYP/application/build/opencvplugin/intermediates/cmake/debug/obj/x86/libopencvplugin.so	d97d01bf9a811696
+1	108	671890362	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/aimodel/main.cpp.o	f6e63f77c845dacf
+8	3984	671890365	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp.o	d34cec5d8d6945f1
+3991	5484	671890367	C:/Users/Jaspreet/Desktop/FYP/application/build/opencvplugin/intermediates/cmake/debug/obj/x86/libopencvplugin.so	d97d01bf9a811696
