@@ -246,11 +246,13 @@ class testAnswerSection extends StatefulWidget {
 }
 
 class _testAnswerSection extends State<testAnswerSection> {
-  _testAnswerSection({Key? key, required this.testQuestion});
   // : super(key: key);
+  _testAnswerSection({Key? key, required this.testQuestion}) {
+    answerInput = TextEditingController(text: testQuestion.userAnswer);
+  }
 
   final testQuestions testQuestion;
-  final answerInput = TextEditingController();
+  var answerInput;
 
   // answerInput.value.text = testQuestion.userAnswer;
 

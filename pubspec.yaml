@@ -33,6 +33,8 @@ dependencies:
   flutter:
     sdk: flutter
   opencv_4: ^1.0.0
+  opencvplugin:
+    path: opencvplugin
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,6 +42,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.0.12
   dots_indicator: ^2.0.0
+  camera: ^0.9.4+19
+  path_provider: ^2.0.9
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:
@@ -111,3 +116,4 @@ flutter:
     - assets/images/testResults/
     - assets/icons/userScreen/
     - assets/images/background/
+    - assets/classifier/haarcascade_frontalface_default.xml
