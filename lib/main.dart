@@ -1,27 +1,20 @@
 import 'package:application/Pages/mainScreen/mainScreen.dart';
-import 'package:application/Pages/signin/SignIn.dart';
+
 import 'package:application/Pages/onboarding/onboarding.dart';
 import 'package:application/Pages/testResults/testResultsDetailed.dart';
-import 'package:application/Pages/testScreens/testScreenComponents.dart';
-import 'package:application/Pages/testScreens/testScreenQuestions.dart';
-import 'package:application/Pages/testScreens/introTestScreens.dart';
+
 import 'package:application/Pages/userScreen/userScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:application/Services/api.dart';
 
 import 'package:application/Pages/testResults/testResults.dart';
-import 'package:application/Pages/testResults/testResultsDetailed.dart';
-import 'package:application/Pages/mainScreen/mainScreen.dart';
-import 'package:application/Pages/userScreen/userScreen.dart';
-import "package:application/Pages/testResults/testResults.dart";
-import 'package:application/pages/testScreens/immediateTestResultsScreen.dart';
-import 'package:application/pages/testScreens/introTestScreens.dart';
 
-import 'Pages/signin/SignIn.dart';
-import 'Pages/signin/SignIn.dart';
+
+
+
 import 'Pages/signin/SignUp.dart';
-import 'Pages/signin/SignUp.dart';
+
 //to do: come up with a nice font, discuss the status bar issue
 
 //to do: come up with a nice font, discuss the status bar issue
@@ -64,12 +57,12 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
       ),
-      // home: signedinalready == true
-      //     ? bottomNavigationBar()
-      //     : onboardingdone == true
-      //         ? SignUpPage()
-      //         : OnBoardingPages(),
-      home: carouselScreen(),
+      home: signedinalready == true
+          ? bottomNavigationBar()
+          : onboardingdone == true
+              ? SignUpPage()
+              : OnBoardingPages(),
+      // home: carouselScreen(),
     );
   }
 }

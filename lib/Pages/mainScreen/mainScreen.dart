@@ -5,7 +5,7 @@ import 'package:application/Pages/userScreen/userScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import 'package:application/Pages/testScreens/testScreenQuestions.dart';
+
 import 'package:application/Pages/settingsScreen/settings.dart';
 import 'package:application/Pages/mainScreen/globals.dart' as globals;
 import 'package:application/Services/api.dart';
@@ -55,16 +55,7 @@ class _carouselScreenState extends State<carouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
-          elevation: 0,
-        ),
-        primaryColor: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2),
-      ),
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text('Online iTest'),
         ),
@@ -95,8 +86,8 @@ class _carouselScreenState extends State<carouselScreen> {
                 ],
               )),
         ),
-      ),
-    );
+      );
+
   }
 }
 

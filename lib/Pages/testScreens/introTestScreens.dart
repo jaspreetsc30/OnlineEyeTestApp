@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:application/Pages/mainScreen/mainScreen.dart';
-import 'package:application/Pages/testScreens/testScreenQuestions.dart';
+
 import 'package:application/Pages/testScreens/testScreenComponents.dart';
 import 'package:application/Pages/mainScreen/globals.dart' as globals;
 
@@ -117,23 +117,25 @@ class _testIntroScreen extends State<testIntroScreen> {
                 );
               },
             )),
-        body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 30),
-          child: Column(
-            children: [
-              Text(introTestScreen.testType,
-                  style: TextStyle(fontSize: 36, fontWeight: FontWeight.w600)),
-              SizedBox(height: 20),
-              Text(introTestScreen.testHeading,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-              SizedBox(height: 20),
-              instruction1(introTestScreen: introTestScreen),
-              instruction1Icons(),
-              instruction2(introTestScreen: introTestScreen),
-              instruction2Icons(),
-              Column(children: show2moreInstructions()),
-              beginTestButton()
-            ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 30),
+            child: Column(
+              children: [
+                Text(introTestScreen.testType,
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.w600)),
+                SizedBox(height: 20),
+                Text(introTestScreen.testHeading,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                SizedBox(height: 20),
+                instruction1(introTestScreen: introTestScreen),
+                instruction1Icons(),
+                instruction2(introTestScreen: introTestScreen),
+                instruction2Icons(),
+                Column(children: show2moreInstructions()),
+                beginTestButton()
+              ],
+            ),
           ),
         ));
   }
@@ -152,7 +154,11 @@ class beginTestButton extends StatelessWidget {
     _resultQuestions.then((questionString) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => TestScreenQuestions()),
+        MaterialPageRoute(
+          builder: (context) => testScreenQuestion(
+              testQuestion: testQuestionList[0], // no need + 1 cause questionNumber starts from 1?
+              wholeTest: testQuestionList),
+        ),
       );
     });
   }
