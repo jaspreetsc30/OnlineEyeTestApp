@@ -13,17 +13,18 @@ class completedTest {
   final String testDate;
   final int testScore;
   final String testCondition;
+  final List<testQuestions> testQuestionList;
   final VoidCallback
       testPress; // hide VoidCallback cause multiple files allow this
 
-  completedTest({
-    required this.testImage,
-    required this.testName,
-    required this.testDate,
-    required this.testScore,
-    required this.testCondition,
-    required this.testPress,
-  });
+  completedTest(
+      {required this.testImage,
+      required this.testName,
+      required this.testDate,
+      required this.testScore,
+      required this.testCondition,
+      required this.testPress,
+      required this.testQuestionList});
 
   factory completedTest.fromJson(Map<String, dynamic> json) {
     completedTest newCompletedTest = completedTest(
@@ -32,14 +33,35 @@ class completedTest {
         testDate: "",
         testScore: 0,
         testCondition: "",
+        testQuestionList: [],
         testPress: () {});
 
     for (int i = 0; i < json['payload']['tests'].length; i++) {
+      List<testQuestions> list = [];
       int score = 0;
       for (int j = 0;
           j < json['payload']['tests'][i]['questions'].length;
           j++) {
+        testQuestions questionObj = testQuestions(
+            testType: json['payload']['tests'][i]['questions'][j]
+                ['user_answer'],
+            questionId: "",
+            questionNumber: 0,
+            questionType: json['payload']['tests'][i]['questions'][j]
+                ['questionType'],
+            questionImage: "",
+            questionTitle: json['payload']['tests'][i]['questions'][j]
+                ['question'],
+            questionDescription: "",
+            correctAnswer: "",
+            answerOptions: [],
+            userAnswer: "",
+            isUserAnswerCorrect: json['payload']['tests'][i]['questions'][j]
+                ['is_correct'],
+            testId: "");
         if (json['payload']['tests'][i]['questions'][j]['is_correct']) score++;
+
+        list.add(questionObj);
       }
       newCompletedTest = completedTest(
           testImage: "",
@@ -47,6 +69,7 @@ class completedTest {
           testDate: json['payload']['tests'][i]['date'],
           testScore: score,
           testCondition: json['payload']['tests'][i]['status'],
+          testQuestionList: list,
           testPress: () {});
 
       testResults.add(newCompletedTest);
