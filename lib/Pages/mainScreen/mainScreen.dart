@@ -8,6 +8,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:application/Pages/settingsScreen/settings.dart';
 import 'package:application/Pages/mainScreen/globals.dart' as globals;
+import "package:application/Pages/testScreens/calibrationsScreen.dart";
 import 'package:application/Services/api.dart';
 import 'package:application/Pages/testScreens/testScreenComponents.dart';
 
@@ -99,15 +100,22 @@ Widget individualTestCard({
     ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: GestureDetector(
-          onTap: () => {
-            globals.globalTestIndex = testIndex,
+          onTap: ()  {
+
+            globals.globalTestIndex = testIndex;
+            print(testIndex);
+            testIndex!=1?
             Navigator.push(
               testContext,
               MaterialPageRoute(
                   builder: (context) => testIntroScreen(
                         introTestScreen: introTestScreens[testIndex - 1],
                       )),
-            ),
+            ):Navigator.push(
+              testContext,
+              MaterialPageRoute(
+                  builder: (context) => Calibration()),
+            );
           }, // on tap, push the testIndex, and navigate to screen
           child: Container(
               width: 350,
