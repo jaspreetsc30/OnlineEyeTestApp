@@ -9,6 +9,7 @@ import 'package:opencvplugin/opencvplugin.dart';
 import 'dart:developer';
 import "dart:typed_data";
 import 'package:application/responsiveness/RelativeSize.dart';
+import 'package:application/Pages/testScreens/introTestScreens.dart';
 
 class Calibration extends StatefulWidget {
   const Calibration({Key? key}) : super(key: key);
@@ -328,7 +329,7 @@ class _CalibrationState extends State<Calibration> {
                     ),
 
                     SizedBox(
-                      width: startButtonPressed==true?calibrationDone == true? width*40:width*100:width*30,
+                      width: startButtonPressed==true?calibrationDone == true && _start==0? width*50:width*100:width*30,
                       child: startButtonPressed==false?ElevatedButton(
                           onPressed: () {
                            startTimer();
@@ -340,6 +341,13 @@ class _CalibrationState extends State<Calibration> {
                               primary: Color.fromARGB(0xff, 0x7b, 0xd1, 0xc2))
                       ):calibrationDone== true && _start ==0 ?ElevatedButton(
                           onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => testIntroScreen(
+                                    introTestScreen: introTestScreens[1 - 1],
+                                  )),
+                            );
                           },
                           child: Text("Start the Test" ,style: TextStyle(fontSize:18)),
                           style: ElevatedButton.styleFrom(

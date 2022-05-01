@@ -6,6 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:application/main.dart';
 import 'package:application/Services/api.dart';
+import 'package:application/Pages/mainScreen/globals.dart' as globals;
+import 'package:camera/camera.dart';
+import 'package:opencvplugin/opencvplugin.dart';
+import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 
 class testQuestions {
   final int testType; // test number basically
@@ -86,7 +93,7 @@ class testQuestions {
 
 List<testQuestions> testQuestionList = [];
 
-class testScreenQuestion extends StatelessWidget {
+class testScreenQuestion extends StatefulWidget {
   const testScreenQuestion({
     Key? key,
     required this.testQuestion,
@@ -96,12 +103,180 @@ class testScreenQuestion extends StatelessWidget {
   final testQuestions testQuestion;
   final List<testQuestions> wholeTest;
 
+
+
+  @override
+  State<testScreenQuestion> createState() => _testScreenQuestionState();
+}
+
+class _testScreenQuestionState extends State<testScreenQuestion> {
+
+  late double focalLength;
+  bool gotFocalLength = false;
+  late double distance ;
+  bool gotDistance = false;
+
+  final opencvplugin = Opencvplugin();
+  CameraController? _camController;
+  int _camFrameRotation = 0;
+  double _camFrameToScreenScale = 0;
+  int _lastRun = 0;
+
+  Future<void> getDistance(CameraImage image) async {
+    try{
+      if (Platform.isAndroid){
+        Directory? directory = await getExternalStorageDirectory();
+        String newPath = "" ;
+        List<String> folders =directory.toString().split("/");
+        for (int x=1 ; x<folders.length; x++){
+          String folder = folders[x];
+          if (folder!= "Android"){
+            newPath+="/"+folder;
+          }
+          else{break;}
+        }
+        newPath = newPath+ "/eyetestapp/haarcascade_frontalface_default.xml" ;
+        directory = Directory(newPath);
+
+        final prefs = await SharedPreferences.getInstance();
+        final bool? downloaded = prefs.getBool('xmldownloaded');
+        if (downloaded==true){
+          //send it
+          // calc the scale factor to convert from camera frame coords to screen coords.
+          // NOTE!!!! We assume camera frame takes the entire screen width, if that's not the case
+          // (like if camera is landscape or the camera frame is limited to some area) then you will
+          // have to find the correct scale factor somehow else
+          if (_camFrameToScreenScale == 0) {
+            var w = (_camFrameRotation == 0 || _camFrameRotation == 180) ? image.width : image.height;
+            _camFrameToScreenScale = MediaQuery.of(context).size.width / w;
+          }
+
+          // On Android the image format is YUV and we get a buffer per channel,
+          // in iOS the format is BGRA and we get a single buffer for all channels.
+          // So the yBuffer variable on Android will be just the Y channel but on iOS it will be
+          // the entire image
+
+          var planes = image.planes;
+          var yBuffer = planes[0].bytes;
+
+          Uint8List? uBuffer;
+          Uint8List? vBuffer;
+
+          if (Platform.isAndroid) {
+            uBuffer = planes[1].bytes;
+            vBuffer = planes[2].bytes;
+          }
+
+          //call the api
+
+          double computeddistance = opencvplugin.getdistance(image.width, image.height, _camFrameRotation, yBuffer, uBuffer, vBuffer, newPath,focalLength)??-1;
+          print(computeddistance);
+          if (computeddistance > 2){
+            globals.distance = computeddistance;
+            setState(() {
+              distance = computeddistance * 2.56;
+              gotDistance =true;
+            });
+          }
+
+
+
+
+        }
+
+      }
+    }catch (e) {
+
+    }
+  }
+
+
+
+
+
+  void _processCameraImage(CameraImage image) async {
+
+    if ( !mounted || DateTime.now().millisecondsSinceEpoch - _lastRun < 100 ) {
+      return;
+    }
+
+    _lastRun = DateTime.now().millisecondsSinceEpoch;
+    getDistance(image);
+    return ;
+
+
+  }
+
+
+
+
+
+
+  Future<void> initCamera() async {
+    final cameras = await availableCameras();
+    var idx = cameras.indexWhere((c) => c.lensDirection == CameraLensDirection.front);
+
+
+    var desc = cameras[idx];
+    _camFrameRotation = Platform.isAndroid ? desc.sensorOrientation : 0;
+    _camController = CameraController(
+      desc,
+      ResolutionPreset.high, // 720p
+      enableAudio: false,
+      imageFormatGroup: Platform.isAndroid ? ImageFormatGroup.yuv420 : ImageFormatGroup.bgra8888,
+    );
+
+    try {
+      await _camController!.initialize();
+        await _camController!.startImageStream((image) => _processCameraImage(image));
+    } catch (e) {
+      log("Error initializing camera, error: ${e.toString()}");
+    }
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+
+
+
+
+
+  void getFocalLength() async {
+    final prefs = await SharedPreferences.getInstance();
+    final double length  = await  prefs.getDouble('focalLength')??0;
+    setState(() {
+      focalLength = length;
+      gotFocalLength = true;
+    });
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getFocalLength();
+    if (globals.globalTestIndex == 1){
+      initCamera();
+    }
+  }
+
+  @override
+  void dispose() {
+
+    _camController?.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
             title: Text(
-                'Online iTest | Test: ' + testQuestion.testType.toString()),
+                'Online iTest | Test: ' + widget.testQuestion.testType.toString()),
             backgroundColor: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2),
             leading: IconButton(
               // this will be removed
@@ -119,11 +294,13 @@ class testScreenQuestion extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                testQuestionSection(testQuestion: testQuestion),
-                testAnswerSection(testQuestion: testQuestion),
+                if (gotDistance == true)
+                Text(distance.toString()),
+                testQuestionSection(testQuestion: widget.testQuestion),
+                testAnswerSection(testQuestion: widget.testQuestion),
                 testNavigationSection(
-                  testQuestion: testQuestion,
-                  wholeTest: wholeTest,
+                  testQuestion: widget.testQuestion,
+                  wholeTest: widget.wholeTest,
                 )
               ],
             ),
@@ -132,13 +309,57 @@ class testScreenQuestion extends StatelessWidget {
   }
 }
 
-class testQuestionSection extends StatelessWidget {
+class testQuestionSection extends StatefulWidget {
   const testQuestionSection({
     Key? key,
     required this.testQuestion,
   }) : super(key: key);
 
   final testQuestions testQuestion;
+
+  @override
+  State<testQuestionSection> createState() => _testQuestionSectionState();
+}
+
+class _testQuestionSectionState extends State<testQuestionSection> {
+  Widget show_question(context) {
+    if (widget.testQuestion.testType == 1) {
+      return Container(
+        // for the question image
+          height: MediaQuery.of(context).size.height * 0.35,
+          width: MediaQuery.of(context).size.width * 0.75,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xFFF5F6F9),
+          ),
+          child: Container(
+            height: globals.distance < 50 ?MediaQuery.of(context).size.height * 0.35 * globals.distance / 40:MediaQuery.of(context).size.height * 0.35 * 50 / 40,
+            width: globals.distance < 50 ?MediaQuery.of(context).size.width * 0.75 * globals.distance / 40:MediaQuery.of(context).size.width * 0.75 * 50 / 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: NetworkImage(widget.testQuestion.questionImage),
+              ),
+            ),
+          ));
+    } else {
+      return Container(
+        // for the question image
+        height: MediaQuery.of(context).size.height * 0.35,
+        width: MediaQuery.of(context).size.width * 0.75,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xFFF5F6F9),
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: NetworkImage(widget.testQuestion.questionImage),
+            )),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,13 +376,13 @@ class testQuestionSection extends StatelessWidget {
               // for test number and question number
               children: [
                 Text(
-                  "Test No. " + testQuestion.testType.toString(),
+                  "Test No. " + widget.testQuestion.testType.toString(),
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(
                   width: 20,
                 ),
-                Text("Question No." + testQuestion.questionNumber.toString(),
+                Text("Question No." + widget.testQuestion.questionNumber.toString(),
                     style: TextStyle(fontSize: 16)),
                 // SizedBox( // thinking if need this
                 //   width: 50,
@@ -171,23 +392,24 @@ class testQuestionSection extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20), // for gap
-          SizedBox(
-            // for the question image
-            height: MediaQuery.of(context).size.height * 0.35,
-            width: MediaQuery.of(context).size.width * 0.6,
-            child: AspectRatio(
-              aspectRatio: 0.88,
-              child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Color(0xFFF5F6F9),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Image.network(
-                    testQuestion.questionImage), // hopefully works
-              ),
-            ),
-          ),
+          show_question(context),
+          // SizedBox(
+          //   // for the question image
+          //   height: MediaQuery.of(context).size.height * 0.35,
+          //   width: MediaQuery.of(context).size.width * 0.6,
+          //   child: AspectRatio(
+          //     aspectRatio: 0.88,
+          //     child: Container(
+          //       padding: EdgeInsets.all(10),
+          //       decoration: BoxDecoration(
+          //         color: Color(0xFFF5F6F9),
+          //         borderRadius: BorderRadius.circular(15),
+          //       ),
+          //       child: Image.network(
+          //           testQuestion.questionImage), // hopefully works
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             // put a gap
             height: 20,
@@ -208,7 +430,7 @@ class testQuestionSection extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  testQuestion.questionTitle,
+                  widget.testQuestion.questionTitle,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
                 SizedBox(
@@ -222,7 +444,7 @@ class testQuestionSection extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  testQuestion.questionDescription,
+                  widget.testQuestion.questionDescription,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
               ],
