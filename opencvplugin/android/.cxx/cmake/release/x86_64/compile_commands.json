@@ -1,0 +1,13 @@
+[
+{
+  "directory": "C:/Users/Jaspreet/Desktop/FYP/application/opencvplugin/android/.cxx/cmake/release/x86_64",
+  "command": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android24 --gcc-toolchain=C:/Users/Jaspreet/AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/Jaspreet/AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Dopencvplugin_EXPORTS -I../../../../../ios/Classes/aimodel -isystem C:/Users/Jaspreet/Desktop/cpplibs/opencv-4.5.4-android-sdk/OpenCV-android-sdk/sdk/native/jni/include  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC   -std=gnu++11 -o CMakeFiles\\opencvplugin.dir\\C_\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\ios\\Classes\\aimodel\\main.cpp.o -c C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\ios\\Classes\\aimodel\\main.cpp",
+  "file": "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\ios\\Classes\\aimodel\\main.cpp"
+},
+
+{
+  "directory": "C:/Users/Jaspreet/Desktop/FYP/application/opencvplugin/android/.cxx/cmake/release/x86_64",
+  "command": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android24 --gcc-toolchain=C:/Users/Jaspreet/AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/Jaspreet/AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Dopencvplugin_EXPORTS -I../../../../../ios/Classes/aimodel -isystem C:/Users/Jaspreet/Desktop/cpplibs/opencv-4.5.4-android-sdk/OpenCV-android-sdk/sdk/native/jni/include  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC   -std=gnu++11 -o CMakeFiles\\opencvplugin.dir\\C_\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\ios\\Classes\\opencvplugin.cpp.o -c C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\ios\\Classes\\opencvplugin.cpp",
+  "file": "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\ios\\Classes\\opencvplugin.cpp"
+}
+]

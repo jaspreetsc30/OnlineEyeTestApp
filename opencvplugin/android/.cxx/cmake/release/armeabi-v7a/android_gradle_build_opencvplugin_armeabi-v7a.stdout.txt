@@ -1,0 +1,4 @@
+ninja: Entering directory `C:\Users\Jaspreet\Desktop\FYP\application\opencvplugin\android\.cxx\cmake\release\armeabi-v7a'
+[1/3] Building CXX object CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/aimodel/main.cpp.o
+[2/3] Building CXX object CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp.o
+[3/3] Linking CXX shared library C:\Users\Jaspreet\Desktop\FYP\application\build\opencvplugin\intermediates\cmake\release\obj\armeabi-v7a\libopencvplugin.so

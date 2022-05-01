@@ -1,0 +1,25 @@
+{
+  "buildFiles": [
+    "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\CMakeLists.txt",
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\platforms.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\OpenCVConfig-version.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\OpenCVConfig.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-armeabi-v7a\\OpenCVConfig.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-armeabi-v7a\\OpenCVModules.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-armeabi-v7a\\OpenCVModules-release.cmake"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\armeabi-v7a\" clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\armeabi-v7a\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "opencvplugin-Release-armeabi-v7a": {
+      "artifactName": "opencvplugin",
+      "buildCommand": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\armeabi-v7a\" opencvplugin",
+      "abi": "armeabi-v7a",
+      "output": "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\build\\opencvplugin\\intermediates\\cmake\\release\\obj\\armeabi-v7a\\libopencvplugin.so",
+      "runtimeFiles": []
+    }
+  }
+}

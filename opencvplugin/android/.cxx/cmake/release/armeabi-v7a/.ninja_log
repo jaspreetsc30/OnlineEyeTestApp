@@ -1,0 +1,4 @@
+# ninja log v5
+3	301	673116107	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/aimodel/main.cpp.o	2fd7b61a71c34e79
+15	9848	673116117	CMakeFiles/opencvplugin.dir/C_/Users/Jaspreet/Desktop/FYP/application/opencvplugin/ios/Classes/opencvplugin.cpp.o	8245257bd25c5e1
+9856	12515	673116119	C:/Users/Jaspreet/Desktop/FYP/application/build/opencvplugin/intermediates/cmake/release/obj/armeabi-v7a/libopencvplugin.so	553203b65bee862b

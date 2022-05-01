@@ -1,0 +1,25 @@
+{
+  "buildFiles": [
+    "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\CMakeLists.txt",
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\platforms.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\OpenCVConfig-version.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\OpenCVConfig.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-x86_64\\OpenCVConfig.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-x86_64\\OpenCVModules.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-x86_64\\OpenCVModules-release.cmake"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\x86_64\" clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\x86_64\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "opencvplugin-Release-x86_64": {
+      "artifactName": "opencvplugin",
+      "buildCommand": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\x86_64\" opencvplugin",
+      "abi": "x86_64",
+      "output": "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\build\\opencvplugin\\intermediates\\cmake\\release\\obj\\x86_64\\libopencvplugin.so",
+      "runtimeFiles": []
+    }
+  }
+}

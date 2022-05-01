@@ -1,0 +1,53 @@
+{
+  "stringTable": {
+    "0": "C:/Users/Jaspreet/Desktop/FYP/application/opencvplugin/android/.cxx/cmake/release/armeabi-v7a",
+    "1": "--target=armv7-none-linux-androideabi24 --gcc-toolchain=C:/Users/Jaspreet/AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/Jaspreet/AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Dopencvplugin_EXPORTS -I../../../../../ios/Classes/aimodel -isystem C:/Users/Jaspreet/Desktop/cpplibs/opencv-4.5.4-android-sdk/OpenCV-android-sdk/sdk/native/jni/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security -Oz -DNDEBUG -fPIC -std=gnu++11"
+  },
+  "buildFiles": [
+    "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\CMakeLists.txt",
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\platforms.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\OpenCVConfig-version.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\OpenCVConfig.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-armeabi-v7a\\OpenCVConfig.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-armeabi-v7a\\OpenCVModules.cmake",
+    "C:\\Users\\Jaspreet\\Desktop\\cpplibs\\opencv-4.5.4-android-sdk\\OpenCV-android-sdk\\sdk\\native\\jni\\abi-armeabi-v7a\\OpenCVModules-release.cmake"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\armeabi-v7a\" clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\armeabi-v7a\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "opencvplugin-Release-armeabi-v7a": {
+      "buildCommand": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\android\\.cxx\\cmake\\release\\armeabi-v7a\" opencvplugin",
+      "buildType": "release",
+      "toolchain": "1111184266",
+      "abi": "armeabi-v7a",
+      "artifactName": "opencvplugin",
+      "files": [
+        {
+          "src": "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\ios\\Classes\\aimodel\\main.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\opencvplugin\\ios\\Classes\\opencvplugin.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "C:\\Users\\Jaspreet\\Desktop\\FYP\\application\\build\\opencvplugin\\intermediates\\cmake\\release\\obj\\armeabi-v7a\\libopencvplugin.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "1111184266": {
+      "cppCompilerExecutable": "C:\\Users\\Jaspreet\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

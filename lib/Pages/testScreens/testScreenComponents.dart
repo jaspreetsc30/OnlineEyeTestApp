@@ -113,7 +113,7 @@ class _testScreenQuestionState extends State<testScreenQuestion> {
 
   late double focalLength;
   bool gotFocalLength = false;
-  late double distance ;
+  double distance = 0 ;
   bool gotDistance = false;
 
   final opencvplugin = Opencvplugin();
@@ -170,11 +170,12 @@ class _testScreenQuestionState extends State<testScreenQuestion> {
           //call the api
 
           double computeddistance = opencvplugin.getdistance(image.width, image.height, _camFrameRotation, yBuffer, uBuffer, vBuffer, newPath,focalLength)??-1;
+          computeddistance = computeddistance * 2.56;
           print(computeddistance);
-          if (computeddistance > 2){
+          if (computeddistance > 2 && (distance -3 >= computeddistance || computeddistance >= distance +3) ){
             globals.distance = computeddistance;
             setState(() {
-              distance = computeddistance * 2.56;
+              distance = computeddistance ;
               gotDistance =true;
             });
           }
