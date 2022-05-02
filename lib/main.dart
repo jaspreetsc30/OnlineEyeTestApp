@@ -78,7 +78,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
   int bottomnavbarindex = 0;
 
   void goToScreen(int index) {
-    if (index != 2) {
+    if (index != 1) {
       setState(() => bottomnavbarindex = index);
     } else {
       testResults.clear();
@@ -97,7 +97,6 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
       body: IndexedStack(
         index: bottomnavbarindex,
         children: [
-          carouselScreen(),
           carouselScreen(),
           testResultsScreen(),
           UserScreen(),
@@ -123,10 +122,6 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.remove_red_eye),
             label: 'Test',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star_border),
-            label: 'Favorites',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),

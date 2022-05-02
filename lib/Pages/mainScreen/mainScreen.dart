@@ -59,13 +59,14 @@ class _carouselScreenState extends State<carouselScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Online iTest'),
+          elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Container(
               // doesnt work for background image!
               decoration: BoxDecoration(
                   image: DecorationImage(
-                image: AssetImage('images/background/Backdropbackground.png'),
+                image: AssetImage('assets/images/background/Backdropbackground.png'),
                 fit: BoxFit.fill,
               )),
               child: Column(
@@ -78,7 +79,7 @@ class _carouselScreenState extends State<carouselScreen> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image: AssetImage(
-                              'images/mainScreen/appLogo.png'), //'assets/images/mainScreen/appLogo.png'
+                              'assets/images/background/appLogo.png'), //'assets/images/mainScreen/appLogo.png'
                           fit: BoxFit.fill,
                         )),
                   ),
@@ -129,8 +130,8 @@ Widget individualTestCard({
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20)),
-                      child: Image.network(testItem.imageURL,
-                          fit: (BoxFit.contain))),
+                      child: Image.asset(testItem.imageURL,
+                          fit: (BoxFit.contain) )),
                 )),
                 SizedBox(height: 10),
                 Container(
