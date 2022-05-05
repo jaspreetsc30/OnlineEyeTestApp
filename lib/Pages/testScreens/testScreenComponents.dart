@@ -2,7 +2,7 @@
 import 'package:application/Pages/mainScreen/mainScreen.dart';
 import 'package:application/Pages/testScreens/immediateTestResultsScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:application/Pages/testScreens/middleTestScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:application/main.dart';
 import 'package:application/Services/api.dart';
@@ -43,26 +43,14 @@ class testQuestions {
       required this.testId});
 
   factory testQuestions.fromJson(Map<String, dynamic> json) {
-    testQuestions newTestQuestion = testQuestions(
-        testType: -1,
-        questionNumber: -1,
-        questionId: "",
-        questionType: 0, // input field
-        questionImage: "",
-        questionTitle: "",
-        questionDescription: "",
-        correctAnswer: "",
-        answerOptions: [""],
-        userAnswer: "",
-        isUserAnswerCorrect: false,
-        testId: "");
-    for (int i = 0; i < 6; i++) {
-      newTestQuestion = testQuestions(
+    for (int i = 0; i < 12; i++) {
+      // print(json['payload']['questions'][i]);
+      testQuestions newTestQuestion = testQuestions(
           testType: json['payload']['questions'][i]['test_type'],
           questionNumber: i + 1,
           questionId: json['payload']['questions'][i]['id'],
           questionType:
-              json['payload']['questions'][i]['question_type'] == 'MC' ? 1 : 0,
+          json['payload']['questions'][i]['question_type'] == 'MC' ? 1 : 0,
           questionImage: json['payload']['questions'][i]['question_image'],
           questionTitle: json['payload']['questions'][i]['question'],
           questionDescription: "",
@@ -87,7 +75,7 @@ class testQuestions {
 
       testQuestionList.add(newTestQuestion);
     }
-    return newTestQuestion;
+    return testQuestionList[0];
   }
 }
 
@@ -172,7 +160,7 @@ class _testScreenQuestionState extends State<testScreenQuestion> {
           double computeddistance = opencvplugin.getdistance(image.width, image.height, _camFrameRotation, yBuffer, uBuffer, vBuffer, newPath,focalLength)??-1;
           computeddistance = computeddistance * 2.56;
           print(computeddistance);
-          if (computeddistance > 2 && (distance -3 >= computeddistance || computeddistance >= distance +3) ){
+          if (computeddistance > 2  ){
             globals.distance = computeddistance;
             setState(() {
               distance = computeddistance ;
@@ -279,17 +267,8 @@ class _testScreenQuestionState extends State<testScreenQuestion> {
             title: Text(
                 'Online iTest | Test: ' + widget.testQuestion.testType.toString()),
             backgroundColor: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2),
-            leading: IconButton(
-              // this will be removed
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => bottomNavigationBar()),
-                );
-              },
-            )),
+            automaticallyImplyLeading: false,
+        ),
         body: Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: SingleChildScrollView(
@@ -323,33 +302,108 @@ class testQuestionSection extends StatefulWidget {
 }
 
 class _testQuestionSectionState extends State<testQuestionSection> {
+
+
+  final double question1size = 100;
+  final double question2size = 100 / (1.25);
+  final double question3size = 100 / (1.25 * 2);
+  final double question4size = 100 / (1.25 * 3);
+  final double question5size = 100 / (1.25 * 4);
+  final double question6size = 100 / (1.25 * 5);
+
+  Widget show_question_image(questionSize) {
+    return Container(
+      height: questionSize * 0.8 * globals.distance / 40,
+      width: questionSize * 0.8 * globals.distance / 40,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          fit: BoxFit.fill,
+          image: NetworkImage(widget.testQuestion.questionImage),
+        ),
+      ),
+    );
+  }
+
   Widget show_question(context) {
     if (widget.testQuestion.testType == 1) {
-      return Container(
-        // for the question image
-          height: MediaQuery.of(context).size.height * 0.35,
-          width: MediaQuery.of(context).size.width * 0.75,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Color(0xFFF5F6F9),
-          ),
-          child: Container(
-            height: globals.distance < 50 ?MediaQuery.of(context).size.height * 0.35 * globals.distance / 40:MediaQuery.of(context).size.height * 0.35 * 50 / 40,
-            width: globals.distance < 50 ?MediaQuery.of(context).size.width * 0.75 * globals.distance / 40:MediaQuery.of(context).size.width * 0.75 * 50 / 40,
+      if (widget.testQuestion.questionNumber == 1 ||
+          widget.testQuestion.questionNumber == 7) {
+        return Container(
+          // for the question image
+            height: 350,
+            width: 350,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(widget.testQuestion.questionImage),
-              ),
+              color: Color(0xFFF5F6F9),
             ),
-          ));
+            child: show_question_image(question1size));
+      } else if (widget.testQuestion.questionNumber == 2 ||
+          widget.testQuestion.questionNumber == 8) {
+        return Container(
+          // for the question image
+            height: 350,
+            width: 350,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color(0xFFF5F6F9),
+            ),
+            child: show_question_image(question2size));
+      } else if (widget.testQuestion.questionNumber == 3 ||
+          widget.testQuestion.questionNumber == 9) {
+        return Container(
+          // for the question image
+            height: 350,
+            width: 350,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color(0xFFF5F6F9),
+            ),
+            child: show_question_image(question3size));
+      } else if (widget.testQuestion.questionNumber == 4 ||
+          widget.testQuestion.questionNumber == 10) {
+        return Container(
+          // for the question image
+            height: 350,
+            width: 350,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color(0xFFF5F6F9),
+            ),
+            child: show_question_image(question4size));
+      } else if (widget.testQuestion.questionNumber == 5 ||
+         widget.testQuestion.questionNumber == 11) {
+        return Container(
+          // for the question image
+            height: 350,
+            width: 350,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color(0xFFF5F6F9),
+            ),
+            child: show_question_image(question5size));
+      } else {
+        return Container(
+          // for the question image
+            height: 350,
+            width: 350,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color(0xFFF5F6F9),
+            ),
+            child: show_question_image(question6size));
+      }
     } else {
       return Container(
         // for the question image
-        height: MediaQuery.of(context).size.height * 0.35,
-        width: MediaQuery.of(context).size.width * 0.75,
+        height: 350,
+        width: 350,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -361,6 +415,7 @@ class _testQuestionSectionState extends State<testQuestionSection> {
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -394,23 +449,7 @@ class _testQuestionSectionState extends State<testQuestionSection> {
           ),
           SizedBox(height: 20), // for gap
           show_question(context),
-          // SizedBox(
-          //   // for the question image
-          //   height: MediaQuery.of(context).size.height * 0.35,
-          //   width: MediaQuery.of(context).size.width * 0.6,
-          //   child: AspectRatio(
-          //     aspectRatio: 0.88,
-          //     child: Container(
-          //       padding: EdgeInsets.all(10),
-          //       decoration: BoxDecoration(
-          //         color: Color(0xFFF5F6F9),
-          //         borderRadius: BorderRadius.circular(15),
-          //       ),
-          //       child: Image.network(
-          //           testQuestion.questionImage), // hopefully works
-          //     ),
-          //   ),
-          // ),
+
           SizedBox(
             // put a gap
             height: 20,
@@ -437,17 +476,17 @@ class _testQuestionSectionState extends State<testQuestionSection> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Question Description:",
-                    maxLines: 3,
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  widget.testQuestion.questionDescription,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-                ),
+                // Text("Question Description:",
+                //     maxLines: 3,
+                //     style:
+                //         TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // Text(
+                //   widget.testQuestion.questionDescription,
+                //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                // ),
               ],
             ),
           ),
@@ -494,7 +533,11 @@ class _testAnswerSection extends State<testAnswerSection> {
       testQuestion.userAnswer = _answerInputController.value.text;
     } else {
       // for MC Question
-      if (_answerInputChoice == testQuestion.correctAnswer) {
+      print(_answerInputChoice);
+      print(testQuestion.correctAnswer);
+      print(_answerInputChoice == testQuestion.correctAnswer);
+      if (_answerInputChoice == testQuestion.correctAnswer ||
+          (_answerInputChoice == "Up" && testQuestion.correctAnswer == "Up")) {
         testQuestion.isUserAnswerCorrect = true;
       }
       testQuestion.userAnswer = _answerInputChoice;
@@ -722,33 +765,11 @@ class testNavigationSection extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Colors.grey,
-                  textStyle: const TextStyle(fontSize: 28),
-                  padding: EdgeInsets.all(20),
+                  textStyle: const TextStyle(fontSize: 25),
+                  padding: EdgeInsets.all(15),
                   shape: StadiumBorder()),
               onPressed: () {
-                showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Missing answers',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    content: const Text('Please complete the test to submit.'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'OK'),
-                        child: const Text(
-                          'OK',
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                submitDialog(context);
               },
               child: Text(
                 "Submit Test",
@@ -776,28 +797,7 @@ class testNavigationSection extends StatelessWidget {
                       ),
                     );
                   } else {
-                    showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text(
-                          'No input found',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        content: const Text(
-                            'Please enter an answer or select an option.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
+                    answerDialog(context);
                   }
                 },
                 child: Icon(Icons.arrow_forward_ios_rounded)),
@@ -805,7 +805,8 @@ class testNavigationSection extends StatelessWidget {
         ),
       );
     } else if (1 < testQuestion.questionNumber &&
-        testQuestion.questionNumber <= wholeTest.length - 1) {
+        testQuestion.questionNumber < wholeTest.length &&
+        testQuestion.questionNumber != wholeTest.length / 2) {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Row(
@@ -839,33 +840,11 @@ class testNavigationSection extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Colors.grey,
-                  textStyle: const TextStyle(fontSize: 28),
-                  padding: EdgeInsets.all(20),
+                  textStyle: const TextStyle(fontSize: 25),
+                  padding: EdgeInsets.all(15),
                   shape: StadiumBorder()),
               onPressed: () {
-                showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Missing answers',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    content: const Text('Please complete the test to submit.'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'OK'),
-                        child: const Text(
-                          'OK',
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                submitDialog(context);
               },
               child: Text(
                 "Submit Test",
@@ -893,30 +872,76 @@ class testNavigationSection extends StatelessWidget {
                       ),
                     );
                   } else {
-                    showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text(
-                          'No input found',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        content: const Text(
-                            'Please enter an answer or select an option.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text(
-                              'OK',
-                            ),
-                          ),
-                        ],
-                      ),
+                    answerDialog(context);
+                  }
+                },
+                child: Icon(Icons.arrow_forward_ios_rounded)),
+          ],
+        ),
+      );
+    } else if (testQuestion.questionNumber == wholeTest.length / 2) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(20),
+                  primary: Color.fromARGB(
+                      0xFF, 0x7b, 0xd1, 0xc2), // <-- Button color
+                  onPrimary: Colors.white, // <-- icon color
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => testScreenQuestion(
+                          testQuestion: testQuestionList[
+                          testQuestion.questionNumber -
+                              2], // -2 cause question number starts 1
+                          wholeTest: testQuestionList),
+                    ),
+                  );
+                },
+                child: Icon(Icons.arrow_back_ios_rounded)),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.10,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.grey,
+                  textStyle: const TextStyle(fontSize: 28),
+                  padding: EdgeInsets.all(20),
+                  shape: StadiumBorder()),
+              onPressed: () {
+                submitDialog(context);
+              },
+              child: Text(
+                "Submit Test",
+              ),
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.10),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(20),
+                  primary: Color.fromARGB(
+                      0xFF, 0x7b, 0xd1, 0xc2), // <-- Button color
+                  onPrimary: Colors.white, // <-- icon color
+                ),
+                onPressed: () {
+                  // go to next question from same test
+                  if (testQuestion.userAnswer != "") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => middleTestScreen()),
                     );
+                  } else {
+                    answerDialog(context);
                   }
                 },
                 child: Icon(Icons.arrow_forward_ios_rounded)),
@@ -958,37 +983,14 @@ class testNavigationSection extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(0xFF, 0x7b, 0xd1, 0xc2),
-                  textStyle: const TextStyle(fontSize: 28),
-                  padding: EdgeInsets.all(20),
+                  textStyle: const TextStyle(fontSize: 25),
+                  padding: EdgeInsets.all(10),
                   shape: StadiumBorder()),
               onPressed: () {
                 if (testQuestion.userAnswer != "") {
                   _sendTestResults(context);
                 } else {
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text(
-                        'Missing answers',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      content:
-                          const Text('Please complete the test to submit.'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'OK'),
-                          child: const Text(
-                            'OK',
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                  submitDialog(context);
                 }
               },
               child: Text(
@@ -1012,4 +1014,60 @@ class testNavigationSection extends StatelessWidget {
       );
     }
   }
+
+  Future<String?> submitDialog(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text(
+          'Missing answers',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        content: const Text('Please complete the test to submit.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text(
+              'OK',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<String?> answerDialog(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text(
+          'No input found',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        content: const Text('Please enter an answer or select an option.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text(
+              'OK',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+
 }
+
+

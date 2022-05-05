@@ -59,6 +59,7 @@ class _carouselScreenState extends State<carouselScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Online iTest'),
+          automaticallyImplyLeading: false,
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -224,7 +225,7 @@ class rowUnderTestSection extends StatelessWidget {
                       Text("Personal\nInformation",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                              fontSize: 17, fontWeight: FontWeight.bold)),
                     ],
                   )),
             ),

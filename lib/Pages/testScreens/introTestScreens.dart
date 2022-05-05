@@ -1,7 +1,7 @@
 // import 'dart:html' hide VoidCallback;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:application/Pages/testScreens/firstTestScreen.dart';
 import 'package:application/Pages/mainScreen/mainScreen.dart';
 
 import 'package:application/Pages/testScreens/testScreenComponents.dart';
@@ -29,7 +29,7 @@ List<introTestScreenComponents> introTestScreens = [
     testInstructions: [
       // 1 2 3 are same for all, 4 is different for each test
       "Place yourself 40 cenitmeter from the screen.",
-      "If you have glasses for distance vision or glasses with progressive lenses,\nplease keep them on.",
+      "If you have glasses for distance vision or glasses with progressive lenses,please keep them on.",
       "Without pressing on the eyelid, cover your left/right eye with your hand.",
       "Indicate which way the open side of the E is facing."
     ],
@@ -39,7 +39,7 @@ List<introTestScreenComponents> introTestScreens = [
     testHeading: "Some guidelines for the astigmatism test",
     testInstructions: [
       "Place yourself 40 cenitmeter from the screen.",
-      "If you have glasses for distance vision or glasses with progressive lenses,\nplease keep them on.",
+      "If you have glasses for distance vision or glasses with progressive lenses,please keep them on.",
       "Without pressing on the eyelid, cover your left/right eye with your hand.",
       "Indicate if you see lines that are darker."
     ],
@@ -59,7 +59,7 @@ List<introTestScreenComponents> introTestScreens = [
     testHeading: "Some guidelines for the color vision test",
     testInstructions: [
       "Place yourself 40 cenitmeter from the screen.",
-      "If you have glasses for distance vision or glasses with progressive lenses,\nplease keep them on.",
+      "If you have glasses for distance vision or glasses with progressive lenses,please keep them on.",
     ],
   )
 ];
@@ -155,9 +155,7 @@ class beginTestButton extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => testScreenQuestion(
-              testQuestion: testQuestionList[0], // no need + 1 cause questionNumber starts from 1?
-              wholeTest: testQuestionList),
+          builder: (context) => firstTestScreen(),
         ),
       );
     });
@@ -236,11 +234,13 @@ class instruction4 extends StatelessWidget {
           SizedBox(
             width: 20,
           ),
-          Text(introTestScreen.testInstructions[3],
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black)),
+          Flexible(
+            child: Text(introTestScreen.testInstructions[3],
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black)),
+          ),
         ],
       ),
     );
@@ -305,11 +305,13 @@ class instruction3 extends StatelessWidget {
           SizedBox(
             width: 20,
           ),
-          Text(introTestScreen.testInstructions[2],
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black)),
+          Flexible(
+            child:  Text(introTestScreen.testInstructions[2],
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black)),
+          ),
         ],
       ),
     );
@@ -362,12 +364,14 @@ class instruction2 extends StatelessWidget {
           SizedBox(
             width: 20,
           ),
-          Text(introTestScreen.testInstructions[1],
-              maxLines: 2,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black)),
+          Flexible(
+            child: Text(introTestScreen.testInstructions[1],
+                maxLines: 2,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black)),
+          ),
         ],
       ),
     );
@@ -438,11 +442,13 @@ class instruction1 extends StatelessWidget {
           SizedBox(
             width: 20,
           ),
-          Text(introTestScreen.testInstructions[0],
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black)),
+          Flexible(
+            child: Text(introTestScreen.testInstructions[0],
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black)),
+          ),
         ],
       ),
     );
